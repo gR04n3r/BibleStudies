@@ -128,12 +128,28 @@ function removeClassByPrefix(node, prefix) {
 /****************************************************/
 function generateLocationsArrayOnLoad() {
 	//	var locationsMenuList = document.getElementById('locationsMenuList');
-	var locationsLabels = locationsMenuList.querySelectorAll('label');
-	if (locationsLabels) {
-		for (i = 0; i = locationsLabels.length; i++) {
-			var location = locationsLabels[i].getAttribute('for');
+	//	var locationsLabels = locationsMenuList.querySelectorAll('label');
+	/*	if (locationsLabels) {
+			for (i = 0; i = locationsLabels.length; i++) {
+				var location = locationsLabels[i].getAttribute('for');
+				if (locationsArray.indexOf(location) == -1) {
+					locationsArray.push(location);
+					locationsMenuGenerate(location);
+				};
+			}
+		}*/
+	var cell = storyLineTable.querySelectorAll('td:not(:empty)');
+
+	for (z = 0; z < cell.length; z++) {
+		if (cell[z].querySelector('.locationspan')) {
+			var locationSpanElm = cell[z].querySelector('.locationspan');
+			var x = locationSpanElm.innerHTML;
+			//		var formerAssignedLocation = cell.getAttribute('location');
+			var location = x.toLowerCase();
+
 			if (locationsArray.indexOf(location) == -1) {
 				locationsArray.push(location);
+				locationsMenuGenerate(x);
 			};
 		}
 	}
@@ -1713,7 +1729,7 @@ function buildLegendTable() {
 /*SET HEIGHT OF LEGEND CELLS***************************************************************/
 /******************************************************************************************/
 function btn_buildLegendTable() {
-//	uncheckAllBoxes('.timeLINameCheckBox');
+	uncheckOnly('.timeLINameCheckBox');
 	dragDiv2TD();
 	divListeners();
 	if (clickedCell) {
@@ -1964,7 +1980,6 @@ function hideAllOtherExcept4DivsOfClass(x) {
 function makeInputSelectable() {
 	divNameOptionsDropdown.setAttribute('onchange', 'fillDivNameInput()');
 	divClassOptionsDropdown.setAttribute('onchange', 'fillDivClassInput()');
-
 }
 
 function fillDivNameInput() {
@@ -2091,13 +2106,16 @@ function uncheckAllBoxes(x) {
 		})
 	}
 
-//	classesToUncheck.forEach(function (itm) {
-//		if (itm.checked) {
-//			itm.click();
-//		}
-//	})
 }
 
+function uncheckOnly(x) {
+	var classesToUncheck = document.querySelectorAll(x);
+	classesToUncheck.forEach(function (itm) {
+		if (itm.checked) {
+			itm.click();
+		}
+	})
+}
 /*function uncheckAllBoxes(x) {
 	var classesToUncheck = document.querySelectorAll(x);
 	classesToUncheck.forEach(function (itm) {
@@ -2328,6 +2346,15 @@ function createTimeMenu(ROWorCOL) {
 						var targetCellI = this.getAttribute('targetCellIndex');
 						var targetedTD = storyLineTableTHead.rows[targetRowI].cells[targetCellI];
 
+						/*
+						targetedTD.click();
+						deselectEmptyCell();
+						
+						THE CODE BELOW IS SO THE THE DETAIL OF THE SELECTED TD WILL AUTOMATICALLY LOAD IN THE DETAILS SECTION.
+						THIS IS HOWEVER PROBLEMATIC AS THE DETAILS INDEX SEEMS TO BE SOMETIMES WORKING WRONGLY.
+						ALSO, THIS CAN IDEALLY ONLY SHOW DETAILS FOR THE TIME-ROW TDS
+						*/
+
 						/*GET COL-X CLASSES AND ACT*********************/
 						/***********************************************/
 						var targetedTDClassList = targetedTD.classList;
@@ -2366,6 +2393,10 @@ function createTimeMenu(ROWorCOL) {
 												//IF COLSPAN OF TD OF THE COL-X CLASS IS 1, HIDE THE TD
 												if ((orgColSpan - hiddenColXCount == 1)) {
 													TD.style.display = 'none';
+													/*
+													//THE FOLLOWING CODE WAS AN ATTEMPT TO KEEP THE SPACING BETWEEN THE DISPLAYED EVENTS. IT HOWEVER REQUIRES MORE WORK AS IT MESSES UP THE AESTETHICS
+													if(TD.innerHTML){TD.style.display = 'none';}
+													*/
 												}
 
 												//ELSE IF COLSPAN OF TD OF THE COL-X CLASS IS GREATER THAN 1, THEN DON'T HIDE IT, RATHER JUST REDUCE THE COLSPAN BY 1
@@ -2496,7 +2527,7 @@ function locationsMenuGenerate(LX) {
 
 	LI4location.addEventListener('mouseenter', function () {
 		var location2searchFor = this.id.slice(9);
-		console.log(location2searchFor);
+//		console.log(location2searchFor);
 		var allTargetedTD = storyLineTable.querySelectorAll(`[location="` + location2searchFor + `"]`);
 		allTargetedTD.forEach(function (itm) {
 			itm.style.backgroundColor = 'rgba(255, 231, 0, 0.56)';
