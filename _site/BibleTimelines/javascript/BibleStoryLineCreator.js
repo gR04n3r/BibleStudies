@@ -1713,7 +1713,7 @@ function buildLegendTable() {
 /*SET HEIGHT OF LEGEND CELLS***************************************************************/
 /******************************************************************************************/
 function btn_buildLegendTable() {
-	uncheckAllBoxes('.timeLINameCheckBox');
+//	uncheckAllBoxes('.timeLINameCheckBox');
 	dragDiv2TD();
 	divListeners();
 	if (clickedCell) {

@@ -41,14 +41,14 @@ var timeMenuLILabels;
 function buildTimeMenuSelectors() {
 	timeMenuLIInputs = timeMenuListDiv.querySelectorAll('li > input');
 	timeMenuLILabels = timeMenuListDiv.querySelectorAll('li > label');
-	
-	
-//	var LILI = timeMenuListDiv.getElementsByTagName('li');
-//	console.log(LILI);
-//	for (i = 0; i < LILI.length; i++) {
-//		timeMenuLIInputs.push(LILI[i].getElementsByTagName('input')[0]);
-//		console.log(timeMenuLIInputs);
-//	}
+
+
+	//	var LILI = timeMenuListDiv.getElementsByTagName('li');
+	//	console.log(LILI);
+	//	for (i = 0; i < LILI.length; i++) {
+	//		timeMenuLIInputs.push(LILI[i].getElementsByTagName('input')[0]);
+	//		console.log(timeMenuLIInputs);
+	//	}
 
 	slideShowListContainer.innerHTML = '';
 	var timeMenuLILabels = timeMenuListDiv.querySelectorAll('li > label');
@@ -118,17 +118,19 @@ function slideMenuArrayGenerator() {
 			}
 		}
 	}
-	slideMenuArray.sort((a,b)=>a-b);//SORT THE ARRAY IN ASCENDING ORDER
+	slideMenuArray.sort((a, b) => a - b); //SORT THE ARRAY IN ASCENDING ORDER
 }
 
 var currentSlideMenuArrayIndex = Number(0);
-
+var clickedIndex = 0;
 function nextEventShow() {
-
-	if (slideMenuArray != []) {
+		
 		if (currentSlideMenuArrayIndex == 0) {
 			slideMenuArrayGenerator()
 		}
+//		console.log(slideMenuArray);
+
+	if (slideMenuArray != []){
 
 		for (v = 0; v < slideMenuArraySource.length; v++) {
 			if (slideMenuArraySource[v].selectedIndex == slideMenuArray[currentSlideMenuArrayIndex]) {
@@ -143,22 +145,26 @@ function nextEventShow() {
 
 function resetEventShow() {
 	currentSlideMenuArrayIndex = Number(0);
+	uncheckAllBoxes('.timeLINameCheckBox');
 }
 
 function prevEventShow() {
 
-	if (slideMenuArray != []) {
-		if (currentSlideMenuArrayIndex == 0) {
-			slideMenuArrayGenerator()
-		}
-
-		for (v = 0; v < slideMenuArraySource.length; v++) {
-			if (slideMenuArraySource[v].selectedIndex == slideMenuArray[currentSlideMenuArrayIndex]) {
-				timeMenuLIInputs[v].click();
+	if (currentSlideMenuArrayIndex != 0) {
+	
+		console.log(currentSlideMenuArrayIndex);
+		
+		currentSlideMenuArrayIndex = currentSlideMenuArrayIndex - 1;
+		if (slideMenuArray != []) {
+			if (currentSlideMenuArrayIndex == 0) {
+				slideMenuArrayGenerator()
 			}
-		}
-		if (currentSlideMenuArrayIndex != 0) {
-			currentSlideMenuArrayIndex = currentSlideMenuArrayIndex - 1;
+
+			for (v = 0; v < slideMenuArraySource.length; v++) {
+				if (slideMenuArraySource[v].selectedIndex == slideMenuArray[currentSlideMenuArrayIndex]) {
+					timeMenuLIInputs[v].click();
+				}
+			}
 		}
 	}
 }
@@ -167,21 +173,18 @@ document.onkeydown = checkKey;
 
 function checkKey(e) {
 
-    e = e || window.event;
+	e = e || window.event;
 
-    if (e.keyCode == '38') {
-        // up arrow
-    }
-    else if (e.keyCode == '40') {
-        // down arrow
-    }
-    else if ((e.keyCode == '37')&&(document.querySelector('#nextEventUseKeboard').checked == true)){
+	if (e.keyCode == '38') {
+		// up arrow
+	} else if (e.keyCode == '40') {
+		// down arrow
+	} else if ((e.keyCode == '37') && (document.querySelector('#nextEventUseKeboard').checked == true)) {
 		prevEventShow();
-       // left arrow
-	}
-    else if ((e.keyCode == '39') &&(document.querySelector('#nextEventUseKeboard').checked == true)){
+		// left arrow
+	} else if ((e.keyCode == '39') && (document.querySelector('#nextEventUseKeboard').checked == true)) {
 		nextEventShow();
-       // right arrow
+		// right arrow
 	}
 }
 
