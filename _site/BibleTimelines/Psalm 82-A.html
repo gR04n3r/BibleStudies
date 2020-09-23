@@ -112,6 +112,10 @@
 					<span>Connection</span>
 					<input id="connectByTimelines" type="checkbox" value="connectByTimelines">
 				</button>
+				<button class="headbuttons" id="slideShowArranger" onclick="closeSlideShow()" title="Show/Hide the SlideShow List">
+					<span>SlideShow List</span>
+					<input id="showSlideShowArranger" type="checkbox" value="slideShowArranger" checked>
+				</button>
 			</div>
 
 
@@ -715,7 +719,32 @@
 		</div>
 	</section>
 	<!--***********************************************-->
-</body>
+	<!--*SLIDE SHOW************************************-->
+	<!--***********************************************-->
+	<!--SLIDE SHOW BUTTONS-->
+	<div id="slideShowButtons">
+		<button id="prevEvent" class="fa fa-arrow-left" onclick="prevEventShow()" title="Show PREVIOUS event"></button>
+		<button id="resetEvent" class="fa fa-arrows" onclick="resetEventShow()" title="RESET events"></button>
+		<button id="nextEvent" class="fa fa-arrow-right" onclick="nextEventShow()" title="Show NEXT event"></button>
+		<input id="nextEventUseKeboard" type="checkbox" checked="true" title="Enable Arrow Keys on Keyboard"></input>
+	</div>
+	<!--*SLIDESHOW LIST********************************-->
+	<div id="slideShowListMaster">
+		<div id="slideShowListMasterheader" class="titleBarH3">
+			<h3>SlideShow</h3>
+
+			<div>
+				<button id="closeSlideShow2" class=" fa fa-refresh" onclick="buildTimeMenuSelectors()"></button><button id="closeSlideShow2" class="fa fa-window-close" onclick="closeSlideShow()"></button>
+			</div>
+		</div>
+		<div id="slideShowListContainer" class="scrollbar-custom">
+
+		</div>
+	</div>
+	<!--***********************************************-->
+	<!--******************-->
+	</body>
+
 
 <script type="text/javascript" src="javascript/darkOrlightBG.js"></script>
 <script type="text/javascript" src="javascript/GetElement-XY-Coordinates.js"></script>
@@ -735,6 +764,7 @@
 <script type="text/javascript" src="javascript/saveTimelineAndDetails.js"></script>
 <script type="text/javascript" src="javascript/TextEditorDocExec.js"></script>
 
-<script type="text/javascript" src="javascript/reftager.js"></script>
+<!--<script type="text/javascript" src="javascript/reftager.js"></script>-->
+<script type="text/javascript" src="javascript/storyTellerColumnSlideShow.js"></script>
 
 </html>

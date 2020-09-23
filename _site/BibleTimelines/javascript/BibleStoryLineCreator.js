@@ -305,7 +305,7 @@ function onloadAnalysis() {
 	timeLinesMenu();
 
 	//GENERATE ACTORS NODES ARRAY AND MENU
-	generateActorsNodesArrayOnLoad()
+	generateActorsNodesArrayOnLoad();
 }
 
 /*BECAUSE COORDINATES CHANGE WHEN BROWSER WINDOW IS RESIZED******************************/
@@ -2228,7 +2228,7 @@ function buildActorsMenu(x) {
 /******************************************************************************************/
 
 /******************************************************************************************/
-/*BUILD TIME MENU**************************************************************************/
+/*BUILD TIME MENU* ************************************************************************/
 /******************************************************************************************/
 var timeMenuArray = [];
 var col_x_CellHeader;

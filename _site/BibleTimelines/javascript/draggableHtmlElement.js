@@ -3,6 +3,7 @@
 dragElement(document.getElementById("navSection4navDivButtonHolder"));
 dragElement(document.getElementById("detailsSection"));
 dragElement(document.getElementById("alternateStoryLineEditorButtons"));
+dragElement(slideShowListMaster);
 //dragElement(document.getElementById("timePeriodMenu"));
 
 function dragElement(elmnt) {

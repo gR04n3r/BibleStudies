@@ -512,7 +512,7 @@ td > div {
 	border: 1px solid black;
 }
 
-#detailsSectionheader {
+#detailsSectionheader, #slideShowListMasterheader {
 	grid-row-start: 1;
 	grid-row-end: 2;
 	grid-column-start: 1;
@@ -528,8 +528,10 @@ td > div {
 	border-top-right-radius: 5px;
 	background-color: #f0de92;
 }
-#detailsSectionheader h3 {
+#detailsSectionheader h3, #slideShowListMasterheader h3 {
 	display: inline;
+	margin-top: 0;
+	margin-bottom,: 0;
 }
 
 /*WYSIWYG*/
@@ -624,7 +626,7 @@ td > div {
 	margin-right: 10px;
 }
 
-#closeDetails {
+#closeDetails, #closeSlideShow {
 	float: right;
 	margin-right: 10px;
 }
@@ -995,4 +997,53 @@ img.intLink {
 #editMode > input {
 	width: 10px;
 	float: left;
+}
+
+/*SLIDESHOW*/
+#slideShowListMaster {	
+	width: 250px;
+	border: 2px solid grey;
+	background-color: white;
+
+	position: fixed;
+	right:0;
+	top:0;
+	z-index: 10;
+}
+
+#slideShowListMasterheader {
+	display: grid;
+	grid-template-columns: 1fr auto;
+	grid-template-rows: 1fr;
+}
+
+#slideShowListContainer {
+	max-height: 80vh;
+	overflow-y: scroll;
+	grid-row-start: 2;
+	grid-row-end: 3;
+}
+
+#slideShowListContainer li {
+	display: grid;
+	grid-template-columns: 1fr auto;
+}
+
+#slideShowListContainer label {
+	grid-column-start: 1;
+	grid-column-end: 2;
+}
+#slideShowListContainer select {
+	grid-column-start: 2;
+	grid-column-end: 3;
+}
+
+#slideShowButtons {
+	position: fixed;
+	right:0;
+	bottom:0;
+}
+
+#nextEventUseKeboard {
+	width:20px;
 }

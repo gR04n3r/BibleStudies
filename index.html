@@ -5,6 +5,9 @@
 layout: homeTEMPLATE
 title: "Site Home"
 ---
+<p><em>Please see the <a href="
+	{% for page in site.pages %}{% if page.title contains "About" %}{% if site.baseurl == "" %}{{page.url}}{% elsif site.baseurl != "" %}/{{site.baseurl}}{{page.url}}{% endif %}{% endif %}{% endfor %}">About Page</a> for some sort of statement of belief. Thank you.</em></p>
+
 <header>
 	<h2>A Prayer for You</h2>
 </header>
@@ -18,11 +21,8 @@ title: "Site Home"
 	<br>May He save you from lies and false doctrines of all kinds, mainstream and fringe, ancient and recent, obvious and subtle.
 	<br>May He save you from the wayward wife who has left the Husband of her youth and may you never be numbered among her children.</p>
 
-<p><em>Please see the <a href="
-	{% for page in site.pages %}{% if page.title contains "About" %}{% if site.baseurl == "" %}{{page.url}}{% elsif site.baseurl != "" %}/{{site.baseurl}}{{page.url}}{% endif %}{% endif %}{% endfor %}">About Page</a> for some sort of statement of belief. Thank you.</em></p>
-
+<h1>LightCity Teaching Resources</h1>
 <h3>Angel of Yahweh</h3>
-
 <ol>
 	{% for page in site.pages %}{% if page.categories contains "Angel of Yahweh" %}<li><a href="{% if site.baseurl == "" %}{{page.url}}{% elsif site.baseurl != "" %}/{{site.baseurl}}{{page.url}}{% endif %}">{{page.title}}</a></li>
 	{% endif %}{% endfor %}
