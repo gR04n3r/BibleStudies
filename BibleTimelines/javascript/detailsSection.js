@@ -54,8 +54,9 @@ function addDetailKeys() {
 
 		/*TO GET LOCATION/REGION OF SELECTED CELL*/
 		var location = selectedCell.getAttribute('location') || ''; //the selectedCell may or may not have the location attribute
+		var spanLocationName = selectedCell.querySelector('span.locationspan').innerHTML;
 		var cellLocation_LI = document.createElement('LI');
-		cellLocation_LI.innerHTML = location;
+		cellLocation_LI.innerHTML = spanLocationName;
 		removeAllChildNodesOf(detailsRegions);
 		//if it has location attribute, then the <li> will be appended 
 		if (location != '') {
@@ -159,17 +160,17 @@ function addDetailKeys() {
 		//////////////////////////////////////////
 		//MAKE DETAILS TEXT-EDITOR BUTTONS VISIBLE
 		//////////////////////////////////////////
-/*		var wysiwygEditorButtons = document.querySelectorAll('#wysiwygEditor > div > *');
-		if (wysiwygEditorButtons[0].style.display == 'none') {
-			var toolBar1_Buttons = document.querySelectorAll('#wysiwygEditor > div > *');
-			toolBar1_Buttons.forEach(function (btn) {
-				btn.style.display = 'none';
-			})
-			wysiwygEditor.style.display = "";
-			for (let i = 1; i <= toolBar1_Buttons.length; i++) {
-				setTimeout(() => [toolBar1_Buttons[i - 1].style.display = ''], 7.5 * i);
-			}
-		}*/
+		/*		var wysiwygEditorButtons = document.querySelectorAll('#wysiwygEditor > div > *');
+				if (wysiwygEditorButtons[0].style.display == 'none') {
+					var toolBar1_Buttons = document.querySelectorAll('#wysiwygEditor > div > *');
+					toolBar1_Buttons.forEach(function (btn) {
+						btn.style.display = 'none';
+					})
+					wysiwygEditor.style.display = "";
+					for (let i = 1; i <= toolBar1_Buttons.length; i++) {
+						setTimeout(() => [toolBar1_Buttons[i - 1].style.display = ''], 7.5 * i);
+					}
+				}*/
 		//////////////////////////////////////////
 		//////////////////////////////////////////
 	} else if (previouslyShownDetail) {
@@ -206,10 +207,13 @@ function detailsEditButtons() {
 	//////////////////////////////////////////
 	//////////////////////////////////////////
 }
-function makeCurrentDetailEditable(){
-		if(document.querySelector('.showDetail')){
+
+function makeCurrentDetailEditable() {
+	if (document.querySelector('.showDetail')) {
 		document.querySelector('.showDetail').contentEditable = 'true';
-	}else { customAlert('There is No Note To Edit.')}
+	} else {
+		customAlert('There is No Note To Edit.')
+	}
 }
 
 ///////////////////////////////////////////
@@ -251,7 +255,7 @@ function addDetail() {
 
 				var cellDetail_p = document.createElement('P');
 				//				cellDetail_p.innerHTML = 'Insert details for selected cell here';
-				
+
 				var cellDetail = document.createElement('DIV');
 				cellDetail.classList.add('showDetail');
 				cellDetail.id = 'detail_' + detailsCount;

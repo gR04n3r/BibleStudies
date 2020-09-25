@@ -150,6 +150,10 @@ function generateLocationsArrayOnLoad() {
 			if (locationsArray.indexOf(location) == -1) {
 				locationsArray.push(location);
 				locationsMenuGenerate(x);
+				var locationNameOption = document.createElement('OPTION');
+				locationNameOption.text = x;
+				locationNameOption.id = 'locopt_' + location;
+				locationOptionsDropdown.append(locationNameOption);
 			};
 		}
 	}
@@ -185,6 +189,11 @@ function generateActorsNodesArrayOnLoad() {
 		}
 		if (divNameArray.indexOf(divzName) == -1) {
 			divNameArray.push(divzName);
+			var dNmoption = document.createElement('OPTION');
+			dNmoption.text = divzName;
+			dNmoption.setAttribute('optCounter', 1);
+			dNmoption.setAttribute('optClassName', divzName);
+			divClassOptionsDropdown.append(dNmoption);
 			for (j = 0; j < divNameOptions.length; j++) {
 				if (divNameOptions[j].text == divzName) {
 					var optCounterValue = Number(divNameOptions[j].getAttribute('optCounter'));
@@ -631,6 +640,7 @@ var cCBtnCounter = 0;
 var selectedCellsArray = [];
 var controlArray = [];
 var controlArray4RowIndex = [];
+var makeCellsSelectable4MergeSplit = 0;
 
 
 function selectCells(dbtn) {
@@ -638,6 +648,7 @@ function selectCells(dbtn) {
 	if (selectCellsToMerge == 1) {
 
 		dbtn.style.background = active;
+		makeCellsSelectable4MergeSplit = 1;
 		selectCellsToMerge = 0
 		cellSelectBtn = dbtn;
 		shouldContentsBeMerged = 1;
@@ -647,7 +658,8 @@ function selectCells(dbtn) {
 		for (i = 0; i < cells.length; i++) {
 			cells[i].onclick = function () {
 
-				if ((!this.classList.contains('selected')) && (dbtn.style.background == active) && (this.rowSpan == 1)) {
+				if ((!this.classList.contains('selected')) && ((dbtn.style.background == active) || (makeCellsSelectable4MergeSplit == 1)) && (this.rowSpan == 1)) {
+					console.log('SELECT-CELL');
 					this.style.backgroundColor = 'pink';
 					this.classList.add('selected')
 					var cspan = this.colSpan;
@@ -674,6 +686,7 @@ function selectCells(dbtn) {
 
 	} else if (selectCellsToMerge == 0) {
 		dbtn.style.background = deactivated;
+		makeCellsSelectable4MergeSplit = 0;
 		selectCellsToMerge = 1;
 		cellSelectBtn = null;
 		shouldContentsBeMerged = null;
@@ -2532,7 +2545,7 @@ function locationsMenuGenerate(LX) {
 
 	LI4location.addEventListener('mouseenter', function () {
 		var location2searchFor = this.id.slice(9);
-//		console.log(location2searchFor);
+		//		console.log(location2searchFor);
 		var allTargetedTD = storyLineTable.querySelectorAll(`[location="` + location2searchFor + `"]`);
 		allTargetedTD.forEach(function (itm) {
 			itm.style.backgroundColor = 'rgba(255, 231, 0, 0.56)';
@@ -2720,7 +2733,7 @@ function timeLinesMenu() {
 		});
 
 		LI4timeLines.addEventListener('mouseenter', function () {
-			
+
 			var rowName2searchFor = this.id.slice(10);
 			console.log(rowName2searchFor);
 			var allTargetedTD = storyLineTable.querySelectorAll(`[rowname="` + rowName2searchFor + `"]`);

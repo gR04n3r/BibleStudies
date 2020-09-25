@@ -7,16 +7,12 @@ layout: bibleStoryLineTEMPLATE
 title: "` + storyLineTableTitleHeader.innerHTML + `"
 categories: Timeline
 ---
-<style id="divColorStyles">`
-	+
-		divColorStyles.innerHTML
-	+
+<style id="divColorStyles">` +
+		divColorStyles.innerHTML +
 		`</style>
 {% include BStL-preStorylineTable.html %}
-<table id="storyLineTable">`
-	+
-		storyLineTable.innerHTML
-	+
+<table id="storyLineTable">` +
+		storyLineTable.innerHTML +
 		`</table>
 
 {% include BStL-masterTableEND.html %}
@@ -26,6 +22,14 @@ categories: Timeline
 		detailsSummary.innerHTML;
 
 	//console.log(saveText);
+
+	////////////////////////////////////////////////////////////////////////////////////////////
+	//REMOVE THE MODIFICATION ADDED BY REFTAGGER BEFORE SAVING
+	//This is useful for when you make a correction in a Bible reference or else it would still link to the old reference.
+	saveText.toString();
+	saveText = saveText.replace(/(<a class="rtBibleRef"([^>]+)>)(\w+\s+\d+:\d+)(<\/a>)/g, "$3");
+	console.log(saveText);
+	////////////////////////////////////////////////////////////////////////////////////////////
 
 	var fname = storyLineTableTitleHeader.innerHTML;
 	if (fname == "") {

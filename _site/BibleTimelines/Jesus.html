@@ -38,16 +38,21 @@
 		<!--		<h3 style="display: none">Bible Timelines</h3>-->
 		<h4 style="display: none">
 			
-			<a id="timelinesHome" href="/BibleTimelines/Home-BibleTimeLines.html">BibleTimelines Home</a>
+			<a id="timelinesHome" href="/LightCityBibleStudies/BibleTimelines/Home-BibleTimeLines.html">BibleTimelines Home</a>
 			
 		</h4>
 		<ul style="display: none">
 
-			<li style="display: none"><a href="/BibleTimelines/Angel%20of%20Yahweh.html">Angel of Yahweh</a></li>
-			<li style="display: none"><a href="/BibleTimelines/BibleTimelineCreator.html">Timeline Template</a></li>
-			<li style="display: none"><a href="/BibleTimelines/Jesus.html">Yahweh</a></li>
-			<li style="display: none"><a href="/BibleTimelines/Psalm%2082-A.html">Psalm 82-A</a></li>
-			<li style="display: none"><a href="/BibleTimelines/Psalm%2082.html">Psalm 82</a></li>
+			<li style="display: none"><a href="/LightCityBibleStudies/BibleTimelines/Angel%20of%20Yahweh.html
+		        ">Angel of Yahweh</a></li>
+			<li style="display: none"><a href="/LightCityBibleStudies/BibleTimelines/BibleTimelineCreator.html
+		        ">Timeline Template</a></li>
+			<li style="display: none"><a href="/LightCityBibleStudies/BibleTimelines/Jesus.html
+		        ">Yahweh</a></li>
+			<li style="display: none"><a href="/LightCityBibleStudies/BibleTimelines/Psalm%2082-A.html
+		        ">Psalm 82-A</a></li>
+			<li style="display: none"><a href="/LightCityBibleStudies/BibleTimelines/Psalm%2082.html
+		        ">Psalm 82</a></li>
 			
 		</ul>
 
@@ -428,7 +433,7 @@
 			<div id="mergeAndSplit" class="vertical">
 				<span>Merge<br>/Split:</span>
 				<div class="vertical">
-					<button title="select cells to be merged or split" onclick="selectCells(this)">
+					<button id="selectCell2MergeSplit" title="select cells to be merged or split" onclick="selectCells(this)">
 						&#10010;
 						<br />
 						Select
@@ -570,13 +575,13 @@
 					<span style="font-style: italic">Main Name:</span>
 					<div class="vertical3">
 						<input type="text" id="divClass" value="" draggable="false">
-						<select id="divClassOptionsDropdown">
+						<select id="divClassOptionsDropdown" onclick="fillDivClassInput()">
 						</select><br>
 					</div>
 					<span style="font-style: italic">Alias:</span>
 					<div class="vertical3">
 						<input type="text" id="divName" value="" draggable="false">
-						<select id="divNameOptionsDropdown">
+						<select id="divNameOptionsDropdown" onclick="fillDivNameInput()">
 						</select>
 					</div>
 					<div class="vertical2">
