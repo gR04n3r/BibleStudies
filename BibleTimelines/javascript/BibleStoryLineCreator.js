@@ -216,6 +216,23 @@ function storyTableTitle() {
 }
 /******************************************************/
 /******************************************************/
+var scaleSize = 1;
+//ZOOM STORYLINE TABLE WITH SCOLL-WHEEL
+//divTableContainer.addEventListener('mousewheel', function (e) {
+//	masterTable.style.transform = "origin(left,top)";
+//	if (e.wheelDelta < 0) {
+//		if (scaleSize != 1) {
+//			scaleSize = scaleSize - 0.1;
+//		}
+//		masterTable.style.transform = "scale(" + scaleSize + ")";
+//		connectAllDraggableDivsWithSVGLines;
+//	} else if (e.wheelDelta > 0) {
+//		scaleSize = scaleSize + 0.1;
+//		masterTable.style.transform = "scale(" + scaleSize + ")";
+//		connectAllDraggableDivsWithSVGLines;
+//	}
+//})
+
 
 //TO DESELECT TD ON CLICK OUTSIDE THE TABLE
 function deslectOnClickAway() {

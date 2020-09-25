@@ -9,6 +9,13 @@
 	background-color: rgba(252, 233, 255, 0.56);
 }
 
+#navHeadNavBtn {
+	display: grid;
+	grid-template-columns: auto auto;
+	grid-gap: 20px;
+	padding-left: 10px;
+}
+
 #websiteNav h3:first-of-type {
 	margin-top: 0;
 	padding-top: 0;
@@ -277,7 +284,7 @@ table > h6 {
 	background-color: transparent;
 	border: 0;
 	box-shadow: 0 0 transparent;
-	min-width: 10px; 
+	min-width: 10px;
 }
 
 .locationspan {
@@ -1071,7 +1078,7 @@ img.intLink {
 	#alternateStoryLineEditorButtons,
 	#detailsSection {
 		position: fixed;
-/*		height: auto;*/
+		/*		height: auto;*/
 		width: 100%;
 		bottom: auto;
 		top: auto;
@@ -1079,11 +1086,11 @@ img.intLink {
 	}
 
 	#alternateStoryLineEditorButtons {
-		display:grid;
+		display: grid;
 		grid-template-columns: auto auto;
 		grid-template-rows: auto auto;
 	}
-	
+
 	#alternateStoryLineEditorButtonsBody button {
 		width: 100px;
 		height: 100px;
@@ -1092,27 +1099,27 @@ img.intLink {
 	}
 
 	#alternateStoryLineEditorButtonsBody {
-/*		height: 100vh;*/
+		/*		height: 100vh;*/
 		width: 100vw;
-		display:grid;
+		display: grid;
 		grid-template-columns: auto auto;
 		overflow-x: scroll;
 	}
-	
+
 	#alternateStoryLineEditorButtonsheader {
 		grid-row-start: 1;
 		grid-row-end: 2;
 	}
-	#alternateStoryLineEditorButtons > div:not(#alternateStoryLineEditorButtonsheader) {
-	}
-	
+
+	#alternateStoryLineEditorButtons > div:not(#alternateStoryLineEditorButtonsheader) {}
+
 	alternateStoryLineEditorButtonsBody > div {
 		height: 100px;
 	}
 
 	.vertical {
-		display:inline-block;
-/*		width: auto;*/
+		display: inline-block;
+		/*		width: auto;*/
 		height: auto;
 	}
 
@@ -1121,7 +1128,7 @@ img.intLink {
 		margin-left: 0px;
 		padding-left: 0px;
 	}
-	
-/* THIS MEDIA QUERY REQUIRES WORK
+
+	/* THIS MEDIA QUERY REQUIRES WORK
 */
 }

@@ -20,9 +20,9 @@
 	<!--*HEAD***********************************************-->
 	<!--****************************************************-->
 	<nav class="grid2">
-		<div style="display: grid; grid-template-rows: auto auto;">
-			<button id="navMenu" class="" onclick="navMenu()" title="Toggle Navigation Menu">Site Menu</button>
-			<button class="masterNavButtonsToggle" class="" onclick="toggleAllMasterNavBtnz()" title="Hide Navigation SideBar">Control</button>
+		<div id="navHeadNavBtn" >
+			<button id="navMenu" onclick="navMenu()" title="Toggle Navigation Menu">Site Menu</button>
+			<button class="masterNavButtonsToggle" onclick="toggleAllMasterNavBtnz()" title="Hide Navigation SideBar">Control</button>
 		</div>
 
 		<h1 class="tableHeadEqualHeights" id="storyLineTableTitleHeader" contenteditable="true"></h1>
@@ -561,7 +561,7 @@ world [Job 38:7].</li><li><b>Yahweh, the Angel of Yahweh's Name</b>. The Name of
 				<div class="vertical">
 					<div class="vertical3">
 						<input type="text" id="locationInput" value="" draggable="false">
-						<select id="locationOptionsDropdown" onclick="fillLocationInput()" >
+						<select id="locationOptionsDropdown" onclick="fillLocationInput()" onchange="fillLocationInput()" >
 						</select>
 					</div>
 					<div class="vertical2">
@@ -576,13 +576,13 @@ world [Job 38:7].</li><li><b>Yahweh, the Angel of Yahweh's Name</b>. The Name of
 					<span style="font-style: italic">Main Name:</span>
 					<div class="vertical3">
 						<input type="text" id="divClass" value="" draggable="false">
-						<select id="divClassOptionsDropdown" onclick="fillDivClassInput()">
+						<select id="divClassOptionsDropdown" onclick="fillDivClassInput()" onchange="fillDivClassInput()">
 						</select><br>
 					</div>
 					<span style="font-style: italic">Alias:</span>
 					<div class="vertical3">
 						<input type="text" id="divName" value="" draggable="false">
-						<select id="divNameOptionsDropdown" onclick="fillDivNameInput()">
+						<select id="divNameOptionsDropdown" onclick="fillDivNameInput()" onchange="fillDivNameInput()">
 						</select>
 					</div>
 					<div class="vertical2">

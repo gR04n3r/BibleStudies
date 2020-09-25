@@ -184,7 +184,7 @@ function generateActorsNodesArrayOnLoad() {
 			dNmoption.text = divzName;
 			dNmoption.setAttribute('optCounter', 1);
 			dNmoption.setAttribute('optClassName', divzClass);
-			divNameOptionsDropdown.append(dNmoption);
+			divClassOptionsDropdown.append(dNmoption);
 
 		}
 		if (divNameArray.indexOf(divzName) == -1) {
@@ -193,7 +193,7 @@ function generateActorsNodesArrayOnLoad() {
 			dNmoption.text = divzName;
 			dNmoption.setAttribute('optCounter', 1);
 			dNmoption.setAttribute('optClassName', divzName);
-			divClassOptionsDropdown.append(dNmoption);
+			divNameOptionsDropdown.append(dNmoption);
 			for (j = 0; j < divNameOptions.length; j++) {
 				if (divNameOptions[j].text == divzName) {
 					var optCounterValue = Number(divNameOptions[j].getAttribute('optCounter'));
@@ -216,6 +216,23 @@ function storyTableTitle() {
 }
 /******************************************************/
 /******************************************************/
+var scaleSize = 1;
+//ZOOM STORYLINE TABLE WITH SCOLL-WHEEL
+//divTableContainer.addEventListener('mousewheel', function (e) {
+//	masterTable.style.transform = "origin(left,top)";
+//	if (e.wheelDelta < 0) {
+//		if (scaleSize != 1) {
+//			scaleSize = scaleSize - 0.1;
+//		}
+//		masterTable.style.transform = "scale(" + scaleSize + ")";
+//		connectAllDraggableDivsWithSVGLines;
+//	} else if (e.wheelDelta > 0) {
+//		scaleSize = scaleSize + 0.1;
+//		masterTable.style.transform = "scale(" + scaleSize + ")";
+//		connectAllDraggableDivsWithSVGLines;
+//	}
+//})
+
 
 //TO DESELECT TD ON CLICK OUTSIDE THE TABLE
 function deslectOnClickAway() {
