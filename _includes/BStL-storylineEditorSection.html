@@ -33,7 +33,7 @@
 			<div id="mergeAndSplit" class="vertical">
 				<span>Merge<br>/Split:</span>
 				<div class="vertical">
-					<button title="select cells to be merged or split" onclick="selectCells(this)">
+					<button id="selectCell2MergeSplit" title="select cells to be merged or split" onclick="selectCells(this)">
 						&#10010;
 						<br />
 						Select
@@ -175,13 +175,13 @@
 					<span style="font-style: italic">Main Name:</span>
 					<div class="vertical3">
 						<input type="text" id="divClass" value="" draggable="false">
-						<select id="divClassOptionsDropdown">
+						<select id="divClassOptionsDropdown" onclick="fillDivClassInput()">
 						</select><br>
 					</div>
 					<span style="font-style: italic">Alias:</span>
 					<div class="vertical3">
 						<input type="text" id="divName" value="" draggable="false">
-						<select id="divNameOptionsDropdown">
+						<select id="divNameOptionsDropdown" onclick="fillDivNameInput()">
 						</select>
 					</div>
 					<div class="vertical2">
