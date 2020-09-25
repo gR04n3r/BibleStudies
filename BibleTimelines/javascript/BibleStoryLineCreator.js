@@ -184,7 +184,7 @@ function generateActorsNodesArrayOnLoad() {
 			dNmoption.text = divzName;
 			dNmoption.setAttribute('optCounter', 1);
 			dNmoption.setAttribute('optClassName', divzClass);
-			divNameOptionsDropdown.append(dNmoption);
+			divClassOptionsDropdown.append(dNmoption);
 
 		}
 		if (divNameArray.indexOf(divzName) == -1) {
@@ -193,7 +193,7 @@ function generateActorsNodesArrayOnLoad() {
 			dNmoption.text = divzName;
 			dNmoption.setAttribute('optCounter', 1);
 			dNmoption.setAttribute('optClassName', divzName);
-			divClassOptionsDropdown.append(dNmoption);
+			divNameOptionsDropdown.append(dNmoption);
 			for (j = 0; j < divNameOptions.length; j++) {
 				if (divNameOptions[j].text == divzName) {
 					var optCounterValue = Number(divNameOptions[j].getAttribute('optCounter'));
