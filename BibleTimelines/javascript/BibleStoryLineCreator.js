@@ -1980,6 +1980,7 @@ function hideAllOtherExcept4DivsOfClass(x) {
 function makeInputSelectable() {
 	divNameOptionsDropdown.setAttribute('onchange', 'fillDivNameInput()');
 	divClassOptionsDropdown.setAttribute('onchange', 'fillDivClassInput()');
+	locationOptionsDropdown.setAttribute('onchange', 'fillLocationInput()');
 }
 
 function fillDivNameInput() {
@@ -1988,6 +1989,10 @@ function fillDivNameInput() {
 
 function fillDivClassInput() {
 	input4divClass.value = divClassOptionsDropdown.value;
+};
+
+function fillLocationInput() {
+	locationInput.value = locationOptionsDropdown.value;
 };
 /******************************************************************************************/
 /******************************************************************************************/
@@ -2715,6 +2720,7 @@ function timeLinesMenu() {
 		});
 
 		LI4timeLines.addEventListener('mouseenter', function () {
+			
 			var rowName2searchFor = this.id.slice(10);
 			console.log(rowName2searchFor);
 			var allTargetedTD = storyLineTable.querySelectorAll(`[rowname="` + rowName2searchFor + `"]`);
