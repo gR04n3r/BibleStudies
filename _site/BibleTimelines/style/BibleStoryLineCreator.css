@@ -277,6 +277,7 @@ table > h6 {
 	background-color: transparent;
 	border: 0;
 	box-shadow: 0 0 transparent;
+	min-width: 10px; 
 }
 
 .locationspan {
@@ -512,7 +513,9 @@ td > div {
 	border: 1px solid black;
 }
 
-#detailsSectionheader, #slideShowListMasterheader {
+#detailsSectionheader,
+#slideShowListMasterheader,
+#alternateStoryLineEditorButtonsheader {
 	grid-row-start: 1;
 	grid-row-end: 2;
 	grid-column-start: 1;
@@ -528,10 +531,13 @@ td > div {
 	border-top-right-radius: 5px;
 	background-color: #f0de92;
 }
-#detailsSectionheader h3, #slideShowListMasterheader h3 {
+
+#detailsSectionheader h3,
+#slideShowListMasterheader h3,
+#alternateStoryLineEditorButtonsheader h3 {
 	display: inline;
 	margin-top: 0;
-	margin-bottom,: 0;
+	margin-bottom,
 }
 
 /*WYSIWYG*/
@@ -626,7 +632,8 @@ td > div {
 	margin-right: 10px;
 }
 
-#closeDetails, #closeSlideShow {
+#closeDetails,
+#closeSlideShow {
 	float: right;
 	margin-right: 10px;
 }
@@ -642,10 +649,9 @@ td > div {
 /*ULTERNATE STORYLINE TABLE EDITOR BUTTONS*/
 
 #alternateStoryLineEditorButtons {
-	font-size: 11px;
 	font-weight: 1000;
 	align-items: flex-end;
-	position: absolute;
+	position: fixed;
 	top: 600px;
 	left: 40px;
 	width: 970px;
@@ -653,6 +659,10 @@ td > div {
 	border-radius: 5px;
 	box-shadow: 0px 0px 1px 1px grey;
 	z-index: 4;
+}
+
+#alternateStoryLineEditorButtons > div:not(#alternateStoryLineEditorButtonsheader) {
+	font-size: 11px;
 }
 
 #alternateStoryLineEditorButtons button {
@@ -743,6 +753,7 @@ td > div {
 	box-shadow: 2px 2px 2px 0px grey;
 }
 
+/*
 #alternateStoryLineEditorButtonsheader {
 	width: 100%;
 	height: 30px;
@@ -751,6 +762,7 @@ td > div {
 	border-top-left-radius: 5px;
 	border-top-right-radius: 5px;
 }
+*/
 
 #deleteButtons {
 	background-color: rgba(255, 192, 203, 0.57) !important;
@@ -959,7 +971,7 @@ img.intLink {
 }
 
 #toolBar1 select {
-/*	font-size: 10px;*/
+	/*	font-size: 10px;*/
 }
 
 #textBox {
@@ -981,8 +993,7 @@ img.intLink {
 	cursor: pointer;
 }
 
-.intLink {
-}
+.intLink {}
 
 #editMode {
 	margin: 0;
@@ -1000,14 +1011,14 @@ img.intLink {
 }
 
 /*SLIDESHOW*/
-#slideShowListMaster {	
+#slideShowListMaster {
 	width: 250px;
 	border: 2px solid grey;
 	background-color: white;
 
 	position: fixed;
-	right:0;
-	top:0;
+	right: 0;
+	top: 0;
 	z-index: 10;
 }
 
@@ -1033,6 +1044,7 @@ img.intLink {
 	grid-column-start: 1;
 	grid-column-end: 2;
 }
+
 #slideShowListContainer select {
 	grid-column-start: 2;
 	grid-column-end: 3;
@@ -1040,10 +1052,76 @@ img.intLink {
 
 #slideShowButtons {
 	position: fixed;
-	right:0;
-	bottom:0;
+	right: 0;
+	bottom: 0;
 }
 
 #nextEventUseKeboard {
-	width:20px;
+	width: 20px;
+}
+
+/*@media only screen and (max-width: 768px) {*/
+/*@media (max-width: 768px) {*/
+@media (orientation: portrait) {
+	body {
+		background-color: aquamarine;
+		width: 100vh;
+	}
+
+	#alternateStoryLineEditorButtons,
+	#detailsSection {
+		position: fixed;
+/*		height: auto;*/
+		width: 100%;
+		bottom: auto;
+		top: auto;
+		left: 0;
+	}
+
+	#alternateStoryLineEditorButtons {
+		display:grid;
+		grid-template-columns: auto auto;
+		grid-template-rows: auto auto;
+	}
+	
+	#alternateStoryLineEditorButtonsBody button {
+		width: 100px;
+		height: 100px;
+		font-size: 25px;
+		font-weight: bolder;
+	}
+
+	#alternateStoryLineEditorButtonsBody {
+/*		height: 100vh;*/
+		width: 100vw;
+		display:grid;
+		grid-template-columns: auto auto;
+		overflow-x: scroll;
+	}
+	
+	#alternateStoryLineEditorButtonsheader {
+		grid-row-start: 1;
+		grid-row-end: 2;
+	}
+	#alternateStoryLineEditorButtons > div:not(#alternateStoryLineEditorButtonsheader) {
+	}
+	
+	alternateStoryLineEditorButtonsBody > div {
+		height: 100px;
+	}
+
+	.vertical {
+		display:inline-block;
+/*		width: auto;*/
+		height: auto;
+	}
+
+	.vertical2:not(:first-of-type):not(:last-of-type) {
+		border-left: 1px solid #b7b7b7;
+		margin-left: 0px;
+		padding-left: 0px;
+	}
+	
+/* THIS MEDIA QUERY REQUIRES WORK
+*/
 }
