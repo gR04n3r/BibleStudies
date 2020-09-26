@@ -53,20 +53,6 @@
 	font-color: red;
 }
 
-#saveDynamicDataToFile_1 {
-	/*
-	position: fixed;
-	bottom: 0;
-	font-size: 23px;
-	left: 0;
-	*/
-	background-color: darkred !important;
-	padding: 0;
-	margin-top: 10px;
-	color: white;
-	font-weight: bold;
-}
-
 .masterNavButtonsToggle {
 	height: auto;
 	min-width: 30px;
@@ -111,6 +97,7 @@ nav.gid2 > h1 {
 }
 
 /*MAIN*/
+
 * {
 	/*font-family: "Lucida Console", Courier, monospace;*/
 	font-family: 'Open Sans', sans-serif;
@@ -123,7 +110,7 @@ nav.gid2 > h1 {
 	/*font-size: 95%;*/
 }
 
-body {
+body {	
 	scroll-behavior: smooth;
 	overflow-y: scroll;
 	margin-left: 0;
@@ -507,8 +494,8 @@ td > div {
 
 	resize: both;
 	position: fixed;
-	top: 300px;
-	left: 40px;
+	top: 79px;
+	right: 300px;
 	min-height: 350px;
 	max-height: 600px;
 	width: 700px;
@@ -532,6 +519,7 @@ td > div {
 	margin-top: 0;
 	padding-bottom: 5px;
 	padding-top: 5px;
+	padding-left: 10px;
 	margin-bottom: 0;
 	border-bottom: 1px solid grey;
 	border-top-left-radius: 5px;
@@ -659,8 +647,8 @@ td > div {
 	font-weight: 1000;
 	align-items: flex-end;
 	position: fixed;
-	top: 600px;
-	left: 40px;
+	top: 435px;
+	right: 32px;
 	width: 970px;
 	background-color: rgba(245, 245, 220, 0.9);
 	border-radius: 5px;
@@ -1024,8 +1012,8 @@ img.intLink {
 	background-color: white;
 
 	position: fixed;
-	right: 0;
-	top: 0;
+	right: 45px;
+	top: 79px;
 	z-index: 10;
 }
 
@@ -1057,19 +1045,63 @@ img.intLink {
 	grid-column-end: 3;
 }
 
-#slideShowButtons {
+/*PAGE BOTTOM SECTION*/
+#pageFootSection {
 	position: fixed;
-	right: 0;
+	left: 0;
 	bottom: 0;
+	width: 100%;
+	background-color: antiquewhite;
+	display: grid;
+	grid-template-columns: auto 1fr auto;
+	grid-template-areas: pageBottomLeft pageBottomCenter pageBottomRight;
+}
+
+#saveDynamicDataToFile_1 {
+	grid-area: "pageBottomLeft";
+	color: darkblue;
+	font-weight: bold;
+	font-size: 1em;
+}
+
+#saveDynamicDataToFile_1:hover::before {
+	content: "SAVE";
+}
+
+#pageBottomStorylineTableEditorButtons {
+	grid-area: "pageBottomCenter";
+	display: grid;
+	grid-template-areas: "a a a a";
+	grid-auto-columns: auto;
+}
+
+#pageBottomStorylineTableEditorButtons button {
+	width: auto;
+	padding: 0;
+	margin: 0;
+	font-size: 1em;
+}
+
+#slideShowButtons {
+	grid-area: "pageBottomRight";
+	display: grid;
+	grid-template-areas: "a a a a";
+	grid-auto-columns: auto;
+
+}
+
+#slideShowButtons button {
+	height: 30px;
+	width: 30px;
 }
 
 #nextEventUseKeboard {
-	width: 20px;
+	width: 25px;
 }
 
 /*@media only screen and (max-width: 768px) {*/
 /*@media (max-width: 768px) {*/
-@media (orientation: portrait) {
+/*@media (orientation: portrait) {
 	body {
 		background-color: aquamarine;
 		width: 100vh;
@@ -1078,7 +1110,6 @@ img.intLink {
 	#alternateStoryLineEditorButtons,
 	#detailsSection {
 		position: fixed;
-		/*		height: auto;*/
 		width: 100%;
 		bottom: auto;
 		top: auto;
@@ -1099,7 +1130,6 @@ img.intLink {
 	}
 
 	#alternateStoryLineEditorButtonsBody {
-		/*		height: 100vh;*/
 		width: 100vw;
 		display: grid;
 		grid-template-columns: auto auto;
@@ -1129,6 +1159,6 @@ img.intLink {
 		padding-left: 0px;
 	}
 
+}*/
 	/* THIS MEDIA QUERY REQUIRES WORK
 */
-}

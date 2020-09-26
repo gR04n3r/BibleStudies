@@ -25,7 +25,7 @@
 <body class="scrollbar scrollbar-custom">
 	<!--*HEAD***********************************************-->
 	<!--****************************************************-->
-	<nav class="grid2">
+	<nav id="head_1" class="grid2">
 		<div id="navHeadNavBtn" >
 			<button id="navMenu" onclick="navMenu()" title="Toggle Navigation Menu">Site Menu</button>
 			<button class="masterNavButtonsToggle" onclick="toggleAllMasterNavBtnz()" title="Hide Navigation SideBar">Control</button>
@@ -168,13 +168,6 @@
 					<h3  class="titleBarH3">Actors</h3>
 				</div>
 				<div style="">
-					<!--
-					<div class="grid2">
-						<div>By Timelines</div>
-						<div><input type="radio" name="choice" value="yes"><label for="yes">Yes</label></div>
-						<div><input type="radio" name="choice" value="no"><label for="no">No</label></div>
-					</div>
--->
 					<div  id="navDivButtonHolder" class="scrollbar scrollbar-custom">
 						<button  id='soloDivsOfCheckedClass' onclick="hideAllOtherExcept4DivsOfClass(this)" title="Show only labels belonging to the checked list item">Solo</button>
 						<button  id='hideDivsOfCheckedClass' onclick="hideDivsOfClass(this)" title="Hide just the labels belonging to the checked list items">Hide</button>
@@ -199,8 +192,6 @@
 					<ol id="locationsMenuList"></ol>
 				</div>
 			</div>
-			
-				<button id="saveDynamicDataToFile_1" class="" onclick="saveDynamicDataToFile()" title="Save BIBLE STORYLINE">&#128190;<br>Save</button>
 			<!--***********************************************-->
 		</div>
 		<!--***********************************************-->
@@ -560,7 +551,7 @@
 				<div class="vertical">
 					<div class="vertical3">
 						<input type="text" id="locationInput" value="" draggable="false">
-						<select id="locationOptionsDropdown" onclick="fillLocationInput()" onchange="fillLocationInput()" >
+						<select id="locationOptionsDropdown" onclick="fillLocationInput()" onchange="fillLocationInput()">
 						</select>
 					</div>
 					<div class="vertical2">
@@ -593,13 +584,7 @@
 	<!--***********************************************-->
 	<!--*SLIDE SHOW************************************-->
 	<!--***********************************************-->
-	<!--SLIDE SHOW BUTTONS-->
-	<div id="slideShowButtons">
-		<button id="prevEvent" class="fa fa-arrow-left" onclick="prevEventShow()" title="Show PREVIOUS event"></button>
-		<button id="resetEvent" class="fa fa-arrows" onclick="resetEventShow()" title="RESET events"></button>
-		<button id="nextEvent" class="fa fa-arrow-right" onclick="nextEventShow()" title="Show NEXT event"></button>
-		<input id="nextEventUseKeboard" type="checkbox" checked="true" title="Enable Arrow Keys on Keyboard"></input>
-	</div>
+
 	<!--*SLIDESHOW LIST********************************-->
 	<div id="slideShowListMaster">
 		<div id="slideShowListMasterheader" class="titleBarH3">
@@ -613,6 +598,34 @@
 
 		</div>
 	</div>
+	<!--PAGE BOTTOM-->
+	<section id="pageFootSection">
+		<!--SAVE BUTTON-->
+		<button id="saveDynamicDataToFile_1" class="" onclick="saveDynamicDataToFile()" title="Save BIBLE STORYLINE">&#128190;</button>
+		<!--MODIFIERS & BUILDERS BUTTONS-->
+		<div id="pageBottomStorylineTableEditorButtons">
+
+				<button class="headbuttons tableHeadEqualHeights" id="pageBottomMasterEditButton" onclick="makeTableEditable()" title="Click to Edit StoryLineTable" for="editableRadio">
+					Edit StoryLine
+				</button>
+				<button class="headbuttons tableHeadEqualHeights" id="pageBottomDetailsShowButton" onclick="toggleDetailsSection()" title="Show notes and details of selected events" for="detailsRadio">
+					Detials/Notes
+				</button>
+				<button class="headbuttons" id="divsArrangementButton" onclick="howShouldDivsBeConnected(this)" title="Connect Actors Across TimeLines">
+					Connection
+				</button>
+				<button class="headbuttons" id="slideShowArranger" onclick="closeSlideShow()" title="Show/Hide the SlideShow List">
+					SlideShow List
+				</button>
+			</div>
+		<!--SLIDE SHOW BUTTONS-->
+		<div id="slideShowButtons">
+			<input id="nextEventUseKeboard" type="checkbox" checked="true" title="Enable Arrow Keys on Keyboard"></input>
+			<button id="prevEvent" class="fa fa-arrow-left" onclick="prevEventShow()" title="Show PREVIOUS event"></button>
+			<button id="resetEvent" class="fa fa-arrows" onclick="resetEventShow()" title="RESET events"></button>
+			<button id="nextEvent" class="fa fa-arrow-right" onclick="nextEventShow()" title="Show NEXT event"></button>
+		</div>
+	</section>
 	<!--***********************************************-->
 	<!--******************-->
 	</body>

@@ -535,6 +535,60 @@ function cellListeners() {
 
 			aCellIsClicked = 1;
 		}
+		//		if (cells[i].innerHTML) {
+		cells[i].onmouseover = function () {
+			var cellsClassList = this.classList;
+			var prefix = 'col-';
+			var prefixLength = prefix.length;
+
+			for (k = 0; k < cellsClassList.length; k++) {
+
+				//GET THE COL-X CLASSES ONE AFTER ANOTHER BELONGING TO THE TARGETED TD
+				if (cellsClassList[k].slice(0, prefixLength) == prefix) {
+					var col_xClass = cellsClassList[k];
+
+					//GET COLLECTION OF TDs BELONGING TO THIS COL-X CLASS
+					var tdsOfCheckedClass = storyLineTable.querySelectorAll('.' + col_xClass);
+
+					//GO THROUGH EACH CELL BELONGING TO THIS CLASS
+					for (l = 0; l < tdsOfCheckedClass.length; l++) {
+						var TD = tdsOfCheckedClass[l];
+						if (TD.innerHTML) {
+							TD.style.backgroundColor = 'rgba(255, 231, 0, 0.73)';
+						}
+						if (!TD.innerHTML) {
+							TD.style.backgroundColor = 'rgba(255, 231, 0, 0.24)';
+						}
+						if (this.innerHTML) {
+							this.style.backgroundColor = 'rgba(255, 135, 204, 0.58)';
+						}
+					}
+				}
+			}
+		}
+		//		}
+		cells[i].onmouseout = function () {
+			var cellsClassList = this.classList;
+			var prefix = 'col-';
+			var prefixLength = prefix.length;
+
+			for (k = 0; k < cellsClassList.length; k++) {
+
+				//GET THE COL-X CLASSES ONE AFTER ANOTHER BELONGING TO THE TARGETED TD
+				if (cellsClassList[k].slice(0, prefixLength) == prefix) {
+					var col_xClass = cellsClassList[k];
+
+					//GET COLLECTION OF TDs BELONGING TO THIS COL-X CLASS
+					var tdsOfCheckedClass = storyLineTable.querySelectorAll('.' + col_xClass);
+
+					//GO THROUGH EACH CELL BELONGING TO THIS CLASS
+					for (l = 0; l < tdsOfCheckedClass.length; l++) {
+						var TD = tdsOfCheckedClass[l];
+						TD.style.backgroundColor = '';
+					}
+				}
+			}
+		}
 	}
 }
 
@@ -2324,6 +2378,8 @@ function createTimeMenu(ROWorCOL) {
 
 				elmLI_1.appendChild(elmUL);
 				timeMenuList.appendChild(elmLI_1);
+
+
 			}
 		}
 	}
@@ -2375,6 +2431,7 @@ function createTimeMenu(ROWorCOL) {
 					/***************************************************************************************/
 					/*ADD EVENTLISTNER TO INPUT ELEMENT TO SHOW/HIDE RESPECTIVE COL-X COLUMNS***************/
 					/***************************************************************************************/
+
 					labelListNameCheckBox.addEventListener('click', function () {
 
 						var targetRowI = this.getAttribute('targetRowIndex');
@@ -2508,6 +2565,77 @@ function createTimeMenu(ROWorCOL) {
 					elmLI.appendChild(labelListName);
 					//APPEND INPUT ELEMENT TO LIST
 					elmLI.appendChild(labelListNameCheckBox);
+
+					/***************************************************************************************/
+					/*ADD EVENTLISTNER TO INPUT ELEMENT TO HIGHLIGHT RESPECTIVE COL-X COLUMNS***************/
+					/***************************************************************************************/
+					elmLI.addEventListener('mouseenter', function () {
+						var lizInput = this.querySelector('input');
+						var targetRowI = lizInput.getAttribute('targetRowIndex');
+						var targetCellI = lizInput.getAttribute('targetCellIndex');
+						var targetedTD = storyLineTableTHead.rows[targetRowI].cells[targetCellI];
+
+						/*GET COL-X CLASSES AND ACT*********************/
+						/***********************************************/
+						var targetedTDClassList = targetedTD.classList;
+						var cellsClassList = this.classList;
+						var prefix = 'col-';
+						var prefixLength = prefix.length;
+
+						for (k = 0; k < targetedTDClassList.length; k++) {
+
+							//GET THE COL-X CLASSES ONE AFTER ANOTHER BELONGING TO THE TARGETED TD
+							if (targetedTDClassList[k].slice(0, prefixLength) == prefix) {
+								var col_xClass = targetedTDClassList[k];
+
+								//GET COLLECTION OF TDs BELONGING TO THIS COL-X CLASS
+								var tdsOfCheckedClass = storyLineTable.querySelectorAll('.' + col_xClass);
+
+								//GO THROUGH EACH CELL BELONGING TO THIS CLASS
+								for (l = 0; l < tdsOfCheckedClass.length; l++) {
+									var TD = tdsOfCheckedClass[l];
+									if (TD.innerHTML) {
+										TD.style.backgroundColor = 'rgba(255, 231, 0, 0.73)';
+									}
+									if (!TD.innerHTML) {
+										TD.style.backgroundColor = 'rgba(255, 231, 0, 0.24)';
+									}
+								}
+							}
+						}
+					})
+
+					elmLI.addEventListener('mouseout', function () {
+						var lizInput = this.querySelector('input');
+						var targetRowI = lizInput.getAttribute('targetRowIndex');
+						var targetCellI = lizInput.getAttribute('targetCellIndex');
+						var targetedTD = storyLineTableTHead.rows[targetRowI].cells[targetCellI];
+
+						/*GET COL-X CLASSES AND ACT*********************/
+						/***********************************************/
+						var targetedTDClassList = targetedTD.classList;
+						var cellsClassList = this.classList;
+						var prefix = 'col-';
+						var prefixLength = prefix.length;
+
+						for (k = 0; k < targetedTDClassList.length; k++) {
+
+							//GET THE COL-X CLASSES ONE AFTER ANOTHER BELONGING TO THE TARGETED TD
+							if (targetedTDClassList[k].slice(0, prefixLength) == prefix) {
+								var col_xClass = targetedTDClassList[k];
+
+								//GET COLLECTION OF TDs BELONGING TO THIS COL-X CLASS
+								var tdsOfCheckedClass = storyLineTable.querySelectorAll('.' + col_xClass);
+
+								//GO THROUGH EACH CELL BELONGING TO THIS CLASS
+								for (l = 0; l < tdsOfCheckedClass.length; l++) {
+									var TD = tdsOfCheckedClass[l];
+									TD.style.backgroundColor = '';
+								}
+							}
+						}
+					})
+					/*************************************************/
 					//APPEND LIST ELEMENT TO OL
 					elmUL.appendChild(elmLI);
 				}
@@ -2813,3 +2941,12 @@ function navMenu() {
 }
 /******************************************************/
 /******************************************************/
+
+
+
+/****************************************************************/
+/*MAKE HOVER COL-X CLASSES HIGHLIGHT*/
+/****************************************************************/
+
+/****************************************************************/
+/****************************************************************/
