@@ -1,4 +1,4 @@
-	<!--ALTERNATIVE STORYLINE TABLE EDITOR BUTTONS *****-->
+<!--///////[START]/[BStL-storylineEditorSection]///////////-->		<!--ALTERNATIVE STORYLINE TABLE EDITOR BUTTONS *****-->
 	<section id="alternateStoryLineEditorButtons">
 		<div id="alternateStoryLineEditorButtonsheader" class="titleBarH3">
 			<h3>Table Editor/Creator</h3>
@@ -207,10 +207,12 @@
 
 		</div>
 	</div>
+<!--	</section>-->
 	<!--PAGE BOTTOM-->
 	<section id="pageFootSection">
 		<!--SAVE BUTTON-->
 		<button id="saveDynamicDataToFile_1" class="" onclick="saveDynamicDataToFile()" title="Save BIBLE STORYLINE">&#128190;</button>
+		<button class="masterNavButtonsToggle fa fa-align-justify" onclick="toggleAllMasterNavBtnz()" title="Hide Navigation SideBar"></button>
 		<!--MODIFIERS & BUILDERS BUTTONS-->
 		<div id="pageBottomStorylineTableEditorButtons">
 
@@ -220,11 +222,11 @@
 				<button class="headbuttons tableHeadEqualHeights" id="pageBottomDetailsShowButton" onclick="toggleDetailsSection()" title="Show notes and details of selected events" for="detailsRadio">
 					Detials/Notes
 				</button>
-				<button class="headbuttons" id="divsArrangementButton" onclick="howShouldDivsBeConnected(this)" title="Connect Actors Across TimeLines">
-					Connection
-				</button>
 				<button class="headbuttons" id="slideShowArranger" onclick="closeSlideShow()" title="Show/Hide the SlideShow List">
 					SlideShow List
+				</button>
+				<button class="headbuttons" id="divsArrangementButton" onclick="howShouldDivsBeConnected(this)" title="Connect Actors Across TimeLines">
+					Connection
 				</button>
 			</div>
 		<!--SLIDE SHOW BUTTONS-->
@@ -238,3 +240,4 @@
 	<!--***********************************************-->
 	<!--******************-->
 	</body>
+<!--///////[END]/[BStL-storylineEditorSection]/////////////-->

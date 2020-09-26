@@ -1,5 +1,6 @@
+<!--///////[START]/[BStL-controlsSection]//////////////////-->
 	<!--* MENUS & STORYLINE TABLE***************************-->
-	<div class="grid">
+	<div id="middleGridSection" class="grid">
 		<!--* MENUS ****************************************-->
 		<div id="masterNav" class="scrollbar-custom" >
 
@@ -99,7 +100,7 @@
 					<div  id="navDivButtonHolder" class="scrollbar scrollbar-custom">
 						<button  id='soloDivsOfCheckedClass' onclick="hideAllOtherExcept4DivsOfClass(this)" title="Show only labels belonging to the checked list item">Solo</button>
 						<button  id='hideDivsOfCheckedClass' onclick="hideDivsOfClass(this)" title="Hide just the labels belonging to the checked list items">Hide</button>
-						<button id='uncheckAll' onclick="uncheckAllBoxes('.labelListNameCheckBox')">x</button>
+						<button id='uncheckAll' onclick="hideDivsOfCheckedClass.click(), uncheckAllBoxes('.labelListNameCheckBox')">x</button>
 					</div>
 					<ol id="labelList"></ol>
 				</div>
@@ -124,3 +125,4 @@
 		</div>
 		<!--***********************************************-->
 		<!--****************************************************-->
+<!--///////[END]/[BStL-controlsSection]////////////////////-->
