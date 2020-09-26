@@ -1438,6 +1438,7 @@ function minimizeMaximize(a, b) {
 }
 
 
+/*
 var accordionCancel = document.getElementById('tableBuilderheaderHandle');
 
 var minMaxAccordion = document.getElementById('max-min');
@@ -1472,6 +1473,7 @@ for (i = 0; i < tableBuilderSections.length; i++) {
 		}
 	}
 }
+*/
 
 
 /*var tableBuilder = document.getElementById('tableBuilder');
@@ -2184,6 +2186,7 @@ function uncheckAllBoxes(x) {
 	if (shouldIUncheck) {
 		classesToUncheck.forEach(function (itm) {
 			if (itm.checked) {
+			previouslyChecked = null;
 				itm.click();
 			}
 		})
@@ -2220,6 +2223,7 @@ function uncheckOnly(x) {
 /******************************************************************************************/
 /*BUILD LABELS/ACTORS MENU*****************************************************************/
 /******************************************************************************************/
+var previouslyChecked;
 function createDivMenu(dClass) {
 	/*CREATE DIV MANIPULATOR*****************/
 	var labelNavSectionOL = document.querySelector('#labelList');
@@ -2271,6 +2275,8 @@ function createDivMenu(dClass) {
 				connectAllDraggableDivsWithSVGLines();
 			}
 		} else if (shouldISoloDiv == 1) {
+			console.log(previouslyChecked);
+				if(previouslyChecked != null){previouslyChecked.checked = false;}
 			if (this.checked) {
 				/*FIRST TIME*************************/
 				var index2exempt = divopt_ClassArray.indexOf(this.value);
@@ -2290,6 +2296,7 @@ function createDivMenu(dClass) {
 						}
 					}
 				}
+				previouslyChecked = this;
 			} else if (!this.checked) {
 				var index2exempt = divopt_ClassArray.indexOf(this.value);
 				for (i = 0; i < divopt_ClassArray.length; i++) {
@@ -2300,12 +2307,7 @@ function createDivMenu(dClass) {
 						}
 					}
 				}
-
-				/*var classOfDivsToHide = this.value;
-				var allDivsofClassToHide = masterTable.getElementsByClassName(classOfDivsToHide);
-				for (i = 0; i < allDivsofClassToHide.length; i++) {
-					allDivsofClassToHide[i].style.display = "none";
-				}*/
+				previouslyChecked = null;
 			}
 		}
 	});

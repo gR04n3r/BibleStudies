@@ -110,7 +110,16 @@ nav.gid2 > h1 {
 	/*font-size: 95%;*/
 }
 
-body {	
+body {
+	display: grid;
+	grid-template-columns: auto 1fr;
+	grid-template-rows: auto auto 1fr auto;
+	grid-template-areas:
+		"header1    header1" 
+		"header2    header2" 
+		"mainbody   mainbody"
+		"foot1      foot1";
+	height: 50vh;
 	scroll-behavior: smooth;
 	overflow-y: scroll;
 	margin-left: 0;
@@ -132,6 +141,27 @@ body {
 	background-color: rgba(255, 255, 255, 0.87);
 	/*White*/
 	/*			color: white;*/
+}
+
+#head_1 {
+	grid-area: header1;
+}
+
+#websiteNav {
+	grid-area: header2;
+}
+
+#middleGridSection {
+	grid-area: mainbody;
+/*	height: 200px;*/
+/*	margin-bottom: 50px;*/
+}
+
+#pageFootSection {
+	grid-area: foot1;
+}
+
+#divTableContainer, #masterNav {
 }
 
 #svg {
@@ -796,7 +826,8 @@ td > div {
 
 /*MASTER NAV*/
 #masterNav {
-	height: 800px;
+	max-height: 90vh;
+/*	box-shadow: 0px 3px 6px -3px black;*/
 	overflow-y: auto;
 }
 
@@ -1051,14 +1082,21 @@ img.intLink {
 	left: 0;
 	bottom: 0;
 	width: 100%;
-	background-color: antiquewhite;
+	background-color: white;
 	display: grid;
-	grid-template-columns: auto 1fr auto;
-	grid-template-areas: pageBottomLeft pageBottomCenter pageBottomRight;
+	grid-template-columns: auto auto 1fr auto;
+	grid-template-areas: "pageBottomLeft_1 pageBottomLeft_2 pageBottomCenter pageBottomRight";
+	z-index: 10;
 }
 
+/*
+#pageFootSection button {
+	background-color: white;
+}
+*/
+
 #saveDynamicDataToFile_1 {
-	grid-area: "pageBottomLeft";
+	grid-area: "pageBottomLeft_1";
 	color: darkblue;
 	font-weight: bold;
 	font-size: 1em;
@@ -1082,17 +1120,22 @@ img.intLink {
 	font-size: 1em;
 }
 
+#pageFootSection > .masterNavButtonsToggle {
+	grid-area: "pageBottomLeft_2";
+}
+
 #slideShowButtons {
 	grid-area: "pageBottomRight";
 	display: grid;
 	grid-template-areas: "a a a a";
 	grid-auto-columns: auto;
-
+	background-color: white;
 }
 
 #slideShowButtons button {
 	height: 30px;
 	width: 30px;
+	background-color: white;
 }
 
 #nextEventUseKeboard {
@@ -1149,7 +1192,7 @@ img.intLink {
 
 	.vertical {
 		display: inline-block;
-		/*		width: auto;*/
+        width: auto;
 		height: auto;
 	}
 

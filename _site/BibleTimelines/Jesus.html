@@ -22,6 +22,7 @@
 
 </head>
 
+<!--///////[START]/[BStL-header]///////////////////////////-->
 <body class="scrollbar scrollbar-custom">
 	<!--*HEAD***********************************************-->
 	<!--****************************************************-->
@@ -58,7 +59,9 @@
 
 	</section>
 	<!--****************************************************-->
-
+<!--///////[END]/[BStL-header]/////////////////////////////-->
+<!--///////[START]/[BStL-customAlert]//////////////////////-->
+<!--<section id="middleGridSection2">-->
 	<!--*ALERTS*********************************************-->
 	<!--****************************************************-->
 	<div id="customAlertBack" onclick="customAlertClose()">
@@ -69,9 +72,10 @@
 		</div>
 	</div>
 	<!--****************************************************-->
-
+<!--///////[END]/[BStL-customAlert]////////////////////////-->
+<!--///////[START]/[BStL-controlsSection]//////////////////-->
 	<!--* MENUS & STORYLINE TABLE***************************-->
-	<div class="grid">
+	<div id="middleGridSection" class="grid">
 		<!--* MENUS ****************************************-->
 		<div id="masterNav" class="scrollbar-custom" >
 
@@ -171,7 +175,7 @@
 					<div  id="navDivButtonHolder" class="scrollbar scrollbar-custom">
 						<button  id='soloDivsOfCheckedClass' onclick="hideAllOtherExcept4DivsOfClass(this)" title="Show only labels belonging to the checked list item">Solo</button>
 						<button  id='hideDivsOfCheckedClass' onclick="hideDivsOfClass(this)" title="Hide just the labels belonging to the checked list items">Hide</button>
-						<button id='uncheckAll' onclick="uncheckAllBoxes('.labelListNameCheckBox')">x</button>
+						<button id='uncheckAll' onclick="hideDivsOfCheckedClass.click(), uncheckAllBoxes('.labelListNameCheckBox')">x</button>
 					</div>
 					<ol id="labelList"></ol>
 				</div>
@@ -196,8 +200,9 @@
 		</div>
 		<!--***********************************************-->
 		<!--****************************************************-->
+<!--///////[END]/[BStL-controlsSection]////////////////////-->
 
-		<!--ACTUAL TABLE STORY LINE ************************-->
+<!--///////[START]/[BStL-masterTable]//////////////////////-->		<!--ACTUAL TABLE STORY LINE ************************-->
 		<div id="divTableContainer" class="scrollbar scrollbar-custom">
 			<table id="masterTable">
 				<tr>
@@ -219,7 +224,7 @@
 						<!--
 						<h1 class="tableHeadEqualHeights" id="storyLineTableTitleHeader" style="padding: 0; padding-left: 25px; margin: 0;" contenteditable="true"></h1>-->
 
-
+<!--///////[END]/[BStL-masterTable]////////////////////////-->
 
 <table id="storyLineTable">
 	<thead>
@@ -254,6 +259,7 @@
 		</tr>
 	</tbody>
 </table>
+<!--///////[START]/[BStL-masterTableEND]///////////////////-->
 </td>
 </tr>
 </table>
@@ -261,7 +267,8 @@
 </div>
 <!--***********************************************-->
 </div>
-
+<!--///////[END]/[BStL-masterTableEND]/////////////////////-->
+<!--///////[START]/[BStL-detailsSection-Buttons]///////////-->
 <!--DETAILS SECTION (SHOWS DETAILS FOR THE CELlS) **-->
 <section id="detailsSection" class="draggableSection">
 		<div id="detailsSectionheader" class="titleBarH3">
@@ -362,7 +369,7 @@
 			
 			<button id="makeCurrentDetailEditable" onclick="makeCurrentDetailEditable()" title="Make detail/note edtiable">Make Editable</button><button id="expandDetails" onclick="detailsEditButtons()">Editor Buttons</button>
 	</div>
-	
+<!--///////[END]/[BStL-detailsSection-Buttons]/////////////-->
 
 		<div id="detailsSummary" class="scrollbar-custom">
 
@@ -375,21 +382,22 @@
 	</section>
 <!--**********************************************-->
 
-        </div>
+<!--///////[START]/[BStL-detailsSection-ShowHTML]//////////-->        </div>
 		<div id="editMode">
 			<label for="switchBox">Show HTML</label>
 			<input type="checkbox" name="switchMode" id="switchBox" onchange="setDocMode(this.checked);">
 		</div>
 	</section>
 <!--***********************************************-->
-<!--STRIPPED DOWN STORYLINE TABLE EDITOR *************************-->
+<!--STRIPPED DOWN STORYLINE TABLE EDITOR*-->
+<!--
 <div id="tableBuilder">
 	<div id="tableBuilderheader" title="Drag to move">TABLE EDITOR <span id="max-min">&#9776;</span></div>
 	<div class=" scrollbar scrollbar-custom" style=""></div>
 </div>
-<!--***********************************************-->
-
-	<!--ALTERNATIVE STORYLINE TABLE EDITOR BUTTONS *****-->
+-->
+<!--///////[END]/[BStL-detailsSection-ShowHTML]////////////-->
+<!--///////[START]/[BStL-storylineEditorSection]///////////-->		<!--ALTERNATIVE STORYLINE TABLE EDITOR BUTTONS *****-->
 	<section id="alternateStoryLineEditorButtons">
 		<div id="alternateStoryLineEditorButtonsheader" class="titleBarH3">
 			<h3>Table Editor/Creator</h3>
@@ -598,10 +606,12 @@
 
 		</div>
 	</div>
+<!--	</section>-->
 	<!--PAGE BOTTOM-->
 	<section id="pageFootSection">
 		<!--SAVE BUTTON-->
 		<button id="saveDynamicDataToFile_1" class="" onclick="saveDynamicDataToFile()" title="Save BIBLE STORYLINE">&#128190;</button>
+		<button class="masterNavButtonsToggle fa fa-align-justify" onclick="toggleAllMasterNavBtnz()" title="Hide Navigation SideBar"></button>
 		<!--MODIFIERS & BUILDERS BUTTONS-->
 		<div id="pageBottomStorylineTableEditorButtons">
 
@@ -611,11 +621,11 @@
 				<button class="headbuttons tableHeadEqualHeights" id="pageBottomDetailsShowButton" onclick="toggleDetailsSection()" title="Show notes and details of selected events" for="detailsRadio">
 					Detials/Notes
 				</button>
-				<button class="headbuttons" id="divsArrangementButton" onclick="howShouldDivsBeConnected(this)" title="Connect Actors Across TimeLines">
-					Connection
-				</button>
 				<button class="headbuttons" id="slideShowArranger" onclick="closeSlideShow()" title="Show/Hide the SlideShow List">
 					SlideShow List
+				</button>
+				<button class="headbuttons" id="divsArrangementButton" onclick="howShouldDivsBeConnected(this)" title="Connect Actors Across TimeLines">
+					Connection
 				</button>
 			</div>
 		<!--SLIDE SHOW BUTTONS-->
@@ -629,8 +639,8 @@
 	<!--***********************************************-->
 	<!--******************-->
 	</body>
-
-
+<!--///////[END]/[BStL-storylineEditorSection]/////////////-->
+<!--///////[START]/[BStL-foot]/////////////////////////////-->
 <script type="text/javascript" src="javascript/darkOrlightBG.js"></script>
 <script type="text/javascript" src="javascript/GetElement-XY-Coordinates.js"></script>
 <script type="text/javascript" src="javascript/tableColumnClasses.js"></script>
@@ -653,3 +663,4 @@
 <script type="text/javascript" src="javascript/storyTellerColumnSlideShow.js"></script>
 
 </html>
+<!--///////[END]/[BStL-foot]///////////////////////////////-->
