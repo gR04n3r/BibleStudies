@@ -54,7 +54,8 @@ function addDetailKeys() {
 
 		/*TO GET LOCATION/REGION OF SELECTED CELL*/
 		var location = selectedCell.getAttribute('location') || ''; //the selectedCell may or may not have the location attribute
-		var spanLocationName = selectedCell.querySelector('span.locationspan').innerHTML;
+		var spanLocationName;
+		if(selectedCell.querySelector('span.locationspan')){spanLocationName = selectedCell.querySelector('span.locationspan').innerHTML;}
 		var cellLocation_LI = document.createElement('LI');
 		cellLocation_LI.innerHTML = spanLocationName;
 		removeAllChildNodesOf(detailsRegions);

@@ -16,7 +16,7 @@ function dragDiv2TD() {
 			currentDraggedItem = this.cloneNode(true);
 			currentDraggedItem.classList.remove('dragEventListnerAdded');
 			isDivAClone = 1;
-			console.log(isDivAClone)
+//			console.log(isDivAClone)
 		} else {
 			currentDraggedItem = this;
 			currentDraggedItem.classList.add('dragEventListnerAdded');
@@ -123,4 +123,6 @@ function dragDiv2TD() {
 		tdDragEnd[j].classList.add('dragOverELAdded');
 
 	}
+	divListeners();
+	buildLegendTable();
 }

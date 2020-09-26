@@ -301,7 +301,7 @@ table > h6 {
 	background-color: transparent;
 	border: 0;
 	box-shadow: 0 0 transparent;
-	min-width: 10px;
+	min-width: 50px;
 }
 
 .locationspan {

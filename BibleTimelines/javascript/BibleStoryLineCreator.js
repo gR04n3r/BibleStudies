@@ -554,13 +554,13 @@ function cellListeners() {
 					for (l = 0; l < tdsOfCheckedClass.length; l++) {
 						var TD = tdsOfCheckedClass[l];
 						if (TD.innerHTML) {
-							TD.style.backgroundColor = 'rgba(255, 231, 0, 0.73)';
+							TD.style.backgroundColor = 'rgba(255, 231, 0, 0.6)';
 						}
 						if (!TD.innerHTML) {
-							TD.style.backgroundColor = 'rgba(255, 231, 0, 0.24)';
+							TD.style.backgroundColor = 'rgba(255, 231, 0, 0.2)';
 						}
 						if (this.innerHTML) {
-							this.style.backgroundColor = 'rgba(255, 135, 204, 0.58)';
+							this.style.backgroundColor = 'rgba(255, 165, 0, 0.75)';
 						}
 					}
 				}
@@ -1732,7 +1732,7 @@ function buildLegendTable() {
 		var derivedHeight;
 
 		//LOOP THROUGH ROWS TO CREATE
-		//FOR THEAD ROWS6
+		//FOR THEAD ROWS
 		for (i = 0; i < TRS4rm.length; i++) {
 
 			//create row only when you meet a new row name or when this is the last row you are checking
@@ -1795,7 +1795,7 @@ function buildLegendTable() {
 					top_Y_firstTRinNameSet = currentRightTableRow.getBoundingClientRect().top //+ (window.pageYOffset || document.documentElement.scrollTop) ;
 
 					if (i == TRS4rm.length - 1) {
-						newLTrow(null, rowName1, TRsection2o);
+						newLTrow(tdsHeight, rowName1, TRsection2o);
 					}
 				}
 			}
