@@ -257,9 +257,16 @@ function deslectOnClickAway() {
 onload = onloadAnalysis();
 
 function onloadAnalysis() {
+	//HIDE THE EDITOR, DETAILS, SLIDESHO WINDOWS
+	setTimeout(() => slideShowListMaster.style.display = 'none', 200);
+	setTimeout(() => detailsSection.style.display = 'none', 300);
+	setTimeout(() => alternateStoryLineEditorButtons.style.display = 'none', 400);
 
+	//GET THE TITLE OF THE TABLE
 	storyTableTitle();
-	toggleAllMasterNavBtnz();
+	
+	//MINIMIZE THE CONTROL MENU ITEMS
+	setTimeout(() => toggleAllMasterNavBtnz(), 100);
 
 	rowListeners();
 	cellListeners();
