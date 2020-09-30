@@ -176,6 +176,13 @@ body {
 	/*			z-index: 1;*/
 }
 
+.svg-connectors {
+	z-index: 1;
+}
+.svg-connectors2 {
+	z-index: 1;
+}
+
 #divTableContainer {
 	max-height: 90vh;
 	margin-left: 10px;

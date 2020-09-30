@@ -40,6 +40,7 @@ var TypeOfHtmlHeader = 'H4';
 var celldeselect;
 var tblReady;
 var selectedCell;
+var CellzColXClassesArray = [];
 
 var clickedDIV;
 var nameLabelDiv = storyLineTable.getElementsByClassName('nameLabelDiv');
@@ -54,6 +55,7 @@ var divClassOptionsDropdown = document.getElementById('divClassOptionsDropdown')
 var addDetailKeys;
 var locationsArray = [];
 
+var connectFromArray = [];
 var expandMinimizeButtons = document.querySelectorAll('.expandMinimizeButton');
 
 function toggleAllMasterNavBtnz() {
@@ -179,13 +181,14 @@ function generateActorsNodesArrayOnLoad() {
 			buildActorsMenu(divzClass);
 			divopt_ClassArray.push('opt_' + divzClass);
 
-			divNameAttributeArray.push(divzName);
+			divNameAttributeArray.push(divzClass);
 			var dNmoption = document.createElement('OPTION');
-			dNmoption.text = divzName;
+			dNmoption.text = divzClass;
 			dNmoption.setAttribute('optCounter', 1);
 			dNmoption.setAttribute('optClassName', divzClass);
+			var dNmClone = dNmoption.cloneNode(true);
 			divClassOptionsDropdown.append(dNmoption);
-
+			divClass2ConnectToOptions.append(dNmClone);
 		}
 		if (divNameArray.indexOf(divzName) == -1) {
 			divNameArray.push(divzName);
@@ -264,7 +267,7 @@ function onloadAnalysis() {
 
 	//GET THE TITLE OF THE TABLE
 	storyTableTitle();
-	
+
 	//MINIMIZE THE CONTROL MENU ITEMS
 	setTimeout(() => toggleAllMasterNavBtnz(), 100);
 
@@ -297,6 +300,7 @@ function onloadAnalysis() {
 		}
 
 		connectAllDraggableDivsWithSVGLines();
+		generateCustomSVGConnectorsType2();
 		//		dragDiv2TD();
 		divListeners();
 		if (clickedCell) {
@@ -406,8 +410,10 @@ detailsSection.addEventListener('mousedown', function (e) {
 /*EMPTY CELL DESELECT*********************************************************************/
 
 function deselectEmptyCell() {
-	var h2r = celldeselect.querySelector(TypeOfHtmlHeader);
-	emptyCellDeselect(h2r);
+	if (celldeselect.querySelector(TypeOfHtmlHeader)) {
+		var h2r = celldeselect.querySelector(TypeOfHtmlHeader);
+		emptyCellDeselect(h2r);
+	}
 }
 
 /***********/
@@ -541,6 +547,20 @@ function cellListeners() {
 			addDetailKeys();
 
 			aCellIsClicked = 1;
+
+			//GENERATE ARRAY OF COL-X CLASSES
+			CellzColXClassesArray = [];
+			var cellsClassList = this.classList;
+			var prefix = 'col-';
+			var prefixLength = prefix.length;
+
+			for (j = 0; j < cellsClassList.length; j++) {
+
+				//GET THE COL-X CLASSES ONE AFTER ANOTHER BELONGING TO THE TARGETED TD
+				if (cellsClassList[j].slice(0, prefixLength) == prefix) {
+					CellzColXClassesArray.push(cellsClassList[j]);
+				}
+			}
 		}
 		//		if (cells[i].innerHTML) {
 		cells[i].onmouseover = function () {
@@ -614,17 +634,33 @@ function divListeners() {
 					clickedDIV.style.backgroundColor = initialColor;
 					clearTimeout(deletButtonColorTimeOut);
 					clearTimeout(clickedDIVColorTimeOut);
+
+					//clear the input boxes of the custom connection section
+					divClass2ConnectTo.value = '';
+					divToDisConnectFrom.value = '';
 				}
 
 				clickedDIV = this;
 				initialColor = this.style.backgroundColor;
 				this.style.backgroundColor = "lightgrey";
 
+				//DELETE BUTTON
 				initialdeleteDivBtnColor = divDeleteButton.style.backgroundColor;
 				divDeleteButton.style.backgroundColor = 'pink';
+				//CONNECTTO BUTTON
+				connectToButton.style.backgroundColor = 'pink';
 
+
+				//RESET THE COLOR OF THE MODIFIED BUTTONS
 				clickedDIVColorTimeOut = setTimeout(() => [clickedDIV.style.backgroundColor = initialColor], 5000);
 				deletButtonColorTimeOut = setTimeout(() => [divDeleteButton.style.backgroundColor = ''], 5000);
+				connectToButtonColorTimeOut = setTimeout(() => [connectToButton.style.backgroundColor = ''], 5000);
+
+				//clear connectFromArray so that it doesnt have values from old clicked div
+
+				var connectFromArray = [];
+				generateDisconnectFromDropdown();
+
 			}
 		}
 	}
@@ -1831,6 +1867,7 @@ function btn_buildLegendTable() {
 	buildLegendTable();
 	resetClasses();
 	createTimeMenu("ROW");
+	generateCustomSVGConnectorsType2();
 }
 /******************************************************************************************/
 /******************************************************************************************/
@@ -1846,8 +1883,8 @@ function createDIV() {
 	var dName = input4divName.value;
 	var dClass = input4divClass.value;
 	if (dName && dClass) {
-		var c = dClass.slice(0, 1);
-		if (isNaN(parseInt(c))) {
+		var cdd = dClass.slice(0, 1);
+		if (isNaN(parseInt(cdd))) {
 			var dIVwtLabel = document.createElement('DIV');
 			dIVwtLabel.classList.add('opt_' + dClass);
 			dIVwtLabel.classList.add('draggableDiv');
@@ -1909,7 +1946,9 @@ function createDIV() {
 					divClassOption.text = dClass;
 
 					divClassOption.setAttribute('optCounter', 1);
+					var dNmClone = divClassOption.cloneNode(true);
 					divClassOptionsDropdown.append(divClassOption);
+					divClass2ConnectToOptions.append(dNmClone);
 				}
 				/******************************************************************************************/
 				/*WHAT TO DO IF THE DIVCLASS HAS ALREADY BEEN CREATED**************************************/
@@ -1922,6 +1961,17 @@ function createDIV() {
 						if (divClassOptions[j].text == dClass) {
 							var optCounterValue = Number(divClassOptions[j].getAttribute('optCounter'))
 							divClassOptions[j].setAttribute('optCounter', ++optCounterValue);
+							break;
+						}
+					}
+					//FOR THE DIV2CONNECT TO OPTIONS
+					var divClass2ConnectOptions =
+						divClass2ConnectToOptions.getElementsByTagName('option');
+
+					for (j = 0; j < divClass2ConnectOptions.length; j++) {
+						if (divClass2ConnectOptions[j].text == dClass) {
+							var optCounterValue = Number(divClass2ConnectOptions[j].getAttribute('optCounter'))
+							divClass2ConnectOptions[j].setAttribute('optCounter', ++optCounterValue);
 							break;
 						}
 					}
@@ -2074,6 +2124,8 @@ function makeInputSelectable() {
 	divNameOptionsDropdown.setAttribute('onchange', 'fillDivNameInput()');
 	divClassOptionsDropdown.setAttribute('onchange', 'fillDivClassInput()');
 	locationOptionsDropdown.setAttribute('onchange', 'fillLocationInput()');
+	divClass2ConnectToOptions.setAttribute('onchange', 'fillDivClass2ConnectTo()');
+	divToDisConnect4rmOptions.setAttribute('onchange', 'fillDivClassToDisConnectFrom()');
 }
 
 function fillDivNameInput() {
@@ -2086,6 +2138,14 @@ function fillDivClassInput() {
 
 function fillLocationInput() {
 	locationInput.value = locationOptionsDropdown.value;
+};
+
+function fillDivClass2ConnectTo() {
+	divClass2ConnectTo.value = divClass2ConnectToOptions.value;
+};
+
+function fillDivClassToDisConnectFrom() {
+	divToDisConnectFrom.value = divToDisConnect4rmOptions.value;
 };
 /******************************************************************************************/
 /******************************************************************************************/
@@ -2193,7 +2253,7 @@ function uncheckAllBoxes(x) {
 	if (shouldIUncheck) {
 		classesToUncheck.forEach(function (itm) {
 			if (itm.checked) {
-			previouslyChecked = null;
+				previouslyChecked = null;
 				itm.click();
 			}
 		})
@@ -2231,6 +2291,7 @@ function uncheckOnly(x) {
 /*BUILD LABELS/ACTORS MENU*****************************************************************/
 /******************************************************************************************/
 var previouslyChecked;
+
 function createDivMenu(dClass) {
 	/*CREATE DIV MANIPULATOR*****************/
 	var labelNavSectionOL = document.querySelector('#labelList');
@@ -2283,7 +2344,9 @@ function createDivMenu(dClass) {
 			}
 		} else if (shouldISoloDiv == 1) {
 			console.log(previouslyChecked);
-				if(previouslyChecked != null){previouslyChecked.checked = false;}
+			if (previouslyChecked != null) {
+				previouslyChecked.checked = false;
+			}
 			if (this.checked) {
 				/*FIRST TIME*************************/
 				var index2exempt = divopt_ClassArray.indexOf(this.value);
@@ -2957,5 +3020,89 @@ function navMenu() {
 /*MAKE HOVER COL-X CLASSES HIGHLIGHT*/
 /****************************************************************/
 
+function connectTo() {
+
+	//The following just builds the connectFrom attribute of the clicked div
+	if (clickedDIV) {
+		var selectedClass2Connect2 = divClass2ConnectTo.value;
+		if (clickedDIV.getAttribute('connectFrom')) {
+			if (connectFromArray.indexOf(selectedClass2Connect2) == -1) {
+				var formerConnectFrom = clickedDIV.getAttribute('connectFrom');
+				var newConnectFrom = formerConnectFrom + ", " + selectedClass2Connect2;
+				clickedDIV.setAttribute('connectFrom', newConnectFrom)
+			}
+		} else {
+			if (selectedClass2Connect2 != '') {
+				clickedDIV.setAttribute('connectFrom', selectedClass2Connect2)
+			}
+		}
+		//generate the options to disctonnect from
+		generateDisconnectFromDropdown();
+	}
+
+	//The following generates the special lines
+	generateCustomSVGConnectorsType2();
+}
+var divToDisConnect4rmOptions = document.getElementById('divToDisConnect4rmOptions');
+
+function generateDisconnectFromDropdown() {
+	//Clear the divToDisConnect4rmOptions select menu
+	divToDisConnect4rmOptions.innerHTML = '';
+
+	if (clickedDIV.getAttribute('connectFrom')) {
+		//get the connectFrom attribute value which is a string
+		var connectFromString = clickedDIV.getAttribute('connectFrom');
+		//convert it into an array to be converted into individual options to be appended to the divToDisConnect4rmOptions select menu
+		connectFromArray = connectFromString.split(', ');
+
+		//Clear the divToDisConnect4rmOptions select menu
+		if (divToDisConnect4rmOptions.innerHTML) {
+			divToDisConnect4rmOptions.innerHTML = '';
+		}
+
+		//loop through the generated array and append options
+		for (i = 0; i < connectFromArray.length; i++) {
+			//			console.log(connectFromArray[i]);
+			var disConnectFromOption = document.createElement('OPTION');
+			disConnectFromOption.text = connectFromArray[i];
+			divToDisConnect4rmOptions.append(disConnectFromOption);
+		}
+	}
+}
+
+function disConnectFrom() {
+	if (clickedDIV) {
+		var node2 = clickedDIV;
+		var node1;
+
+		var selectedClass2DisConnect4rm = divToDisConnectFrom.value;
+		console.log(selectedClass2DisConnect4rm);
+
+		if (clickedDIV.getAttribute('connectFrom')) {
+			console.log('i2remove');
+			if (connectFromArray.indexOf(selectedClass2DisConnect4rm) != -1) {
+				//remove the class from the connectFromArray
+				var i2remove = connectFromArray.indexOf(selectedClass2DisConnect4rm);
+				console.log(i2remove);
+				connectFromArray.splice(i2remove, 1);
+				//convert the array to a string to replace the former value of the the connectFrom attribute of the selected div
+				var newConnectFrom = connectFromArray.join(", ");
+				clickedDIV.setAttribute('connectFrom', newConnectFrom)
+			}
+			if (clickedDIV.getAttribute('connectFrom') == '') {
+				clickedDIV.removeAttribute('connectFrom');
+			}
+		} else {
+			customAlert("NOTHING TO DISCONNECT FROM");
+		}
+		//clear the input
+		divToDisConnectFrom.value = '';
+		//re-generate the options to disctonnect from
+		generateDisconnectFromDropdown();
+
+		//The following generates the special lines
+		generateCustomSVGConnectorsType2();
+	}
+}
 /****************************************************************/
 /****************************************************************/
