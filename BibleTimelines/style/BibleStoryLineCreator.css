@@ -1,10 +1,8 @@
 /*HEADER SECTION*/
 #websiteNav {
-	column-count: 5;
-	column-rule-style: solid;
-	column-rule-width: 1px;
-	column-rule-color: lightblue;
-	padding: 0 30px 3px 30px;
+	display: grid;
+	grid-auto-rows: content;
+	grid-auto-columns: 1fr;
 	border-bottom: 3px solid grey;
 	background-color: rgba(252, 233, 255, 0.56);
 }
@@ -16,9 +14,9 @@
 	padding-left: 10px;
 }
 
-#websiteNav h3:first-of-type {
-	margin-top: 0;
-	padding-top: 0;
+#websiteNav h3, #websiteNav h4 {
+	margin: 0;
+	padding: 0;
 }
 
 #websiteNav h3 {
@@ -27,26 +25,31 @@
 }
 
 #websiteNav ul,
-#websiteNav > ol {
+#websiteNav ol {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(200px,1fr));
 	margin-top: 0;
 	padding-top: 0;
-	padding-left: 5px;
 	list-style-type: none;
 }
 
 #websiteNav li {
-	display: block;
 	margin-top: 0;
 	padding-bottom: 0;
 }
 
 #websiteNav li > a {
+	display: block;
 	text-decoration: none;
 }
 
 #websiteNav li > a:hover {
 	text-decoration: underline;
 	color: red;
+}
+
+#websiteNav li:hover {
+	background-color: white;
 }
 
 .bibleTimelines li:hover {
@@ -115,11 +118,11 @@ body {
 	grid-template-columns: auto 1fr;
 	grid-template-rows: auto auto 1fr auto;
 	grid-template-areas:
-		"header1    header1" 
-		"header2    header2" 
+		"header1    header1"
+		"header2    header2"
 		"mainbody   mainbody"
 		"foot1      foot1";
-	height: 50vh;
+	/*	height: 50vh;*/
 	scroll-behavior: smooth;
 	overflow-y: scroll;
 	margin-left: 0;
@@ -153,16 +156,16 @@ body {
 
 #middleGridSection {
 	grid-area: mainbody;
-/*	height: 200px;*/
-/*	margin-bottom: 50px;*/
+	/*	height: 200px;*/
+	/*	margin-bottom: 50px;*/
 }
 
 #pageFootSection {
 	grid-area: foot1;
 }
 
-#divTableContainer, #masterNav {
-}
+#divTableContainer,
+#masterNav {}
 
 #svg {
 	pointer-events: none;
@@ -171,6 +174,13 @@ body {
 	width: 110%;
 	height: 110%;
 	/*			z-index: 1;*/
+}
+
+.svg-connectors {
+	z-index: 1;
+}
+.svg-connectors2 {
+	z-index: 1;
 }
 
 #divTableContainer {
@@ -674,12 +684,14 @@ td > div {
 /*ULTERNATE STORYLINE TABLE EDITOR BUTTONS*/
 
 #alternateStoryLineEditorButtons {
+	grid-area: foot1;
 	font-weight: 1000;
 	align-items: flex-end;
 	position: fixed;
-	top: 435px;
+	bottom: 435px;
 	right: 32px;
 	width: 970px;
+	height: 300px;
 	background-color: rgba(245, 245, 220, 0.9);
 	border-radius: 5px;
 	box-shadow: 0px 0px 1px 1px grey;
@@ -827,7 +839,7 @@ td > div {
 /*MASTER NAV*/
 #masterNav {
 	max-height: 90vh;
-/*	box-shadow: 0px 3px 6px -3px black;*/
+	/*	box-shadow: 0px 3px 6px -3px black;*/
 	overflow-y: auto;
 }
 
@@ -1117,7 +1129,9 @@ img.intLink {
 	width: auto;
 	padding: 0;
 	margin: 0;
-	font-size: 1em;
+/*	font-size: 1em;*/
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr 1fr ;
 }
 
 #pageFootSection > .masterNavButtonsToggle {
@@ -1142,66 +1156,114 @@ img.intLink {
 	width: 25px;
 }
 
+
+/* THIS MEDIA QUERY REQUIRES WORK */
 /*@media only screen and (max-width: 768px) {*/
-/*@media (max-width: 768px) {*/
-/*@media (orientation: portrait) {
+@media (max-width: 768px) {
+
+	/*@media (orientation: portrait) {*/
 	body {
-		background-color: aquamarine;
-		width: 100vh;
+		display: grid;
+		grid-template-columns: auto auto;
+		grid-template-rows: auto auto 1fr auto auto;
+		grid-template-areas:
+			"header1    header1"
+			"header2    header2"
+			"mainbody   mainbody"
+			"foot1      foot1";
+		"foot2      foot2";
+	}
+
+	#head_1 {
+		grid-area: header1;
+	}
+
+	#websiteNav {
+		grid-area: header2;
+	}
+
+	#middleGridSection {
+		grid-area: mainbody;
+		/*	height: 200px;*/
+		/*	margin-bottom: 50px;*/
 	}
 
 	#alternateStoryLineEditorButtons,
 	#detailsSection {
+		/*		grid-area: foot1;*/
 		position: fixed;
+		left: 0vw;
+		right: 0vw;
+		bottom: 45px;
+		width: 100vw;
+		min-width: 100vw;
+		min-height: 90vh;
+	}
+
+	#detailsSection {}
+
+	#pageFootSection {
+		grid-area: foot2;
+		display: grid;
+		grid-template-columns: auto auto 1fr auto;
+	}
+
+	#detailsKeyFacts {
+		grid-row-start: 2;
+		grid-row-end: 3;
+		grid-column-start: 1;
+		grid-column-end: 3;
+
 		width: 100%;
-		bottom: auto;
-		top: auto;
-		left: 0;
+		display: grid;
+		grid-template-columns: auto auto auto;
+	}
+	
+	#detailsKeyFacts ul, #detailsKeyFacts li {
+		display: inline;
 	}
 
 	#alternateStoryLineEditorButtons {
-		display: grid;
-		grid-template-columns: auto auto;
-		grid-template-rows: auto auto;
+		position: relative;
+		position: fixed;
+		min-height: auto !important;
+		height: auto !important;
+		/*		max-height: 90vh!important;*/
+		/*		top: !important;*/
 	}
 
-	#alternateStoryLineEditorButtonsBody button {
-		width: 100px;
-		height: 100px;
-		font-size: 25px;
-		font-weight: bolder;
-	}
-
-	#alternateStoryLineEditorButtonsBody {
+	#alternateStoryLineEditorButtonsBody > div {
 		width: 100vw;
-		display: grid;
-		grid-template-columns: auto auto;
 		overflow-x: scroll;
 	}
 
+	#alternateStoryLineEditorButtonsBody button {}
+
 	#alternateStoryLineEditorButtonsheader {
-		grid-row-start: 1;
-		grid-row-end: 2;
 	}
-
-	#alternateStoryLineEditorButtons > div:not(#alternateStoryLineEditorButtonsheader) {}
-
-	alternateStoryLineEditorButtonsBody > div {
-		height: 100px;
+	
+	#pageBottomStorylineTableEditorButtons {
+		display: grid;
+		grid-template-columns: 1fr 1fr 1fr 1fr;
 	}
-
-	.vertical {
-		display: inline-block;
-        width: auto;
-		height: auto;
+	
+	#pageBottomMasterEditButton {
+		grid-column: 1/2;
+		text-overflow:clip;
 	}
-
-	.vertical2:not(:first-of-type):not(:last-of-type) {
-		border-left: 1px solid #b7b7b7;
-		margin-left: 0px;
-		padding-left: 0px;
+	
+	#pageBottomDetailsShowButton {
+		grid-column: 2/3;
+		text-overflow:clip;
 	}
-
-}*/
-	/* THIS MEDIA QUERY REQUIRES WORK
-*/
+	
+	#slideShowArranger {
+		grid-column: 3/4;
+		text-overflow:clip;
+	}
+	
+	#divsArrangementButton {
+		grid-column: 4/5;
+		text-overflow:clip;
+	}
+}
