@@ -1,6 +1,5 @@
 //SVG PATH
 function nodesconnector2(pathXYcord, divClassforColor) {
-	console.log('divClassforColor=>' + divClassforColor);
 
 	var path1 = document.createElementNS("http://www.w3.org/2000/svg", "path");
 	document.getElementById("svg").append(path1);
@@ -9,9 +8,9 @@ function nodesconnector2(pathXYcord, divClassforColor) {
 	path1.setAttributeNS(null, "d", pathXYcord);
 	//		path1.setAttributeNS(null, "stroke", "black");
 	path1.setAttributeNS(null, "stroke-width", 19);
-//	path1.setAttributeNS(null, "stroke-dasharray", 5);
-//	path1.setAttributeNS(null, "stroke-dashoffset", 1);
-	path1.setAttributeNS(null, "opacity", 0.9);
+	//	path1.setAttributeNS(null, "stroke-dasharray", 5);
+	//	path1.setAttributeNS(null, "stroke-dashoffset", 1);
+	path1.setAttributeNS(null, "opacity", 0.75);
 	path1.setAttributeNS(null, "fill", "none");
 	path1.classList.add("svg-connectors2");
 	path1.classList.add(divClassforColor);
@@ -47,7 +46,6 @@ function drawConnector2(X, Y, divClassforColor) {
 		(posnA.x + 100) + "," + (posnA.y) + " " +
 		(posnB.x - 100) + "," + (posnB.y) + " " +
 		(posnB.x) + "," + (posnB.y)), 'opt_' + divClassforColor);
-	console.log('drawConnector2()');
 }
 
 //The following generates the special lines
@@ -65,8 +63,6 @@ function generateCustomSVGConnectorsType2() {
 	//Get all divs that are to have special connections
 	//These have the connectFrom attribute in common
 	var allDivsWithConnectFromAttr = document.querySelectorAll('[connectFrom]');
-	console.log('allDivsWithConnectFromAttr:');
-	console.log(allDivsWithConnectFromAttr);
 	for (cfrm = 0; cfrm < allDivsWithConnectFromAttr.length; cfrm++) {
 
 		var destinationDiv = allDivsWithConnectFromAttr[cfrm];
@@ -95,15 +91,18 @@ function generateCustomSVGConnectorsType2() {
 					//when you find a cell with the divClass,
 					if (allpcColX[j].querySelector('.opt_' + connectFromThisClass)) {
 						//connect it and break the loop
-						node1 = allpcColX[j].querySelector('.opt_' + connectFromThisClass);
+						if (allpcColX[j].style.display != 'none') {
+							node1 = allpcColX[j].querySelector('.opt_' + connectFromThisClass);
+						}
 						//however, don't connect it if its parent cell is hidden or
 						//the div to connect from is hidden (there is not need to add this extra condition because the connector carries the same class as the div is connected from so when that class is hidden, it will be hidden along with it)
-						if ((allpcColX[j].style.display != 'none') && (node2.style.display != 'none')) {
+						if ((allpcColX[j].style.display != 'none') && (node2.style.display != 'none') && (node2.parentElement.style.display != 'none') && (node2.parentElement.parentElement.style.display != 'none')) {
 							//actual connect function
 							drawConnector2(node1, node2, connectFromThisClass);
 						}
+
 						node1 = null;
-//						j = allpcColX.length;
+						//						j = allpcColX.length;
 						i = 0;
 						break;
 					}
@@ -125,7 +124,7 @@ function generateCustomSVGConnectorsType2() {
 		clearTimeout(deletButtonColorTimeOut);
 
 		//	deselectEmptyCell();
-		buildLegendTable();
-		connectAllDraggableDivsWithSVGLines();
+		//		buildLegendTable();
+		//		connectAllDraggableDivsWithSVGLines();
 	}
 }

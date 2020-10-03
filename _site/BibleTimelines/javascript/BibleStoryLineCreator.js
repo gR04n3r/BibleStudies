@@ -58,6 +58,12 @@ var locationsArray = [];
 var connectFromArray = [];
 var expandMinimizeButtons = document.querySelectorAll('.expandMinimizeButton');
 
+var connectAllDraggableDivsWithSVGLines = function () {
+	generateCustomSVGConnectorsType1();
+	generateCustomSVGConnectorsType2();
+	//	buildLegendTable();
+}
+
 function toggleAllMasterNavBtnz() {
 	expandMinimizeButtons.forEach(function (btn) {
 		if (btn.innerHTML != '&#9776;') {
@@ -219,7 +225,7 @@ function storyTableTitle() {
 }
 /******************************************************/
 /******************************************************/
-var scaleSize = 1;
+//var scaleSize = 1;
 //ZOOM STORYLINE TABLE WITH SCOLL-WHEEL
 //divTableContainer.addEventListener('mousewheel', function (e) {
 //	masterTable.style.transform = "origin(left,top)";
@@ -300,7 +306,6 @@ function onloadAnalysis() {
 		}
 
 		connectAllDraggableDivsWithSVGLines();
-		generateCustomSVGConnectorsType2();
 		//		dragDiv2TD();
 		divListeners();
 		if (clickedCell) {
@@ -1867,7 +1872,7 @@ function btn_buildLegendTable() {
 	buildLegendTable();
 	resetClasses();
 	createTimeMenu("ROW");
-	generateCustomSVGConnectorsType2();
+	connectAllDraggableDivsWithSVGLines;
 }
 /******************************************************************************************/
 /******************************************************************************************/
@@ -2879,7 +2884,7 @@ function hightlightCheckedTimelines(x) {
 	shouldIhideRowName = 0;
 	x.style.backgroundColor = 'rgba(255, 231, 0, 0.45)';
 	hideAllCheckedTimeLines.style.backgroundColor = '';
-};
+}
 
 function HideCheckedTimelines(x) {
 	uncheckAllBoxes('.timeLinesLINameCheckBox');
@@ -2888,7 +2893,7 @@ function HideCheckedTimelines(x) {
 	shouldIhideRowName = 1;
 	x.style.backgroundColor = 'rgba(255, 231, 0, 0.45)';
 	hightlightTimelines.style.backgroundColor = '';
-};
+}
 
 function timeLinesMenu() {
 	var rowsWithRowName = storyLineTable.querySelectorAll('[rowname]');
@@ -2947,12 +2952,12 @@ function timeLinesMenu() {
 					}
 				})
 			}
+			setTimeout(connectAllDraggableDivsWithSVGLines, 5);
 		});
 
 		LI4timeLines.addEventListener('mouseenter', function () {
 
 			var rowName2searchFor = this.id.slice(10);
-			console.log(rowName2searchFor);
 			var allTargetedTD = storyLineTable.querySelectorAll(`[rowname="` + rowName2searchFor + `"]`);
 			allTargetedTD.forEach(function (itm) {
 				itm.style.backgroundColor = 'rgba(255, 231, 0, 0.56)';

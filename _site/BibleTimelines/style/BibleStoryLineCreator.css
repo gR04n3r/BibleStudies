@@ -14,7 +14,8 @@
 	padding-left: 10px;
 }
 
-#websiteNav h3, #websiteNav h4 {
+#websiteNav h3,
+#websiteNav h4 {
 	margin: 0;
 	padding: 0;
 }
@@ -27,7 +28,7 @@
 #websiteNav ul,
 #websiteNav ol {
 	display: grid;
-	grid-template-columns: repeat(auto-fill, minmax(200px,1fr));
+	grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
 	margin-top: 0;
 	padding-top: 0;
 	list-style-type: none;
@@ -57,7 +58,7 @@
 }
 
 .masterNavButtonsToggle {
-	height: auto;
+/*	height: auto;*/
 	min-width: 30px;
 }
 
@@ -144,6 +145,7 @@ body {
 	background-color: rgba(255, 255, 255, 0.87);
 	/*White*/
 	/*			color: white;*/
+	/*	font-size: calc(14px + (26 - 14) * ((100vw - 300px) / (1600 - 300)));*/
 }
 
 #head_1 {
@@ -179,6 +181,7 @@ body {
 .svg-connectors {
 	z-index: 1;
 }
+
 .svg-connectors2 {
 	z-index: 1;
 }
@@ -217,15 +220,13 @@ table > h6 {
 
 .headbuttons {
 	display: grid;
-	grid-template-columns: 1fr auto;
-	align-items: center;
-	margin-top: 3px;
-	padding-right: 0;
-	cursor: pointer;
-	/*	font-style: italic;*/
-	font-weight: bold;
-	width: 100%;
-	min-height: 32px;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    padding-right: 0px;
+    cursor: pointer;
+    font-weight: bold;
+    width: 100%;
+    min-height: 32px;
 	box-shadow: 0px 3px 2px -3px black;
 	background-color: transparent;
 	border-radius: 2px;
@@ -237,25 +238,22 @@ table > h6 {
 	background-color: #fcffb6;
 }
 
-.headbuttons:active {
-	/*			background-color: #b6ffe6;*/
-}
-
 .headbuttons > span {
-	font-size: 15px;
-	text-align: right;
-	width: 150px;
+	font-size: 1.5em;
 }
 
 .headbuttons > input {
 	width: 20px;
-	margin: 0;
-	float: left;
 }
 
 
 #masterTable > td {
 	background-color: transparent;
+}
+
+#legendTable h4 {
+	margin: 0;
+	padding: 0;
 }
 
 #storyLineTable,
@@ -270,20 +268,25 @@ table > h6 {
 	margin-left: 30px;
 }
 
+#storyLineTable tr:hover {
+	border: 2px soilid black;
+	background-color: rgba(255, 192, 203, 0.5);
+}
+
 #legendTable td,
 #legendTable th,
 #storyLineTable td,
 #storyLineTable th {
 	position: relative;
 	min-width: 100px;
-	height: 55px;
+	height: 20px;
 	border: 0.5px solid rgba(208, 164, 171, 0.48);
 	background-color: rgba(245, 245, 220, 0.5);
 	border-radius: 5px;
 	/*			box-shadow: 0 8px 7.5px -8px black;*/
 	box-shadow: 0 4px 5px -6px black;
-	padding-left: 10px;
-	padding-right: 10px;
+	padding-left: 5px;
+	padding-right: 5px;
 }
 
 #legendTable td:hover,
@@ -490,9 +493,9 @@ td > div {
 	z-index: 1;
 }
 
-#storyLineTable th div:not(:first-child),
-#storyLineTable td div:not(:first-child) {
-	margin-top: 5px;
+#storyLineTable th div,
+#storyLineTable td div {
+	margin-top: 2.5px;
 	padding: 5px 0;
 	border: 1px solid #acacac;
 	border-radius: 3px;
@@ -500,17 +503,17 @@ td > div {
 
 #storyLineTable th div:first-of-type,
 #storyLineTable td div:first-of-type {
-	margin-top: 20px;
+	margin-top: 5px;
 }
 
-#storyLineTable th div:first-child,
-#storyLineTable td div:first-child {
-	margin-top: 10px;
+#storyLineTable th .locationspan + div,
+#storyLineTable td .locationspan + div {
+	margin-top: 20px;
 }
 
 #storyLineTable th div:last-child,
 #storyLineTable td div:last-child {
-	margin-bottom: 10px;
+	margin-bottom: 5px;
 }
 
 #legendTable th div,
@@ -528,7 +531,7 @@ td > div {
 #detailsSection {
 	display: grid;
 	grid-template-rows: auto auto 1fr auto;
-	grid-template-columns: auto 1fr;
+	grid-template-columns: max(150px) 1fr;
 	grid-row-gap: 2px;
 	grid-column-gap: 2px;
 
@@ -594,19 +597,12 @@ td > div {
 	grid-column-start: 1;
 	grid-column-end: 2;
 
-	width: 130px;
-
 	position: relative;
 	padding-left: 8px;
 	padding-right: 8px;
 	background-color: #f0f0d2;
 	border: 2px solid grey;
 	border-top: 1px solid grey;
-	/*
-	border-right: 1px solid grey;
-	border-left: 2px solid grey;
-	border-bottom: 2px solid grey;
-*/
 	border-bottom-left-radius: 5px;
 }
 
@@ -665,6 +661,10 @@ td > div {
 #expandDetails {
 	float: right;
 	margin-right: 10px;
+}
+
+#toggleKeyDetails {
+	float: right;
 }
 
 #closeDetails,
@@ -1101,12 +1101,6 @@ img.intLink {
 	z-index: 10;
 }
 
-/*
-#pageFootSection button {
-	background-color: white;
-}
-*/
-
 #saveDynamicDataToFile_1 {
 	grid-area: "pageBottomLeft_1";
 	color: darkblue;
@@ -1122,16 +1116,7 @@ img.intLink {
 	grid-area: "pageBottomCenter";
 	display: grid;
 	grid-template-areas: "a a a a";
-	grid-auto-columns: auto;
-}
-
-#pageBottomStorylineTableEditorButtons button {
-	width: auto;
-	padding: 0;
-	margin: 0;
-/*	font-size: 1em;*/
-	display: grid;
-	grid-template-columns: 1fr 1fr 1fr 1fr ;
+	grid-auto-columns: 1fr;
 }
 
 #pageFootSection > .masterNavButtonsToggle {
@@ -1147,13 +1132,17 @@ img.intLink {
 }
 
 #slideShowButtons button {
-	height: 30px;
 	width: 30px;
-	background-color: white;
+/*	background-color: white;*/
+	margin: 0;
+	padding: 0;
+	font-size: 1.5em
 }
 
-#nextEventUseKeboard {
+#nextEventUseKeyboard {
 	width: 25px;
+	margin: 0;
+	padding: 0;
 }
 
 
@@ -1170,8 +1159,8 @@ img.intLink {
 			"header1    header1"
 			"header2    header2"
 			"mainbody   mainbody"
-			"foot1      foot1";
-		"foot2      foot2";
+			"foot1      foot1"
+			"foot2      foot2";
 	}
 
 	#head_1 {
@@ -1194,33 +1183,65 @@ img.intLink {
 		position: fixed;
 		left: 0vw;
 		right: 0vw;
+		top: 60px;
 		bottom: 45px;
 		width: 100vw;
 		min-width: 100vw;
 		min-height: 90vh;
 	}
 
-	#detailsSection {}
-
 	#pageFootSection {
+		width: 100vw;
 		grid-area: foot2;
-		display: grid;
-		grid-template-columns: auto auto 1fr auto;
+	}
+
+	#detailsSection {
+		grid-template-rows: auto auto auto 1fr auto;
+		grid-template-columns: 1fr;
+		grid-template-areas:
+			"titlebar     "
+			"editorButtons"
+			"keyfacts      "
+			"notes        "
+			"showHtml     ";
+		background-color: rgba(245, 245, 220, 0.75);
+	}
+
+	#wysiwygEditor {
+		grid-area: editorButtons;
 	}
 
 	#detailsKeyFacts {
-		grid-row-start: 2;
-		grid-row-end: 3;
-		grid-column-start: 1;
-		grid-column-end: 3;
-
-		width: 100%;
+		grid-area: keyfacts;
+		/*		width:100vw;*/
 		display: grid;
-		grid-template-columns: auto auto auto;
+		grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
 	}
-	
-	#detailsKeyFacts ul, #detailsKeyFacts li {
-		display: inline;
+
+	#detailsKeyFacts h4 {
+		padding: 0;
+		margin: 0;
+	}
+
+	#detailsKeyFacts ul,
+	#detailsKeyFacts li {}
+
+	#detailsSummary {
+		grid-area: notes;
+		background-color: rgba(255, 255, 255, 0.75);
+	}
+
+	#makeCurrentDetailEditable {
+		margin-left: 2px;
+	}
+
+	#expandDetails {
+		margin-right: 2px;
+	}
+
+
+	#editMode {
+		grid-area: showHtml;
 	}
 
 	#alternateStoryLineEditorButtons {
@@ -1239,31 +1260,67 @@ img.intLink {
 
 	#alternateStoryLineEditorButtonsBody button {}
 
-	#alternateStoryLineEditorButtonsheader {
-	}
+	#alternateStoryLineEditorButtonsheader {}
+
+	#pageBottomStorylineTableEditorButtons {}
 	
-	#pageBottomStorylineTableEditorButtons {
+	#pageBottomStorylineTableEditorButtons .headbuttons > span {
+		display: none;
+	}
+
+	#pageFootSection #pageBottomMasterEditButton:before {
+		padding-left: 0;
+		content: 'E';
+		font-size: 2em;
+	}
+
+	#pageFootSection #pageBottomDetailsShowButton:before {
+		padding-left: 0;
+		content: 'N';
+		font-size: 2em;
+	}
+
+	#pageFootSection #divsArrangementButton:before {
+		padding-left: 0;
+		content: 'L';
+		font-size: 2em;
+	}
+
+	#pageFootSection #slideShowArranger:before {
+		padding-left: 0;
+		content: 'S';
+		font-size: 2em;
+	}
+
+	#nextEventUseKeyboard {
+		display: none;
+	}
+
+	#slideShowButtons #prevEvent {
+		width:40px;
+	}
+
+	#slideShowButtons #nextEvent {
+		width:40px;
+	}
+
+	/*PAGE HEADER SECTION*/
+	.grid2 {
 		display: grid;
-		grid-template-columns: 1fr 1fr 1fr 1fr;
+		grid-template-columns: auto 1fr;
+		place-items: center;
 	}
-	
-	#pageBottomMasterEditButton {
-		grid-column: 1/2;
-		text-overflow:clip;
+
+	#navHeadNavBtn {
+		display: grid;
+		grid-template-columns: auto;
+		grid-row-gap: 1px;
+		margin-right: 10px;
 	}
-	
-	#pageBottomDetailsShowButton {
-		grid-column: 2/3;
-		text-overflow:clip;
-	}
-	
-	#slideShowArranger {
-		grid-column: 3/4;
-		text-overflow:clip;
-	}
-	
-	#divsArrangementButton {
-		grid-column: 4/5;
-		text-overflow:clip;
+
+	#storyLineTableTitleHeader {
+		margin: 0;
+		font-size: 6vw;
+		text-overflow: ellipsis;
 	}
 }

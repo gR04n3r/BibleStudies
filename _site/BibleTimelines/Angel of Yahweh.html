@@ -366,7 +366,7 @@
 				<button class="intLink fa fa-paste" title="Paste" onclick="formatDoc('paste');" style="display: none"></button>
 			</div>
 			
-			<button id="makeCurrentDetailEditable" onclick="makeCurrentDetailEditable()" title="Make detail/note edtiable">Make Editable</button><button id="expandDetails" onclick="detailsEditButtons()">Editor Buttons</button>
+			<button id="makeCurrentDetailEditable" onclick="makeCurrentDetailEditable()" title="Make detail/note edtiable">Make Editable</button><button id="expandDetails" onclick="detailsEditButtons()">Editor Buttons</button><button id="toggleKeyDetails" onclick="toglesummary()">Key Details</button>
 	</div>
 <!--///////[END]/[BStL-detailsSection-Buttons]/////////////-->
 
@@ -424,10 +424,7 @@ world [Job 38:7].</li><li><b>Yahweh, the Angel of Yahweh's Name</b>. The Name of
 		<!--Table-->
 		<div id="realignandreconnect" class="vertical">
 			<span>Table:</span>
-			<div class="vertical"><button onclick="btn_buildLegendTable()">Re-Align Tables</button>
-				<button onclick="connectAllDraggableDivsWithSVGLines()">Connect Divs</button>
-
-				<button id="saveDynamicDataToFile_2" class="" onclick="saveDynamicDataToFile()" title="Save BIBLE STORYLINE"><strong>&#128190;</strong> </button>
+			<div class="vertical"><button onclick="buildLegendTable()">Re-Align Tables</button><button onclick="connectAllDraggableDivsWithSVGLines()">Connect Divs</button><button onclick="btn_buildLegendTable()"><strong>Restore Timeline</strong></button><button id="saveDynamicDataToFile_2" class="" onclick="saveDynamicDataToFile()" title="Save BIBLE STORYLINE"><strong>&#128190;</strong> </button>
 			</div>
 		</div>
 		<!--//////////////////////////////////////////-->
@@ -663,20 +660,20 @@ world [Job 38:7].</li><li><b>Yahweh, the Angel of Yahweh's Name</b>. The Name of
 	<div id="pageBottomStorylineTableEditorButtons">
 
 		<button class="headbuttons tableHeadEqualHeights" id="pageBottomMasterEditButton" style="" onclick="makeTableEditable()" title="Click to Edit StoryLineTable" for="editableRadio">
-			Edit
+			<span>Edit</span>
 		</button>
-		<button class="headbuttons tableHeadEqualHeights" id="pageBottomDetailsShowButton" onclick="toggleDetailsSection()" title="Show notes and details of selected events" for="detailsRadio">Notes
-		</button>
-		<button class="headbuttons" id="slideShowArranger" onclick="closeSlideShow()" title="Show/Hide the SlideShow List">
-			SlideShow
+		<button class="headbuttons tableHeadEqualHeights" id="pageBottomDetailsShowButton" onclick="toggleDetailsSection()" title="Show notes and details of selected events" for="detailsRadio"><span>Notes</span>
 		</button>
 		<button class="headbuttons" id="divsArrangementButton" onclick="howShouldDivsBeConnected(this)" title="Connect Actors Across TimeLines">
-			Connection
+			<span>Connection</span>
+		</button>
+		<button class="headbuttons" id="slideShowArranger" onclick="closeSlideShow()" title="Show/Hide the SlideShow List">
+			<span>SlideShow</span>
 		</button>
 	</div>
 	<!--SLIDE SHOW BUTTONS-->
 	<div id="slideShowButtons">
-		<input id="nextEventUseKeboard" type="checkbox" checked="true" title="Enable Arrow Keys on Keyboard"></input>
+		<input id="nextEventUseKeyboard" type="checkbox" checked="true" title="Enable Arrow Keys on Keyboard"></input>
 		<button id="prevEvent" class="fa fa-arrow-left" onclick="prevEventShow()" title="Show PREVIOUS event"></button>
 		<button id="resetEvent" class="fa fa-arrows" onclick="resetEventShow()" title="RESET events"></button>
 		<button id="nextEvent" class="fa fa-arrow-right" onclick="nextEventShow()" title="Show NEXT event"></button>
