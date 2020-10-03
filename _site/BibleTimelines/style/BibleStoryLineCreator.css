@@ -58,7 +58,7 @@
 }
 
 .masterNavButtonsToggle {
-/*	height: auto;*/
+	/*	height: auto;*/
 	min-width: 30px;
 }
 
@@ -220,13 +220,13 @@ table > h6 {
 
 .headbuttons {
 	display: grid;
-    grid-template-columns: 1fr auto;
-    align-items: center;
-    padding-right: 0px;
-    cursor: pointer;
-    font-weight: bold;
-    width: 100%;
-    min-height: 32px;
+	grid-template-columns: 1fr auto;
+	align-items: center;
+	padding-right: 0px;
+	cursor: pointer;
+	font-weight: bold;
+	width: 100%;
+	min-height: 32px;
 	box-shadow: 0px 3px 2px -3px black;
 	background-color: transparent;
 	border-radius: 2px;
@@ -544,7 +544,7 @@ td > div {
 	width: 700px;
 	min-width: 500px;
 	border-radius: 5px;
-	z-index: 3;
+	z-index: 11;
 	overflow: auto;
 	background-color: beige;
 	border: 1px solid black;
@@ -692,10 +692,10 @@ td > div {
 	right: 32px;
 	width: 970px;
 	height: 300px;
-	background-color: rgba(245, 245, 220, 0.9);
+	background-color: rgba(245, 245, 220, 0.97);
 	border-radius: 5px;
 	box-shadow: 0px 0px 1px 1px grey;
-	z-index: 4;
+	z-index: 12;
 }
 
 #alternateStoryLineEditorButtons > div:not(#alternateStoryLineEditorButtonsheader) {
@@ -1133,7 +1133,7 @@ img.intLink {
 
 #slideShowButtons button {
 	width: 30px;
-/*	background-color: white;*/
+	/*	background-color: white;*/
 	margin: 0;
 	padding: 0;
 	font-size: 1.5em
@@ -1179,15 +1179,14 @@ img.intLink {
 
 	#alternateStoryLineEditorButtons,
 	#detailsSection {
-		/*		grid-area: foot1;*/
 		position: fixed;
 		left: 0vw;
 		right: 0vw;
-		top: 60px;
-		bottom: 45px;
 		width: 100vw;
 		min-width: 100vw;
 		min-height: 90vh;
+		bottom: 37px !important;
+		max-height: 100vh;
 	}
 
 	#pageFootSection {
@@ -1196,6 +1195,7 @@ img.intLink {
 	}
 
 	#detailsSection {
+		top: 0;
 		grid-template-rows: auto auto auto 1fr auto;
 		grid-template-columns: 1fr;
 		grid-template-areas:
@@ -1204,7 +1204,7 @@ img.intLink {
 			"keyfacts      "
 			"notes        "
 			"showHtml     ";
-		background-color: rgba(245, 245, 220, 0.75);
+		background-color: rgba(245, 245, 220, 0.97);
 	}
 
 	#wysiwygEditor {
@@ -1245,12 +1245,14 @@ img.intLink {
 	}
 
 	#alternateStoryLineEditorButtons {
-		position: relative;
+		/*
 		position: fixed;
+		top: 60px;
 		min-height: auto !important;
 		height: auto !important;
-		/*		max-height: 90vh!important;*/
-		/*		top: !important;*/
+		max-height: 90vh!important;
+*/
+		/*top: !important;*/
 	}
 
 	#alternateStoryLineEditorButtonsBody > div {
@@ -1263,7 +1265,7 @@ img.intLink {
 	#alternateStoryLineEditorButtonsheader {}
 
 	#pageBottomStorylineTableEditorButtons {}
-	
+
 	#pageBottomStorylineTableEditorButtons .headbuttons > span {
 		display: none;
 	}
@@ -1297,11 +1299,11 @@ img.intLink {
 	}
 
 	#slideShowButtons #prevEvent {
-		width:40px;
+		width: 40px;
 	}
 
 	#slideShowButtons #nextEvent {
-		width:40px;
+		width: 40px;
 	}
 
 	/*PAGE HEADER SECTION*/

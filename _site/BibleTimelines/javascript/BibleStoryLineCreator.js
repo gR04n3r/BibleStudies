@@ -1755,7 +1755,14 @@ function buildLegendTable() {
 
 		newH1.style.marginBottom = '0';
 
+		//LengendTableRow Class
 		newTR.setAttribute('rowname', newTRtxt);
+		var rownameSpaceArray = newTRtxt.split(' ');
+		var rName_modified = '';
+		rownameSpaceArray.forEach(function (rn) {
+			rName_modified = rName_modified + '_' + rn;
+		});
+		newTR.classList.add('rowname' + rName_modified);
 
 		appendHere.appendChild(newTR).appendChild(newTD).prepend(newH1);
 
@@ -2412,7 +2419,7 @@ function buildActorsMenu(x) {
 /******************************************************************************************/
 
 /******************************************************************************************/
-/*BUILD TIME MENU* ************************************************************************/
+/*BUILD TIME SECTION MENU* ************************************************************************/
 /******************************************************************************************/
 var timeMenuArray = [];
 var col_x_CellHeader;
@@ -2634,6 +2641,7 @@ function createTimeMenu(ROWorCOL) {
 								connectAllDraggableDivsWithSVGLines();
 							}
 						}
+						buildLegendTable();
 					});
 					/*************************************************/
 					/*************************************************/
@@ -2932,6 +2940,9 @@ function timeLinesMenu() {
 		timeLinesListNameCheckBox.addEventListener('click', function () {
 			var rowName2searchFor = this.getAttribute('targettimeLine');
 			var allTargetedTD = storyLineTable.querySelectorAll(`[rowname="` + rowName2searchFor + `"]`);
+			var legendTableRowClass = legendTable.querySelector(`[rowname="` + rowName2searchFor + `"]`).classList[0];
+			var legendTableRow = legendTable.getElementsByClassName(legendTableRowClass)[0];
+			var legendTableRowsToggleStyle = document.getElementById('legendTableRowsToggleStyle')
 			if (this.checked == true) {
 				allTargetedTD.forEach(function (itm) {
 					if (shouldIhighlightRowName == 1) {
@@ -2939,6 +2950,9 @@ function timeLinesMenu() {
 					}
 					if (shouldIhideRowName == 1) {
 						itm.style.display = 'none';
+						//to HIDE corresponding lengendTableRow (setting style.display = 'none' will not work because of the table will be rebuilt)
+						//add the following to the styleSheet
+						legendTableRowsToggleStyle.append(`.` + legendTableRowClass + `{ display: none;}`)
 					}
 				})
 			} else if (this.checked != true) {
@@ -2949,10 +2963,19 @@ function timeLinesMenu() {
 					}
 					if (shouldIhideRowName == 1) {
 						itm.style.display = '';
+						//to SHOW corresponding lengendTableRow
+						var ltrtsArray = legendTableRowsToggleStyle.innerHTML.split(`.` + legendTableRowClass + `{ display: none;}`);
+						legendTableRowsToggleStyle.innerHTML = '';
+						ltrtsArray.forEach(function (ltr){
+							var formerInner = legendTableRowsToggleStyle.innerHTML;
+							legendTableRowsToggleStyle.innerHTML = formerInner + ltr;
+						})
+						ltrtsArray = [];
 					}
 				})
 			}
 			setTimeout(connectAllDraggableDivsWithSVGLines, 5);
+			//			buildLegendTable();
 		});
 
 		LI4timeLines.addEventListener('mouseenter', function () {
