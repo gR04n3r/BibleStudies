@@ -216,7 +216,11 @@ function makeCurrentDetailEditable() {
 		customAlert('There is No Note To Edit.')
 	}
 }
-
+function toglesummary(){
+	if(detailsKeyFacts.style.display == 'none'){
+		detailsKeyFacts.style.display = '';
+	} else {detailsKeyFacts.style.display = 'none';}
+}
 ///////////////////////////////////////////
 //TOGGLE DETIALS SECTION///////////////////
 var toggleDetailsCheckbox = document.getElementById('detailsRadio');
