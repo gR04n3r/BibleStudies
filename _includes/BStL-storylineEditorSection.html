@@ -199,11 +199,11 @@
 			<span>Custom<br>Connect</span>
 			<div class="vertical">
 				<div class="vertical2">
-					<button id="connectToButton" onclick="connectTo()">Connect<br>To</button>
+					<button id="connectFromButton" onclick="connectFrom()">Connect<br>From</button>
 				</div>
 				<div class="vertical3">
-					<input type="text" id="divClass2ConnectTo" value="" draggable="false">
-					<select id="divClass2ConnectToOptions" onclick="fillDivClass2ConnectTo()" onchange="fillDivClass2ConnectTo()">
+					<input type="text" id="divClass2ConnectFrom" value="" draggable="false">
+					<select id="divClass2ConnectFromOptions" onclick="fillDivClass2ConnectFrom()" onchange="fillDivClass2ConnectFrom()">
 					</select><br>
 				</div>
 				<div class="vertical2">
@@ -214,6 +214,26 @@
 					<select id="divToDisConnect4rmOptions" onclick="fillDivClassToDisConnectFrom()" onchange="fillDivClassToDisConnectFrom()">
 					</select>
 				</div>
+				<!--///////////////////////////////////////-->
+				
+				<!--///////////////////////////////////////-->
+				<div class="vertical2">
+					<button id="connectToButton" onclick="connectTo()">Connect<br>To</button>
+				</div>
+				<div class="vertical3">
+					<input type="text" id="divClass2ConnectTo" value="" draggable="false">
+					<select id="divClass2ConnectToOptions" onclick="fillDivClass2ConnectTo()" onchange="fillDivClass2ConnectTo()">
+					</select><br>
+				</div>
+				<div class="vertical2">
+					<button onclick="disConnectTo()">DisConnect<br>To</button>
+				</div>
+				<div class="vertical3">
+					<input type="text" id="divToDisConnectTo" value="" draggable="false">
+					<select id="divToDisConnect2Options" onclick="fillDivClassToDisConnectTo()" onchange="fillDivClassToDisConnectTo()">
+					</select>
+				</div>
+				<!--///////////////////////////-->
 			</div>
 		</div>
 		<!--//////////////////////////////////////////-->

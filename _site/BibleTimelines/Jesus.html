@@ -46,6 +46,10 @@
 		</h4>
 		<ul style="display: none">
 
+			<li style="display: none"><a href="/LightCityBibleStudies/BibleTimelines/Ages-Major%20Time%20Divisions.html
+		        ">Ages-Major Time Divisions</a></li>
+			<li style="display: none"><a href="/LightCityBibleStudies/BibleTimelines/Angel%20of%20Yahweh%2002.html
+		        ">Angel of Yahweh 02</a></li>
 			<li style="display: none"><a href="/LightCityBibleStudies/BibleTimelines/Angel%20of%20Yahweh.html
 		        ">Angel of Yahweh</a></li>
 			<li style="display: none"><a href="/LightCityBibleStudies/BibleTimelines/BibleTimelineCreator.html
@@ -60,6 +64,8 @@
 		        ">Salvation Through The Ages</a></li>
 			<li style="display: none"><a href="/LightCityBibleStudies/BibleTimelines/Salvation.html
 		        ">Salvation</a></li>
+			<li style="display: none"><a href="/LightCityBibleStudies/BibleTimelines/SalvationThroughTheAges.html
+		        ">Salvation Through The Ages</a></li>
 			
 		</ul>
 
@@ -610,11 +616,11 @@
 			<span>Custom<br>Connect</span>
 			<div class="vertical">
 				<div class="vertical2">
-					<button id="connectToButton" onclick="connectTo()">Connect<br>To</button>
+					<button id="connectFromButton" onclick="connectFrom()">Connect<br>From</button>
 				</div>
 				<div class="vertical3">
-					<input type="text" id="divClass2ConnectTo" value="" draggable="false">
-					<select id="divClass2ConnectToOptions" onclick="fillDivClass2ConnectTo()" onchange="fillDivClass2ConnectTo()">
+					<input type="text" id="divClass2ConnectFrom" value="" draggable="false">
+					<select id="divClass2ConnectFromOptions" onclick="fillDivClass2ConnectFrom()" onchange="fillDivClass2ConnectFrom()">
 					</select><br>
 				</div>
 				<div class="vertical2">
@@ -625,6 +631,26 @@
 					<select id="divToDisConnect4rmOptions" onclick="fillDivClassToDisConnectFrom()" onchange="fillDivClassToDisConnectFrom()">
 					</select>
 				</div>
+				<!--///////////////////////////////////////-->
+				
+				<!--///////////////////////////////////////-->
+				<div class="vertical2">
+					<button id="connectToButton" onclick="connectTo()">Connect<br>To</button>
+				</div>
+				<div class="vertical3">
+					<input type="text" id="divClass2ConnectTo" value="" draggable="false">
+					<select id="divClass2ConnectToOptions" onclick="fillDivClass2ConnectTo()" onchange="fillDivClass2ConnectTo()">
+					</select><br>
+				</div>
+				<div class="vertical2">
+					<button onclick="disConnectTo()">DisConnect<br>To</button>
+				</div>
+				<div class="vertical3">
+					<input type="text" id="divToDisConnectTo" value="" draggable="false">
+					<select id="divToDisConnect2Options" onclick="fillDivClassToDisConnectTo()" onchange="fillDivClassToDisConnectTo()">
+					</select>
+				</div>
+				<!--///////////////////////////-->
 			</div>
 		</div>
 		<!--//////////////////////////////////////////-->
@@ -691,6 +717,8 @@
 <script type="text/javascript" src="javascript/svgConnectors_01.js"></script>
 <script type="text/javascript" src="javascript/svgConnectors_02.js"></script>
 <script type="text/javascript" src="javascript/cssColorNamesArray.js"></script>
+<script type="text/javascript" src="../BibleTimelines/javascript/svgConnectors_03.js"></script>
+
 
 <script type="text/javascript" src="javascript/BibleStoryLineCreator.js"></script>
 <script type="text/javascript" src="javascript/detailsSection.js"></script>
