@@ -56,11 +56,13 @@ var addDetailKeys;
 var locationsArray = [];
 
 var connectFromArray = [];
+var connectToArray = [];
 var expandMinimizeButtons = document.querySelectorAll('.expandMinimizeButton');
 
 var connectAllDraggableDivsWithSVGLines = function () {
 	generateCustomSVGConnectorsType1();
 	generateCustomSVGConnectorsType2();
+	generateCustomSVGConnectorsType3();
 	//	buildLegendTable();
 }
 
@@ -193,8 +195,10 @@ function generateActorsNodesArrayOnLoad() {
 			dNmoption.setAttribute('optCounter', 1);
 			dNmoption.setAttribute('optClassName', divzClass);
 			var dNmClone = dNmoption.cloneNode(true);
+			var dNmClone2 = dNmoption.cloneNode(true);
 			divClassOptionsDropdown.append(dNmoption);
-			divClass2ConnectToOptions.append(dNmClone);
+			divClass2ConnectFromOptions.append(dNmClone);
+			divClass2ConnectToOptions.append(dNmClone2);
 		}
 		if (divNameArray.indexOf(divzName) == -1) {
 			divNameArray.push(divzName);
@@ -266,6 +270,7 @@ function deslectOnClickAway() {
 onload = onloadAnalysis();
 
 function onloadAnalysis() {
+
 	//HIDE THE EDITOR, DETAILS, SLIDESHO WINDOWS
 	setTimeout(() => slideShowListMaster.style.display = 'none', 200);
 	setTimeout(() => detailsSection.style.display = 'none', 300);
@@ -364,6 +369,14 @@ function onloadAnalysis() {
 
 	//GENERATE ACTORS NODES ARRAY AND MENU
 	generateActorsNodesArrayOnLoad();
+
+/*
+	//FUNCTION FOR REMOVING ALL INLINE STYLES --darkreader....
+	var storyLineTableCONTENT = storyLineTable.innerHTML;
+	storyLineTableCONTENT.toString();
+	storyLineTableCONTENT = storyLineTableCONTENT.replace(/ style=("|\')(.*?)("|\')/g, '');
+	storyLineTable.innerHTML = storyLineTableCONTENT;
+*/
 }
 
 /*BECAUSE COORDINATES CHANGE WHEN BROWSER WINDOW IS RESIZED******************************/
@@ -653,18 +666,21 @@ function divListeners() {
 				initialdeleteDivBtnColor = divDeleteButton.style.backgroundColor;
 				divDeleteButton.style.backgroundColor = 'pink';
 				//CONNECTTO BUTTON
-				connectToButton.style.backgroundColor = 'pink';
+				connectFromButton.style.backgroundColor = 'pink';
 
 
 				//RESET THE COLOR OF THE MODIFIED BUTTONS
 				clickedDIVColorTimeOut = setTimeout(() => [clickedDIV.style.backgroundColor = initialColor], 5000);
 				deletButtonColorTimeOut = setTimeout(() => [divDeleteButton.style.backgroundColor = ''], 5000);
-				connectToButtonColorTimeOut = setTimeout(() => [connectToButton.style.backgroundColor = ''], 5000);
+				connectToButtonColorTimeOut = setTimeout(() => [connectFromButton.style.backgroundColor = ''], 5000);
 
 				//clear connectFromArray so that it doesnt have values from old clicked div
 
-				var connectFromArray = [];
+				connectFromArray = [];
 				generateDisconnectFromDropdown();
+
+				connectToArray = [];
+				generateDisconnectToDropdown();
 
 			}
 		}
@@ -1757,12 +1773,14 @@ function buildLegendTable() {
 
 		//LengendTableRow Class
 		newTR.setAttribute('rowname', newTRtxt);
-		var rownameSpaceArray = newTRtxt.split(' ');
-		var rName_modified = '';
-		rownameSpaceArray.forEach(function (rn) {
-			rName_modified = rName_modified + '_' + rn;
-		});
-		newTR.classList.add('rowname' + rName_modified);
+		if (newTRtxt != null) {
+			var rownameSpaceArray = newTRtxt.split(' ');
+			var rName_modified = '';
+			rownameSpaceArray.forEach(function (rn) {
+				rName_modified = rName_modified + '_' + rn;
+			});
+			newTR.classList.add('rowname' + rName_modified);
+		}
 
 		appendHere.appendChild(newTR).appendChild(newTD).prepend(newH1);
 
@@ -2136,8 +2154,10 @@ function makeInputSelectable() {
 	divNameOptionsDropdown.setAttribute('onchange', 'fillDivNameInput()');
 	divClassOptionsDropdown.setAttribute('onchange', 'fillDivClassInput()');
 	locationOptionsDropdown.setAttribute('onchange', 'fillLocationInput()');
-	divClass2ConnectToOptions.setAttribute('onchange', 'fillDivClass2ConnectTo()');
+	divClass2ConnectFromOptions.setAttribute('onchange', 'fillDivClass2ConnectFrom()');
 	divToDisConnect4rmOptions.setAttribute('onchange', 'fillDivClassToDisConnectFrom()');
+	divClass2ConnectFromOptions.setAttribute('onchange', 'fillDivClass2ConnectTo()');
+	divToDisConnect4rmOptions.setAttribute('onchange', 'fillDivClassToDisConnectTo()');
 }
 
 function fillDivNameInput() {
@@ -2152,12 +2172,20 @@ function fillLocationInput() {
 	locationInput.value = locationOptionsDropdown.value;
 };
 
-function fillDivClass2ConnectTo() {
-	divClass2ConnectTo.value = divClass2ConnectToOptions.value;
+function fillDivClass2ConnectFrom() {
+	divClass2ConnectFrom.value = divClass2ConnectFromOptions.value;
 };
 
 function fillDivClassToDisConnectFrom() {
 	divToDisConnectFrom.value = divToDisConnect4rmOptions.value;
+};
+
+function fillDivClass2ConnectTo() {
+	divClass2ConnectTo.value = divClass2ConnectToOptions.value;
+};
+
+function fillDivClassToDisConnectTo() {
+	divToDisConnectTo.value = divToDisConnect2Options.value;
 };
 /******************************************************************************************/
 /******************************************************************************************/
@@ -2966,7 +2994,7 @@ function timeLinesMenu() {
 						//to SHOW corresponding lengendTableRow
 						var ltrtsArray = legendTableRowsToggleStyle.innerHTML.split(`.` + legendTableRowClass + `{ display: none;}`);
 						legendTableRowsToggleStyle.innerHTML = '';
-						ltrtsArray.forEach(function (ltr){
+						ltrtsArray.forEach(function (ltr) {
 							var formerInner = legendTableRowsToggleStyle.innerHTML;
 							legendTableRowsToggleStyle.innerHTML = formerInner + ltr;
 						})
@@ -3045,26 +3073,26 @@ function navMenu() {
 
 
 /****************************************************************/
-/*MAKE HOVER COL-X CLASSES HIGHLIGHT*/
+/*2ND TYPE SVG CONNECTOR -- CONNECTFROM*/
 /****************************************************************/
 
-function connectTo() {
+function connectFrom() {
 
 	//The following just builds the connectFrom attribute of the clicked div
 	if (clickedDIV) {
-		var selectedClass2Connect2 = divClass2ConnectTo.value;
+		var selectedClass2Connect4rm = divClass2ConnectFrom.value;
 		if (clickedDIV.getAttribute('connectFrom')) {
-			if (connectFromArray.indexOf(selectedClass2Connect2) == -1) {
+			if (connectFromArray.indexOf(selectedClass2Connect4rm) == -1) {
 				var formerConnectFrom = clickedDIV.getAttribute('connectFrom');
-				var newConnectFrom = formerConnectFrom + ", " + selectedClass2Connect2;
+				var newConnectFrom = formerConnectFrom + ", " + selectedClass2Connect4rm;
 				clickedDIV.setAttribute('connectFrom', newConnectFrom)
 			}
 		} else {
-			if (selectedClass2Connect2 != '') {
-				clickedDIV.setAttribute('connectFrom', selectedClass2Connect2)
+			if (selectedClass2Connect4rm != '') {
+				clickedDIV.setAttribute('connectFrom', selectedClass2Connect4rm)
 			}
 		}
-		//generate the options to disctonnect from
+		//generate the options to disconnect from
 		generateDisconnectFromDropdown();
 	}
 
@@ -3130,6 +3158,97 @@ function disConnectFrom() {
 
 		//The following generates the special lines
 		generateCustomSVGConnectorsType2();
+	}
+}
+/****************************************************************/
+/****************************************************************/
+
+/****************************************************************/
+/*3RD TYPE SVG CONNECTOR */
+/****************************************************************/
+
+function connectTo() {
+
+	//The following just builds the connectFrom attribute of the clicked div
+	if (clickedDIV) {
+		var selectedClass2Connect2 = divClass2ConnectTo.value;
+		if (clickedDIV.getAttribute('connectTo')) {
+			if (connectToArray.indexOf(selectedClass2Connect2) == -1) {
+				var formerConnectTo = clickedDIV.getAttribute('connectTo');
+				var newConnectTo = formerConnectTo + ", " + selectedClass2Connect2;
+				clickedDIV.setAttribute('connectTo', newConnectTo)
+			}
+		} else {
+			if (selectedClass2Connect2 != '') {
+				clickedDIV.setAttribute('connectTo', selectedClass2Connect2)
+			}
+		}
+		//generate the options to disconnect from
+		generateDisconnectToDropdown();
+	}
+
+	//The following generates the special lines
+	generateCustomSVGConnectorsType3();
+}
+var divToDisConnect2Options = document.getElementById('divToDisConnect2Options');
+
+function generateDisconnectToDropdown() {
+	//Clear the divToDisConnect2Options select menu
+	divToDisConnect2Options.innerHTML = '';
+
+	if (clickedDIV.getAttribute('connectTo')) {
+		//get the connectTo attribute value which is a string
+		var connectToString = clickedDIV.getAttribute('connectTo');
+		//convert it into an array to be converted into individual options to be appended to the divToDisConnect2Options select menu
+		connectToArray = connectToString.split(', ');
+
+		//Clear the divToDisConnect4rmOptions select menu
+		if (divToDisConnect2Options.innerHTML) {
+			divToDisConnect2Options.innerHTML = '';
+		}
+
+		//loop through the generated array and append options
+		for (i = 0; i < connectToArray.length; i++) {
+			//			console.log(connectFromArray[i]);
+			var disConnectToOption = document.createElement('OPTION');
+			disConnectToOption.text = connectToArray[i];
+			divToDisConnect2Options.append(disConnectToOption);
+		}
+	}
+}
+
+function disConnectTo() {
+	if (clickedDIV) {
+		var node2 = clickedDIV;
+		var node1;
+
+		var selectedClass2DisConnect2 = divToDisConnectTo.value;
+		console.log(selectedClass2DisConnect2);
+
+		if (clickedDIV.getAttribute('connectTo')) {
+			console.log('i2remove');
+			if (connectToArray.indexOf(selectedClass2DisConnect2) != -1) {
+				//remove the class from the connectFromArray
+				var i2remove = connectToArray.indexOf(selectedClass2DisConnect2);
+				console.log(i2remove);
+				connectToArray.splice(i2remove, 1);
+				//convert the array to a string to replace the former value of the the connectFrom attribute of the selected div
+				var newConnectTo = connectToArray.join(", ");
+				clickedDIV.setAttribute('connectTo', newConnectTo)
+			}
+			if (clickedDIV.getAttribute('connectTo') == '') {
+				clickedDIV.removeAttribute('connectTo');
+			}
+		} else {
+			customAlert("NOTHING TO DISCONNECT TO");
+		}
+		//clear the input
+		divToDisConnectTo.value = '';
+		//re-generate the options to disctonnect To
+		generateDisconnectToDropdown();
+
+		//The following generates the special lines
+		generateCustomSVGConnectorsType3();
 	}
 }
 /****************************************************************/

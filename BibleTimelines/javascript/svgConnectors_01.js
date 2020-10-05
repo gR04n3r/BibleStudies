@@ -77,6 +77,7 @@ var generateCustomSVGConnectorsType1 = function () {
 		var allRows = storyLineTable.rows;
 
 		//get the higest col-x of ROW
+		//(this is to know how many columns/cells it would be without colspan)
 		var maxColX;
 		var highestCol;
 		for (b = 0; b < allRows.length; b++) {
@@ -136,13 +137,13 @@ var generateCustomSVGConnectorsType1 = function () {
 							endDivParentColXArray.push(endDivParentClassList[j]);
 						}
 					}
-
 					var endPArray = endDivParentColXArray;
 					var goAhead = 1;
 					////////////////////////////////////////////
-
+					//count the col-x's backwards to get the start div
 					for (d = X - 1; d > 0; d--) {
 
+						//find div with the same divclassname attribute as in the preceeding col-x
 						var div2connect4rm = storyLineTable.querySelector(`.col-` + d + ` [divclassname="` + divzClassName + `"]`);
 						var startDiv = div2connect4rm;
 						if (startDiv != null) {
@@ -164,9 +165,11 @@ var generateCustomSVGConnectorsType1 = function () {
 							}
 
 							var startPArray = startDivParentColXArray;
-							//////////////////////////////////////////////
-							//compare the two col-x arrays////////////////
-							//////////////////////////////////////////////
+							/////////////////////////////////////////////////////
+							//compare the two col-x arrays///////////////////////
+							//this is to prevent divs in the same cell that//////
+							//has a colspan > 1 from connecting with each other//
+							/////////////////////////////////////////////////////
 							for (j = 0; j < startPArray.length; j++) {
 								if (endPArray.indexOf(startPArray[j]) != -1) {
 									startDiv == null;
@@ -174,10 +177,22 @@ var generateCustomSVGConnectorsType1 = function () {
 									break;
 								}
 							}
-							//////////////////////////////////////////////
+							/////////////////////////////////////////////////////
+							/////////////////////////////////////////////////////
 
 							if (connectAccording2RowNames == 0) {
 								if ((goAhead) && (startDiv != null) && (startDivParent != endDivParent) && (startDivParent.style.display != 'none') && (endDivParent.style.display != 'none') && (startDivParentRow.style.display != 'none') && (endDivParentRow.style.display != 'none')) {
+
+									//////////////////////////////////////////////////////////////////////////////
+									//check to be sure that the endDiv is the first div of its class in its column
+									//if not, move on to the next div
+									//do this only if the connection is accross rowNames
+									var endDivBrodasInColx = storyLineTable.querySelector(`.col-` + X + ` [divclassname="` + divzClassName + `"]`);
+									if (endDiv != endDivBrodasInColx) {
+										break;
+									}
+									//////////////////////////////////////////////////////////////////////////////
+
 									drawConnector(startDiv, endDiv, divzClassName);
 									startDiv = null;
 									break;
@@ -200,4 +215,4 @@ var generateCustomSVGConnectorsType1 = function () {
 //REDRAW THE LINES EVERYTIME THE WINDOW IS RESIZED
 //window.addEventListener("resize", connectAllDraggableDivsWithSVGLines);
 //window.addEventListener("wheel", connectAllDraggableDivsWithSVGLines);
-//window.addEventListener("resize", drawConnector(startElement, endElement));
+//window.addEventListener("resize", drawConnector(startElement, endElement))

@@ -8,7 +8,7 @@ function nodesconnector2(pathXYcord, divClassforColor) {
 	path1.setAttributeNS(null, "d", pathXYcord);
 	//		path1.setAttributeNS(null, "stroke", "black");
 	path1.setAttributeNS(null, "stroke-width", 19);
-	//	path1.setAttributeNS(null, "stroke-dasharray", 5);
+//		path1.setAttributeNS(null, "stroke-dasharray", 5);
 	//	path1.setAttributeNS(null, "stroke-dashoffset", 1);
 	path1.setAttributeNS(null, "opacity", 0.75);
 	path1.setAttributeNS(null, "fill", "none");
@@ -96,7 +96,7 @@ function generateCustomSVGConnectorsType2() {
 						}
 						//however, don't connect it if its parent cell is hidden or
 						//the div to connect from is hidden (there is not need to add this extra condition because the connector carries the same class as the div is connected from so when that class is hidden, it will be hidden along with it)
-						if ((allpcColX[j].style.display != 'none') && (node2.style.display != 'none') && (node2.parentElement.style.display != 'none') && (node2.parentElement.parentElement.style.display != 'none')) {
+						if ((allpcColX[j].style.display != 'none') && (node1.style.display != 'none') && (node1.parentElement.style.display != 'none') && (node1.parentElement.parentElement.style.display != 'none') && (node2.style.display != 'none') && (node2.parentElement.style.display != 'none') && (node2.parentElement.parentElement.style.display != 'none')) {
 							//actual connect function
 							drawConnector2(node1, node2, connectFromThisClass);
 						}
@@ -120,11 +120,12 @@ function generateCustomSVGConnectorsType2() {
 		}
 
 		divDeleteButton.style.backgroundColor = '';
-		connectToButton.style.backgroundColor = '';
+		connectFromButton.style.backgroundColor = '';
 		clearTimeout(deletButtonColorTimeOut);
 
 		//	deselectEmptyCell();
 		//		buildLegendTable();
 		//		connectAllDraggableDivsWithSVGLines();
 	}
+//	generateCustomSVGConnectorsType3();
 }
