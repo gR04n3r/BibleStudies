@@ -370,13 +370,13 @@ function onloadAnalysis() {
 	//GENERATE ACTORS NODES ARRAY AND MENU
 	generateActorsNodesArrayOnLoad();
 
-/*
-	//FUNCTION FOR REMOVING ALL INLINE STYLES --darkreader....
-	var storyLineTableCONTENT = storyLineTable.innerHTML;
-	storyLineTableCONTENT.toString();
-	storyLineTableCONTENT = storyLineTableCONTENT.replace(/ style=("|\')(.*?)("|\')/g, '');
-	storyLineTable.innerHTML = storyLineTableCONTENT;
-*/
+	/*
+		//FUNCTION FOR REMOVING ALL INLINE STYLES --darkreader....
+		var storyLineTableCONTENT = storyLineTable.innerHTML;
+		storyLineTableCONTENT.toString();
+		storyLineTableCONTENT = storyLineTableCONTENT.replace(/ style=("|\')(.*?)("|\')/g, '');
+		storyLineTable.innerHTML = storyLineTableCONTENT;
+	*/
 }
 
 /*BECAUSE COORDINATES CHANGE WHEN BROWSER WINDOW IS RESIZED******************************/
@@ -428,7 +428,7 @@ detailsSection.addEventListener('mousedown', function (e) {
 /*EMPTY CELL DESELECT*********************************************************************/
 
 function deselectEmptyCell() {
-	if (celldeselect.querySelector(TypeOfHtmlHeader)) {
+	if ((celldeselect)&&(celldeselect.querySelector(TypeOfHtmlHeader))) {
 		var h2r = celldeselect.querySelector(TypeOfHtmlHeader);
 		emptyCellDeselect(h2r);
 	}
@@ -598,14 +598,16 @@ function cellListeners() {
 					//GO THROUGH EACH CELL BELONGING TO THIS CLASS
 					for (l = 0; l < tdsOfCheckedClass.length; l++) {
 						var TD = tdsOfCheckedClass[l];
-						if (TD.innerHTML) {
-							TD.style.backgroundColor = 'rgba(255, 231, 0, 0.6)';
-						}
-						if (!TD.innerHTML) {
-							TD.style.backgroundColor = 'rgba(255, 231, 0, 0.2)';
-						}
-						if (this.innerHTML) {
-							this.style.backgroundColor = 'rgba(255, 165, 0, 0.75)';
+						if (!TD.classList.contains('selected')) {
+							if (TD.innerHTML) {
+								TD.style.backgroundColor = 'rgba(255, 231, 0, 0.6)';
+							}
+							if (!TD.innerHTML) {
+								TD.style.backgroundColor = 'rgba(255, 231, 0, 0.2)';
+							}
+							if (this.innerHTML) {
+								this.style.backgroundColor = 'rgba(255, 165, 0, 0.75)';
+							}
 						}
 					}
 				}
@@ -629,7 +631,9 @@ function cellListeners() {
 					//GO THROUGH EACH CELL BELONGING TO THIS CLASS
 					for (l = 0; l < tdsOfCheckedClass.length; l++) {
 						var TD = tdsOfCheckedClass[l];
-						TD.style.backgroundColor = '';
+						if (!TD.classList.contains('selected')) {
+							TD.style.backgroundColor = '';
+						}
 					}
 				}
 			}
@@ -1123,98 +1127,97 @@ function destroyRow() {
 /*******************************************************************************************************/
 //CREATE COLUMN BEFORE CLICKED COLUMN
 
-function createColumnBefore() {
-
+function modifyColumn(what2do) {
 	var row = storyLineTable.querySelectorAll('tr');
 
 	/***********************************************************/
 
 	//find true index of clicked cell
-	var trueIndex = -1;
+	var trueIndexUpper = -1;
 	for (i = 0; i < (clickedCell + 1); i++) {
 		var cellsUp2clickedCell = row[clickedRow].cells[i];
-
-		trueIndex = trueIndex + row[clickedRow].cells[i].colSpan; //all colspans minus 1 will give the trueindex
+		trueIndexUpper = trueIndexUpper + row[clickedRow].cells[i].colSpan; //all colspans minus 1 will give the trueindexUpper
 	}
 
 	//for when clickedCell has colSpan > 1
 	var colSpanOfClickedCell = row[clickedRow].cells[clickedCell].colSpan;
+	var trueIndexLower;
 	if (colSpanOfClickedCell > 1) {
-		trueIndex = trueIndex - colSpanOfClickedCell + 1;
+		trueIndexLower = trueIndexUpper + colSpanOfClickedCell + 1;
 	}
-
-	var colClass2query = 'col-' + (trueIndex + 1);
-	var lessThanColClass2query = 'col-' + (trueIndex);
-	var greaterThanColClass2query = 'col-' + (trueIndex + 2);
+	var colClass2query = 'col-' + (trueIndexUpper + 1);
+	console.log(colClass2query);
+	//	console.log(upperTrueIndex);
+	var lessThanColClass2query = 'col-' + (trueIndexUpper);
+	var greaterThanColClass2query = 'col-' + (trueIndexUpper + 2);
 	//in each row, add cell before cell with the class of colClass2query
 
 	/***********************************************************/
-	for (j = 0; j < row.length; j++) {
-		beforeCell = row[j].querySelector('.' + colClass2query).cellIndex; //getting index of cell with class of colClass2query. this is for insertion before
 
-		if (row[j].querySelector('.' + colClass2query).classList.contains(lessThanColClass2query)) {
-			row[j].cells[beforeCell].colSpan = row[j].cells[beforeCell].colSpan + 1;
-		} else {
-			row[j].insertCell(newIcell || beforeCell);
+	if (what2do == 'createColumnBefore') {
+		for (j = 0; j < row.length; j++) {
+			beforeCell = row[j].querySelector('.' + colClass2query).cellIndex; //getting index of cell with class of colClass2query. this is for insertion before
+			afterCell = beforeCell + 1;
+			if (row[j].querySelector('.' + colClass2query).classList.contains(lessThanColClass2query)) {
+				//				row[j].cells[beforeCell].colSpan = row[j].cells[beforeCell].colSpan + 1;
+				//this doesn't really change the colspan value because of the function related to the 'originalcolspan' attribute
+				var newCellzColSpan = row[j].cells[beforeCell].colSpan + 1;
+				row[j].cells[beforeCell].setAttribute('originalcolspan', newCellzColSpan);
+			} else {
+				row[j].insertCell( /*newIcell || */ beforeCell);
+			}
 		}
+	}
 
+	if (what2do == 'createColumnAfter') {
+		for (j = 0; j < row.length; j++) {
+			beforeCell = row[j].querySelector('.' + colClass2query).cellIndex; //getting index of cell with class of colClass2query. this is for insertion before
+			afterCell = beforeCell + 1;
+			if (row[j].querySelector('.' + colClass2query).classList.contains(greaterThanColClass2query)) {
+				//				row[j].cells[beforeCell].colSpan = row[j].cells[beforeCell].colSpan + 1;
+				//this doesn't really change the colspan value because of the function related to the 'originalcolspan' attribute
+				var newCellzColSpan = row[j].cells[beforeCell].colSpan + 1;
+				row[j].cells[beforeCell].setAttribute('originalcolspan', newCellzColSpan);
+			} else {
+				row[j].insertCell( /*newIcell || */ afterCell);
+			}
+		}
+	}
+	if (what2do == 'destroyColumn') {
+		for (j = 0; j < row.length; j++) {
+			beforeCell = row[j].querySelector('.' + colClass2query).cellIndex; //getting index of cell with class of colClass2query. this is for insertion before
+			afterCell = beforeCell + 1;
+
+			if ((row[j].querySelector('.' + colClass2query).classList.contains(greaterThanColClass2query)) || (row[j].querySelector('.' + colClass2query).classList.contains(lessThanColClass2query))) {
+				//			row[j].cells[beforeCell].colSpan = row[j].cells[beforeCell].colSpan - 1;//this doesn't really change the colspan value because of the function related to the original colspan
+				var newCellzColSpan = row[j].cells[beforeCell].colSpan - 1;
+				row[j].cells[beforeCell].setAttribute('originalcolspan', newCellzColSpan);
+			} else {
+				row[j].cells[beforeCell].remove();
+			}
+		}
 	}
 	/***********************************************************/
-
-	//	
-	//	for (j = 0; j < row.length; j++) {
-	//		/*var cell =*/ row[j].insertCell(newIcell || beforeCell);
-	//	}
-
-	//	newIcell = (newIcell || beforeCell) + 1;
 	analyzeTable();
 	generateColumnClasses();
 	connectAllDraggableDivsWithSVGLines();
 	dragDiv2TD();
 	divListeners();
+}
+
+function createColumnBefore() {
+	modifyColumn('createColumnBefore');
 }
 
 //CREATE COLUMN AFTER CLICKED COLUMN
 function createColumnAfter() {
-	var row = storyLineTable.querySelectorAll('tr');
-
-	/***********************************************************/
-
-	//find true index of clicked cell
-	var trueIndex = -1;
-	for (i = 0; i < (clickedCell + 1); i++) {
-		var cellsUp2clickedCell = row[clickedRow].cells[i];
-		trueIndex = trueIndex + row[clickedRow].cells[i].colSpan; //all colspans minus 1 will give the trueindex
-	}
-	var colClass2query = 'col-' + (trueIndex + 1);
-	var lessThanColClass2query = 'col-' + (trueIndex);
-	var greaterThanColClass2query = 'col-' + (trueIndex + 2);
-	//in each row, add cell before cell with the class of colClass2query
-
-	/***********************************************************/
-	for (j = 0; j < row.length; j++) {
-		beforeCell = row[j].querySelector('.' + colClass2query).cellIndex; //getting index of cell with class of colClass2query. this is for insertion before
-		afterCell = beforeCell + 1;
-
-		if (row[j].querySelector('.' + colClass2query).classList.contains(greaterThanColClass2query)) {
-			row[j].cells[beforeCell].colSpan = row[j].cells[beforeCell].colSpan + 1;
-		} else {
-			row[j].insertCell(newIcell || afterCell);
-		}
-
-	}
-	/***********************************************************/
-
-	//	newIcell = (newIcell || afterCell) + 1;
-	analyzeTable();
-	generateColumnClasses();
-	connectAllDraggableDivsWithSVGLines();
-	dragDiv2TD();
-	divListeners();
+	modifyColumn('createColumnAfter');
 }
 
 //DELETE COLUMN
-function deleteColumn() {}
+function destroyColumn() {
+	modifyColumn('destroyColumn');
+}
 
 //HIDE COLUMN
 function hideColumn() {}
