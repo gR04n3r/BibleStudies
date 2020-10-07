@@ -638,6 +638,22 @@ td > div {
 	content: "Insert details for selected cell here";
 }
 
+#detailsSummary ol {
+	list-style-type: decimal;
+}
+
+#detailsSummary ol ol {
+	list-style-type: lower-latin;
+}
+
+#detailsSummary ol ol ol {
+	list-style-type: lower-roman;
+}
+
+#detailsSummary ol ol ol ol {
+	list-style-type: upper-latin;
+}
+
 #addDetail {
 	height: 23px;
 	float: right;
