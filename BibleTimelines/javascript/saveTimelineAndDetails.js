@@ -27,8 +27,9 @@ categories: Timeline
 	//REMOVE THE MODIFICATION ADDED BY REFTAGGER BEFORE SAVING
 	//This is useful for when you make a correction in a Bible reference or else it would still link to the old reference.
 	saveText.toString();
-	saveText = saveText.replace(/(<a class="rtBibleRef"([^>]+)>)(\w+\s+\d+:\d+)(<\/a>)/g, "$3");
-	//console.log(saveText);
+//	saveText = saveText.replace(/(<a class="rtBibleRef"([^>]+)>)(\w+\s+\d+:\d+)(<\/a>)/g, "$3");
+	saveText = saveText.replace(/<a[\s]+class="rtBibleRef"[\s]+([^>]+)>((?:.(?!\<\/a\>))*.)<\/a>/g, "$2");
+	console.log(saveText);
 	////////////////////////////////////////////////////////////////////////////////////////////
 
 	var fname = storyLineTableTitleHeader.innerHTML;

@@ -1,4 +1,5 @@
 ////////////////////////////////////////////////////////////////
+//HELPER FUNCTIONS//////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////
 /*FUNCTION TO REMOVE ALL CHILDREN OF PARENT*/
 function removeAllChildNodesOf(parent) {
@@ -54,7 +55,6 @@ var initialDetailsOnload = detailsSection.querySelectorAll(`div[detailIndex]`);
 ////////////////////////////////////////////
 for (i = 0; i < initialDetailsOnload.length; i++) {
 	if (initialDetailsOnload[i].textContent == '') {
-		console.log(`cell's detail is empty`)
 		//		var prevDetailIndex = initialDetailsOnload[i].getAttribute('detailIndex')
 		//		storyLineTable.querySelector.removeAttribute('detailIndex');
 		initialDetailsOnload[i].remove();
@@ -77,7 +77,6 @@ for (i = 0; i < tdDetailIndex.length; i++) {
 for (i = 0; i < initialDetailsOnload.length; i++) {
 	detailsCountArray.push(initialDetailsOnload[i].getAttribute('detailIndex'))
 }
-//console.log(detailsCountArray);
 //////////////////////////////////////////////////////
 //////////////////////////////////////////////////////
 
@@ -87,14 +86,12 @@ function addDetailKeys() {
 	var previouslyShownDetail = document.querySelector('.showDetail'); //don't make it a live nodelist
 	var detailsActors = document.getElementById('detailsActors');
 	var detailsRegions = document.getElementById('detailsRegions');
-	//	console.log(storyLineTable.rows[0]);
 	//	var cellParentName = storyLineTable.rows[clickedRow].parentNode.nodeName;
 	var divsInCellLength = selectedCell.querySelectorAll('div[divclassname]').length;
 	var cellH4;
 	if (selectedCell.querySelector('h4')) {
 		cellH4 = selectedCell.querySelector('h4').textContent
 	}
-	//	console.log(cellH4);
 
 	//if selected cell has label divs or it has a heading, i.e., it cannot be empty
 	if ((selectedCell.innerHTML) && ((selectedCell.querySelectorAll('div[divclassname]').length != 0) || (selectedCell.querySelector('h4').textContent != ''))) {
@@ -107,7 +104,6 @@ function addDetailKeys() {
 		//remove <li>s in detailsActors <ul> to populate it with new names
 		removeAllChildNodesOf(detailsActors);
 
-		//console.log(actorsInSelectedCell.length);
 		if (actorsInSelectedCell.length != 0) {
 			for (i = 0; i < actorsInSelectedCell.length; i++) {
 				var actorClassName = actorsInSelectedCell[i].getAttribute('divclassname');
@@ -185,18 +181,14 @@ function addDetailKeys() {
 		//////////////////////////////////////////////////////
 
 		if (selectedCell.getAttribute('detailIndex') == null) {
-			console.log('no detailIndex')
 			
 			/////////////////////////////////////////
 			//*HIDE PREVIOUSLY SHOWN DETAIL IF ANY*//
 			/////////////////////////////////////////
 			if (document.querySelector('.showDetail')) {
-				//console.log(document.querySelector('.showDetail').textContent);
 				if (document.querySelector('.showDetail').textContent == '') {
-					console.log(`previous cell's detail is empty`);
 					previouslyShownDetail = document.querySelector('.showDetail');
 					var prevDetailIndex = previouslyShownDetail.getAttribute('detailIndex')
-					console.log(prevDetailIndex);
 					previouslyClickedCell = document.querySelector(`td[detailIndex="` + prevDetailIndex + `"]`)
 					previouslyClickedCell.removeAttribute('detailIndex');
 					previouslyShownDetail.remove(prevDetailIndex);
@@ -220,14 +212,11 @@ function addDetailKeys() {
 				detailsCount = getMissingNumber(detailsCountArray)[0];
 				getMissingNumber(detailsCountArray).splice(0, 1);
 			} else {
-				console.log(detailsCount);
-				console.log(detailsCountArray);
 				if (detailsCountArray.length != 0) {
 					detailsCount = Math.max(...detailsCountArray) + 1;
 				} else {
 					detailsCount = 1;
 				}
-				console.log(detailsCount);
 				detailsCountArray.push(detailsCount);
 			}
 			/////////////////////////////////////////////////
@@ -267,11 +256,6 @@ function addDetailKeys() {
 				}
 				previouslyShownDetail.classList.add('hideDetail');
 				previouslyShownDetail.classList.remove('showDetail');
-				console.log('selectedCell:');
-				console.log(selectedCell);
-				console.log(previouslyShownDetail.textContent);
-				console.log('previouslyShownDetail is empty');
-				console.log(previouslyShownDetail.text == '');
 
 				var detailToShow = detailsSection.querySelector(`div[detailIndex="` + x + `"]`); //find the corresponding detail/note (it will carry the same detailIndex attribute value)
 				detailToShow.classList.remove('hideDetail');
@@ -291,14 +275,15 @@ function addDetailKeys() {
 ///////////////////////////////////////////
 //MAKE DETAILS TEXT-EDITOR BUTTONS VISIBLE/
 ///////////////////////////////////////////
+editMode.style.display = 'none';//to hide 'Show HTML'
 function detailsEditButtons() {
 	var toolBar1_Buttons = document.querySelectorAll('#wysiwygEditor > div > *');
 
 	if (document.querySelector('.showDetail')) {
 		if (toolBar1_Buttons[0].style.display == 'none') {
-			function showWYSIWYGbtns() {
-				wysiwygEditor_Buttons[i - 1].style.display = ''
-			}
+//			function showWYSIWYGbtns() {
+//				wysiwygEditor_Buttons[i - 1].style.display = ''
+//			}
 			toolBar1_Buttons.forEach(function (btn) {
 				btn.style.display = 'none';
 			})
@@ -306,10 +291,12 @@ function detailsEditButtons() {
 			for (let i = 1; i <= toolBar1_Buttons.length; i++) {
 				setTimeout(() => [toolBar1_Buttons[i - 1].style.display = ''], 5 * i);
 			}
+			editMode.style.display = '';//to show 'Show HTML'
 		} else {
 			for (let i = 1; i <= toolBar1_Buttons.length; i++) {
 				setTimeout(() => [toolBar1_Buttons[i - 1].style.display = 'none'], 5 * i);
 			}
+			editMode.style.display = 'none';//to hide 'Show HTML'
 		}
 	} else {
 		customAlert('There is no EVENT to make notes for!')
@@ -373,7 +360,6 @@ function addDetail() {
 				//					missingNum.splice(0, 1);
 				//				} else {
 				//					detailsCount = Math.max(...detailsCountArray) + 1;
-				//					console.log(detailsCount);
 				//					detailsCountArray.push(detailsCount);
 				//				}
 				//	detailsCount = detailsCount + 1;
