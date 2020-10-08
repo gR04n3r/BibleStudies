@@ -531,7 +531,7 @@ td > div {
 #detailsSection {
 	display: grid;
 	grid-template-rows: auto auto 1fr auto;
-	grid-template-columns: max(150px) 1fr;
+	grid-template-columns: auto 1fr;
 	grid-row-gap: 2px;
 	grid-column-gap: 2px;
 
@@ -592,6 +592,7 @@ td > div {
 /**********************/
 
 #detailsKeyFacts {
+	width: 150px;
 	grid-row-start: 2;
 	grid-row-end: 5;
 	grid-column-start: 1;
@@ -1229,7 +1230,7 @@ img.intLink {
 
 	#detailsKeyFacts {
 		grid-area: keyfacts;
-		/*		width:100vw;*/
+		width:98%;
 		display: grid;
 		grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
 	}
