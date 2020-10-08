@@ -40,6 +40,7 @@ var TypeOfHtmlHeader = 'H4';
 var celldeselect;
 var tblReady;
 var selectedCell;
+var CellzColXClassesArray = [];
 
 var clickedDIV;
 var nameLabelDiv = storyLineTable.getElementsByClassName('nameLabelDiv');
@@ -54,7 +55,16 @@ var divClassOptionsDropdown = document.getElementById('divClassOptionsDropdown')
 var addDetailKeys;
 var locationsArray = [];
 
+var connectFromArray = [];
+var connectToArray = [];
 var expandMinimizeButtons = document.querySelectorAll('.expandMinimizeButton');
+
+var connectAllDraggableDivsWithSVGLines = function () {
+	generateCustomSVGConnectorsType1();
+	generateCustomSVGConnectorsType2();
+	generateCustomSVGConnectorsType3();
+	//	buildLegendTable();
+}
 
 function toggleAllMasterNavBtnz() {
 	expandMinimizeButtons.forEach(function (btn) {
@@ -179,13 +189,16 @@ function generateActorsNodesArrayOnLoad() {
 			buildActorsMenu(divzClass);
 			divopt_ClassArray.push('opt_' + divzClass);
 
-			divNameAttributeArray.push(divzName);
+			divNameAttributeArray.push(divzClass);
 			var dNmoption = document.createElement('OPTION');
-			dNmoption.text = divzName;
+			dNmoption.text = divzClass;
 			dNmoption.setAttribute('optCounter', 1);
 			dNmoption.setAttribute('optClassName', divzClass);
+			var dNmClone = dNmoption.cloneNode(true);
+			var dNmClone2 = dNmoption.cloneNode(true);
 			divClassOptionsDropdown.append(dNmoption);
-
+			divClass2ConnectFromOptions.append(dNmClone);
+			divClass2ConnectToOptions.append(dNmClone2);
 		}
 		if (divNameArray.indexOf(divzName) == -1) {
 			divNameArray.push(divzName);
@@ -216,6 +229,23 @@ function storyTableTitle() {
 }
 /******************************************************/
 /******************************************************/
+//var scaleSize = 1;
+//ZOOM STORYLINE TABLE WITH SCOLL-WHEEL
+//divTableContainer.addEventListener('mousewheel', function (e) {
+//	masterTable.style.transform = "origin(left,top)";
+//	if (e.wheelDelta < 0) {
+//		if (scaleSize != 1) {
+//			scaleSize = scaleSize - 0.1;
+//		}
+//		masterTable.style.transform = "scale(" + scaleSize + ")";
+//		connectAllDraggableDivsWithSVGLines;
+//	} else if (e.wheelDelta > 0) {
+//		scaleSize = scaleSize + 0.1;
+//		masterTable.style.transform = "scale(" + scaleSize + ")";
+//		connectAllDraggableDivsWithSVGLines;
+//	}
+//})
+
 
 //TO DESELECT TD ON CLICK OUTSIDE THE TABLE
 function deslectOnClickAway() {
@@ -241,8 +271,16 @@ onload = onloadAnalysis();
 
 function onloadAnalysis() {
 
+	//HIDE THE EDITOR, DETAILS, SLIDESHO WINDOWS
+	setTimeout(() => slideShowListMaster.style.display = 'none', 200);
+	setTimeout(() => detailsSection.style.display = 'none', 300);
+	setTimeout(() => alternateStoryLineEditorButtons.style.display = 'none', 400);
+
+	//GET THE TITLE OF THE TABLE
 	storyTableTitle();
-	toggleAllMasterNavBtnz();
+
+	//MINIMIZE THE CONTROL MENU ITEMS
+	setTimeout(() => toggleAllMasterNavBtnz(), 100);
 
 	rowListeners();
 	cellListeners();
@@ -331,6 +369,14 @@ function onloadAnalysis() {
 
 	//GENERATE ACTORS NODES ARRAY AND MENU
 	generateActorsNodesArrayOnLoad();
+
+	/*
+		//FUNCTION FOR REMOVING ALL INLINE STYLES --darkreader....
+		var storyLineTableCONTENT = storyLineTable.innerHTML;
+		storyLineTableCONTENT.toString();
+		storyLineTableCONTENT = storyLineTableCONTENT.replace(/ style=("|\')(.*?)("|\')/g, '');
+		storyLineTable.innerHTML = storyLineTableCONTENT;
+	*/
 }
 
 /*BECAUSE COORDINATES CHANGE WHEN BROWSER WINDOW IS RESIZED******************************/
@@ -382,8 +428,10 @@ detailsSection.addEventListener('mousedown', function (e) {
 /*EMPTY CELL DESELECT*********************************************************************/
 
 function deselectEmptyCell() {
-	var h2r = celldeselect.querySelector(TypeOfHtmlHeader);
-	emptyCellDeselect(h2r);
+	if ((celldeselect) && (celldeselect.querySelector(TypeOfHtmlHeader))) {
+		var h2r = celldeselect.querySelector(TypeOfHtmlHeader);
+		emptyCellDeselect(h2r);
+	}
 }
 
 /***********/
@@ -517,6 +565,78 @@ function cellListeners() {
 			addDetailKeys();
 
 			aCellIsClicked = 1;
+
+			//GENERATE ARRAY OF COL-X CLASSES
+			CellzColXClassesArray = [];
+			var cellsClassList = this.classList;
+			var prefix = 'col-';
+			var prefixLength = prefix.length;
+
+			for (j = 0; j < cellsClassList.length; j++) {
+
+				//GET THE COL-X CLASSES ONE AFTER ANOTHER BELONGING TO THE TARGETED TD
+				if (cellsClassList[j].slice(0, prefixLength) == prefix) {
+					CellzColXClassesArray.push(cellsClassList[j]);
+				}
+			}
+		}
+		//		if (cells[i].innerHTML) {
+		cells[i].onmouseover = function () {
+			var cellsClassList = this.classList;
+			var prefix = 'col-';
+			var prefixLength = prefix.length;
+
+			for (k = 0; k < cellsClassList.length; k++) {
+
+				//GET THE COL-X CLASSES ONE AFTER ANOTHER BELONGING TO THE TARGETED TD
+				if (cellsClassList[k].slice(0, prefixLength) == prefix) {
+					var col_xClass = cellsClassList[k];
+
+					//GET COLLECTION OF TDs BELONGING TO THIS COL-X CLASS
+					var tdsOfCheckedClass = storyLineTable.querySelectorAll('.' + col_xClass);
+
+					//GO THROUGH EACH CELL BELONGING TO THIS CLASS
+					for (l = 0; l < tdsOfCheckedClass.length; l++) {
+						var TD = tdsOfCheckedClass[l];
+						if (!TD.classList.contains('selected')) {
+							if (TD.innerHTML) {
+								TD.style.backgroundColor = 'rgba(255, 231, 0, 0.6)';
+							}
+							if (!TD.innerHTML) {
+								TD.style.backgroundColor = 'rgba(255, 231, 0, 0.2)';
+							}
+							if (this.innerHTML) {
+								this.style.backgroundColor = 'rgba(255, 165, 0, 0.75)';
+							}
+						}
+					}
+				}
+			}
+		}
+		//		}
+		cells[i].onmouseout = function () {
+			var cellsClassList = this.classList;
+			var prefix = 'col-';
+			var prefixLength = prefix.length;
+
+			for (k = 0; k < cellsClassList.length; k++) {
+
+				//GET THE COL-X CLASSES ONE AFTER ANOTHER BELONGING TO THE TARGETED TD
+				if (cellsClassList[k].slice(0, prefixLength) == prefix) {
+					var col_xClass = cellsClassList[k];
+
+					//GET COLLECTION OF TDs BELONGING TO THIS COL-X CLASS
+					var tdsOfCheckedClass = storyLineTable.querySelectorAll('.' + col_xClass);
+
+					//GO THROUGH EACH CELL BELONGING TO THIS CLASS
+					for (l = 0; l < tdsOfCheckedClass.length; l++) {
+						var TD = tdsOfCheckedClass[l];
+						if (!TD.classList.contains('selected')) {
+							TD.style.backgroundColor = '';
+						}
+					}
+				}
+			}
 		}
 	}
 }
@@ -536,17 +656,36 @@ function divListeners() {
 					clickedDIV.style.backgroundColor = initialColor;
 					clearTimeout(deletButtonColorTimeOut);
 					clearTimeout(clickedDIVColorTimeOut);
+
+					//clear the input boxes of the custom connection section
+					divClass2ConnectTo.value = '';
+					divToDisConnectFrom.value = '';
 				}
 
 				clickedDIV = this;
 				initialColor = this.style.backgroundColor;
 				this.style.backgroundColor = "lightgrey";
 
+				//DELETE BUTTON
 				initialdeleteDivBtnColor = divDeleteButton.style.backgroundColor;
 				divDeleteButton.style.backgroundColor = 'pink';
+				//CONNECTTO BUTTON
+				connectFromButton.style.backgroundColor = 'pink';
 
+
+				//RESET THE COLOR OF THE MODIFIED BUTTONS
 				clickedDIVColorTimeOut = setTimeout(() => [clickedDIV.style.backgroundColor = initialColor], 5000);
 				deletButtonColorTimeOut = setTimeout(() => [divDeleteButton.style.backgroundColor = ''], 5000);
+				connectToButtonColorTimeOut = setTimeout(() => [connectFromButton.style.backgroundColor = ''], 5000);
+
+				//clear connectFromArray so that it doesnt have values from old clicked div
+
+				connectFromArray = [];
+				generateDisconnectFromDropdown();
+
+				connectToArray = [];
+				generateDisconnectToDropdown();
+
 			}
 		}
 	}
@@ -589,6 +728,7 @@ function increaseCellColspan() {
 	currentColspan = cell.setAttribute('colspan', currentColspan);
 
 	analyzeTable();
+	connectAllDraggableDivsWithSVGLines();
 }
 
 //DECREASE CELL COLSPAN
@@ -600,14 +740,17 @@ function decreaseCellColspan() {
 	currentColspan = cell.setAttribute('colspan', currentColspan);
 
 	analyzeTable();
+	connectAllDraggableDivsWithSVGLines();
 }
-
 
 //DELETE CELL
 function deleteCell() {
 	var row = storyLineTable.querySelectorAll('tr');
 	var cell = row[clickedRow].querySelectorAll('td');
 	cell[clickedCell].style.display = 'none';
+
+	analyzeTable();
+	connectAllDraggableDivsWithSVGLines();
 }
 
 //HIDE CELL
@@ -617,6 +760,7 @@ function hideCell() {
 	cell[clickedCell].style.visibility = 'hidden';
 
 	analyzeTable();
+	connectAllDraggableDivsWithSVGLines();
 }
 
 //DESTROY CELL (I.E. REMOVE FROM DOM)
@@ -626,6 +770,7 @@ function destroyCell() {
 	cell[clickedCell].remove();
 
 	analyzeTable();
+	connectAllDraggableDivsWithSVGLines();
 }
 
 //SELECT CELLS TO MERGE
@@ -988,98 +1133,113 @@ function destroyRow() {
 /*******************************************************************************************************/
 //CREATE COLUMN BEFORE CLICKED COLUMN
 
-function createColumnBefore() {
-
+function modifyColumn(what2do) {
 	var row = storyLineTable.querySelectorAll('tr');
 
 	/***********************************************************/
 
 	//find true index of clicked cell
-	var trueIndex = -1;
+	var trueIndexUpper = -1;
 	for (i = 0; i < (clickedCell + 1); i++) {
 		var cellsUp2clickedCell = row[clickedRow].cells[i];
-
-		trueIndex = trueIndex + row[clickedRow].cells[i].colSpan; //all colspans minus 1 will give the trueindex
+		trueIndexUpper = trueIndexUpper + row[clickedRow].cells[i].colSpan; //all colspans minus 1 will give the trueindexUpper
 	}
 
 	//for when clickedCell has colSpan > 1
 	var colSpanOfClickedCell = row[clickedRow].cells[clickedCell].colSpan;
+	var trueIndexLower;
 	if (colSpanOfClickedCell > 1) {
-		trueIndex = trueIndex - colSpanOfClickedCell + 1;
+		trueIndexLower = trueIndexUpper - colSpanOfClickedCell + 1;
 	}
+	var colClass2query = 'col-' + (trueIndexUpper + 1);
+	console.log(trueIndexUpper);
+	console.log(colClass2query);
+	var lessThanColClass2query = 'col-' + (trueIndexUpper);
+	var greaterThanColClass2query = 'col-' + (trueIndexUpper + 2);
 
-	var colClass2query = 'col-' + (trueIndex + 1);
-	var lessThanColClass2query = 'col-' + (trueIndex);
-	var greaterThanColClass2query = 'col-' + (trueIndex + 2);
+	var colClass2query_lower = 'col-' + (trueIndexLower + 1);
+	console.log(colClass2query_lower);
+	var lessThanColClass2query_lower = 'col-' + (trueIndexLower);
+	var greaterThanColClass2query_lower = 'col-' + (trueIndexLower + 2);
 	//in each row, add cell before cell with the class of colClass2query
 
 	/***********************************************************/
-	for (j = 0; j < row.length; j++) {
-		beforeCell = row[j].querySelector('.' + colClass2query).cellIndex; //getting index of cell with class of colClass2query. this is for insertion before
 
-		if (row[j].querySelector('.' + colClass2query).classList.contains(lessThanColClass2query)) {
-			row[j].cells[beforeCell].colSpan = row[j].cells[beforeCell].colSpan + 1;
-		} else {
-			row[j].insertCell(newIcell || beforeCell);
+	if (what2do == 'createColumnBefore') {
+		if (colSpanOfClickedCell == 1) {
+			for (j = 0; j < row.length; j++) {
+				beforeCell = row[j].querySelector('.' + colClass2query).cellIndex; //getting index of cell with class of colClass2query. this is for insertion before
+				afterCell = beforeCell + 1;
+				if (row[j].querySelector('.' + colClass2query).classList.contains(lessThanColClass2query)) {
+					//				row[j].cells[beforeCell].colSpan = row[j].cells[beforeCell].colSpan + 1;
+					//this doesn't really change the colspan value because of the function related to the 'originalcolspan' attribute
+					var newCellzColSpan = row[j].cells[beforeCell].colSpan + 1;
+					row[j].cells[beforeCell].setAttribute('originalcolspan', newCellzColSpan);
+				} else {
+					row[j].insertCell( /*newIcell || */ beforeCell);
+				}
+			}
 		}
+		if (colSpanOfClickedCell > 1) {
+			for (j = 0; j < row.length; j++) {
+				beforeCell = row[j].querySelector('.' + colClass2query_lower).cellIndex; //getting index of cell with class of colClass2query. this is for insertion before
+				afterCell = beforeCell + 1;
+				if (row[j].querySelector('.' + colClass2query_lower).classList.contains(lessThanColClass2query_lower)) {
+					var newCellzColSpan = row[j].cells[beforeCell].colSpan + 1;
+					row[j].cells[beforeCell].setAttribute('originalcolspan', newCellzColSpan);
+				} else {
+					row[j].insertCell( /*newIcell || */ beforeCell);
+				}
+			}
+		}
+	}
 
+	if (what2do == 'createColumnAfter') {
+		for (j = 0; j < row.length; j++) {
+			beforeCell = row[j].querySelector('.' + colClass2query).cellIndex; //getting index of cell with class of colClass2query. this is for insertion before
+			afterCell = beforeCell + 1;
+			if (row[j].querySelector('.' + colClass2query).classList.contains(greaterThanColClass2query)) {
+				var newCellzColSpan = row[j].cells[beforeCell].colSpan + 1;
+				row[j].cells[beforeCell].setAttribute('originalcolspan', newCellzColSpan);
+			} else {
+				row[j].insertCell( /*newIcell || */ afterCell);
+			}
+		}
+	}
+	if (what2do == 'destroyColumn') {
+		for (j = 0; j < row.length; j++) {
+			beforeCell = row[j].querySelector('.' + colClass2query).cellIndex; //getting index of cell with class of colClass2query. this is for insertion before
+			afterCell = beforeCell + 1;
+
+			if ((row[j].querySelector('.' + colClass2query).classList.contains(greaterThanColClass2query)) || (row[j].querySelector('.' + colClass2query).classList.contains(lessThanColClass2query))) {
+				var newCellzColSpan = row[j].cells[beforeCell].colSpan - 1; //this is neccesary
+				row[j].cells[beforeCell].setAttribute('originalcolspan', newCellzColSpan);
+			} else {
+				row[j].cells[beforeCell].remove();
+			}
+		}
 	}
 	/***********************************************************/
-
-	//	
-	//	for (j = 0; j < row.length; j++) {
-	//		/*var cell =*/ row[j].insertCell(newIcell || beforeCell);
-	//	}
-
-	//	newIcell = (newIcell || beforeCell) + 1;
 	analyzeTable();
 	generateColumnClasses();
 	connectAllDraggableDivsWithSVGLines();
 	dragDiv2TD();
 	divListeners();
+}
+
+function createColumnBefore() {
+	modifyColumn('createColumnBefore');
 }
 
 //CREATE COLUMN AFTER CLICKED COLUMN
 function createColumnAfter() {
-	var row = storyLineTable.querySelectorAll('tr');
-
-	/***********************************************************/
-
-	//find true index of clicked cell
-	var trueIndex = -1;
-	for (i = 0; i < (clickedCell + 1); i++) {
-		var cellsUp2clickedCell = row[clickedRow].cells[i];
-		trueIndex = trueIndex + row[clickedRow].cells[i].colSpan; //all colspans minus 1 will give the trueindex
-	}
-	var colClass2query = 'col-' + (trueIndex + 1);
-	var lessThanColClass2query = 'col-' + (trueIndex);
-	var greaterThanColClass2query = 'col-' + (trueIndex + 2);
-	//in each row, add cell before cell with the class of colClass2query
-
-	/***********************************************************/
-	for (j = 0; j < row.length; j++) {
-		beforeCell = row[j].querySelector('.' + colClass2query).cellIndex; //getting index of cell with class of colClass2query. this is for insertion before
-		afterCell = beforeCell + 1;
-
-		if (row[j].querySelector('.' + colClass2query).classList.contains(greaterThanColClass2query)) {
-			row[j].cells[beforeCell].colSpan = row[j].cells[beforeCell].colSpan + 1;
-		} else {
-			row[j].insertCell(newIcell || afterCell);
-		}
-
-	}
-	/***********************************************************/
-
-	//	newIcell = (newIcell || afterCell) + 1;
-	analyzeTable();
-	generateColumnClasses();
-	connectAllDraggableDivsWithSVGLines();
-	dragDiv2TD();
-	divListeners();
+	modifyColumn('createColumnAfter');
 }
 
 //DELETE COLUMN
-function deleteColumn() {}
+function destroyColumn() {
+	modifyColumn('destroyColumn');
+}
 
 //HIDE COLUMN
 function hideColumn() {}
@@ -1367,6 +1527,7 @@ function minimizeMaximize(a, b) {
 }
 
 
+/*
 var accordionCancel = document.getElementById('tableBuilderheaderHandle');
 
 var minMaxAccordion = document.getElementById('max-min');
@@ -1401,6 +1562,7 @@ for (i = 0; i < tableBuilderSections.length; i++) {
 		}
 	}
 }
+*/
 
 
 /*var tableBuilder = document.getElementById('tableBuilder');
@@ -1634,7 +1796,16 @@ function buildLegendTable() {
 
 		newH1.style.marginBottom = '0';
 
+		//LengendTableRow Class
 		newTR.setAttribute('rowname', newTRtxt);
+		if (newTRtxt != null) {
+			var rownameSpaceArray = newTRtxt.split(' ');
+			var rName_modified = '';
+			rownameSpaceArray.forEach(function (rn) {
+				rName_modified = rName_modified + '_' + rn;
+			});
+			newTR.classList.add('rowname' + rName_modified);
+		}
 
 		appendHere.appendChild(newTR).appendChild(newTD).prepend(newH1);
 
@@ -1659,7 +1830,7 @@ function buildLegendTable() {
 		var derivedHeight;
 
 		//LOOP THROUGH ROWS TO CREATE
-		//FOR THEAD ROWS6
+		//FOR THEAD ROWS
 		for (i = 0; i < TRS4rm.length; i++) {
 
 			//create row only when you meet a new row name or when this is the last row you are checking
@@ -1722,7 +1893,7 @@ function buildLegendTable() {
 					top_Y_firstTRinNameSet = currentRightTableRow.getBoundingClientRect().top //+ (window.pageYOffset || document.documentElement.scrollTop) ;
 
 					if (i == TRS4rm.length - 1) {
-						newLTrow(null, rowName1, TRsection2o);
+						newLTrow(tdsHeight, rowName1, TRsection2o);
 					}
 				}
 			}
@@ -1751,6 +1922,7 @@ function btn_buildLegendTable() {
 	buildLegendTable();
 	resetClasses();
 	createTimeMenu("ROW");
+	connectAllDraggableDivsWithSVGLines;
 }
 /******************************************************************************************/
 /******************************************************************************************/
@@ -1766,8 +1938,8 @@ function createDIV() {
 	var dName = input4divName.value;
 	var dClass = input4divClass.value;
 	if (dName && dClass) {
-		var c = dClass.slice(0, 1);
-		if (isNaN(parseInt(c))) {
+		var cdd = dClass.slice(0, 1);
+		if (isNaN(parseInt(cdd))) {
 			var dIVwtLabel = document.createElement('DIV');
 			dIVwtLabel.classList.add('opt_' + dClass);
 			dIVwtLabel.classList.add('draggableDiv');
@@ -1829,7 +2001,9 @@ function createDIV() {
 					divClassOption.text = dClass;
 
 					divClassOption.setAttribute('optCounter', 1);
+					var dNmClone = divClassOption.cloneNode(true);
 					divClassOptionsDropdown.append(divClassOption);
+					divClass2ConnectToOptions.append(dNmClone);
 				}
 				/******************************************************************************************/
 				/*WHAT TO DO IF THE DIVCLASS HAS ALREADY BEEN CREATED**************************************/
@@ -1842,6 +2016,17 @@ function createDIV() {
 						if (divClassOptions[j].text == dClass) {
 							var optCounterValue = Number(divClassOptions[j].getAttribute('optCounter'))
 							divClassOptions[j].setAttribute('optCounter', ++optCounterValue);
+							break;
+						}
+					}
+					//FOR THE DIV2CONNECT TO OPTIONS
+					var divClass2ConnectOptions =
+						divClass2ConnectToOptions.getElementsByTagName('option');
+
+					for (j = 0; j < divClass2ConnectOptions.length; j++) {
+						if (divClass2ConnectOptions[j].text == dClass) {
+							var optCounterValue = Number(divClass2ConnectOptions[j].getAttribute('optCounter'))
+							divClass2ConnectOptions[j].setAttribute('optCounter', ++optCounterValue);
 							break;
 						}
 					}
@@ -1994,6 +2179,10 @@ function makeInputSelectable() {
 	divNameOptionsDropdown.setAttribute('onchange', 'fillDivNameInput()');
 	divClassOptionsDropdown.setAttribute('onchange', 'fillDivClassInput()');
 	locationOptionsDropdown.setAttribute('onchange', 'fillLocationInput()');
+	divClass2ConnectFromOptions.setAttribute('onchange', 'fillDivClass2ConnectFrom()');
+	divToDisConnect4rmOptions.setAttribute('onchange', 'fillDivClassToDisConnectFrom()');
+	divClass2ConnectFromOptions.setAttribute('onchange', 'fillDivClass2ConnectTo()');
+	divToDisConnect4rmOptions.setAttribute('onchange', 'fillDivClassToDisConnectTo()');
 }
 
 function fillDivNameInput() {
@@ -2007,6 +2196,22 @@ function fillDivClassInput() {
 function fillLocationInput() {
 	locationInput.value = locationOptionsDropdown.value;
 };
+
+function fillDivClass2ConnectFrom() {
+	divClass2ConnectFrom.value = divClass2ConnectFromOptions.value;
+};
+
+function fillDivClassToDisConnectFrom() {
+	divToDisConnectFrom.value = divToDisConnect4rmOptions.value;
+};
+
+function fillDivClass2ConnectTo() {
+	divClass2ConnectTo.value = divClass2ConnectToOptions.value;
+};
+
+function fillDivClassToDisConnectTo() {
+	divToDisConnectTo.value = divToDisConnect2Options.value;
+};
 /******************************************************************************************/
 /******************************************************************************************/
 
@@ -2017,9 +2222,7 @@ function fillLocationInput() {
 var masterEditButton = document.getElementById('masterEditButton');
 
 function alternateClose() {
-	makeEditableCheckbox.checked = false;
-	storyLineTableTitleHeader.contentEditable = 'false';
-	alternateStoryLineEditorButtons.style.display = 'none';
+	makeTableEditable();
 }
 
 var makeEditableCheckbox = document.getElementById('editableRadio');
@@ -2113,6 +2316,7 @@ function uncheckAllBoxes(x) {
 	if (shouldIUncheck) {
 		classesToUncheck.forEach(function (itm) {
 			if (itm.checked) {
+				previouslyChecked = null;
 				itm.click();
 			}
 		})
@@ -2149,6 +2353,8 @@ function uncheckOnly(x) {
 /******************************************************************************************/
 /*BUILD LABELS/ACTORS MENU*****************************************************************/
 /******************************************************************************************/
+var previouslyChecked;
+
 function createDivMenu(dClass) {
 	/*CREATE DIV MANIPULATOR*****************/
 	var labelNavSectionOL = document.querySelector('#labelList');
@@ -2200,6 +2406,10 @@ function createDivMenu(dClass) {
 				connectAllDraggableDivsWithSVGLines();
 			}
 		} else if (shouldISoloDiv == 1) {
+			console.log(previouslyChecked);
+			if (previouslyChecked != null) {
+				previouslyChecked.checked = false;
+			}
 			if (this.checked) {
 				/*FIRST TIME*************************/
 				var index2exempt = divopt_ClassArray.indexOf(this.value);
@@ -2219,6 +2429,7 @@ function createDivMenu(dClass) {
 						}
 					}
 				}
+				previouslyChecked = this;
 			} else if (!this.checked) {
 				var index2exempt = divopt_ClassArray.indexOf(this.value);
 				for (i = 0; i < divopt_ClassArray.length; i++) {
@@ -2229,12 +2440,7 @@ function createDivMenu(dClass) {
 						}
 					}
 				}
-
-				/*var classOfDivsToHide = this.value;
-				var allDivsofClassToHide = masterTable.getElementsByClassName(classOfDivsToHide);
-				for (i = 0; i < allDivsofClassToHide.length; i++) {
-					allDivsofClassToHide[i].style.display = "none";
-				}*/
+				previouslyChecked = null;
 			}
 		}
 	});
@@ -2264,7 +2470,7 @@ function buildActorsMenu(x) {
 /******************************************************************************************/
 
 /******************************************************************************************/
-/*BUILD TIME MENU* ************************************************************************/
+/*BUILD TIME SECTION MENU* ************************************************************************/
 /******************************************************************************************/
 var timeMenuArray = [];
 var col_x_CellHeader;
@@ -2307,6 +2513,8 @@ function createTimeMenu(ROWorCOL) {
 
 				elmLI_1.appendChild(elmUL);
 				timeMenuList.appendChild(elmLI_1);
+
+
 			}
 		}
 	}
@@ -2358,6 +2566,7 @@ function createTimeMenu(ROWorCOL) {
 					/***************************************************************************************/
 					/*ADD EVENTLISTNER TO INPUT ELEMENT TO SHOW/HIDE RESPECTIVE COL-X COLUMNS***************/
 					/***************************************************************************************/
+
 					labelListNameCheckBox.addEventListener('click', function () {
 
 						var targetRowI = this.getAttribute('targetRowIndex');
@@ -2483,6 +2692,7 @@ function createTimeMenu(ROWorCOL) {
 								connectAllDraggableDivsWithSVGLines();
 							}
 						}
+						buildLegendTable();
 					});
 					/*************************************************/
 					/*************************************************/
@@ -2491,6 +2701,77 @@ function createTimeMenu(ROWorCOL) {
 					elmLI.appendChild(labelListName);
 					//APPEND INPUT ELEMENT TO LIST
 					elmLI.appendChild(labelListNameCheckBox);
+
+					/***************************************************************************************/
+					/*ADD EVENTLISTNER TO INPUT ELEMENT TO HIGHLIGHT RESPECTIVE COL-X COLUMNS***************/
+					/***************************************************************************************/
+					elmLI.addEventListener('mouseenter', function () {
+						var lizInput = this.querySelector('input');
+						var targetRowI = lizInput.getAttribute('targetRowIndex');
+						var targetCellI = lizInput.getAttribute('targetCellIndex');
+						var targetedTD = storyLineTableTHead.rows[targetRowI].cells[targetCellI];
+
+						/*GET COL-X CLASSES AND ACT*********************/
+						/***********************************************/
+						var targetedTDClassList = targetedTD.classList;
+						var cellsClassList = this.classList;
+						var prefix = 'col-';
+						var prefixLength = prefix.length;
+
+						for (k = 0; k < targetedTDClassList.length; k++) {
+
+							//GET THE COL-X CLASSES ONE AFTER ANOTHER BELONGING TO THE TARGETED TD
+							if (targetedTDClassList[k].slice(0, prefixLength) == prefix) {
+								var col_xClass = targetedTDClassList[k];
+
+								//GET COLLECTION OF TDs BELONGING TO THIS COL-X CLASS
+								var tdsOfCheckedClass = storyLineTable.querySelectorAll('.' + col_xClass);
+
+								//GO THROUGH EACH CELL BELONGING TO THIS CLASS
+								for (l = 0; l < tdsOfCheckedClass.length; l++) {
+									var TD = tdsOfCheckedClass[l];
+									if (TD.innerHTML) {
+										TD.style.backgroundColor = 'rgba(255, 231, 0, 0.73)';
+									}
+									if (!TD.innerHTML) {
+										TD.style.backgroundColor = 'rgba(255, 231, 0, 0.24)';
+									}
+								}
+							}
+						}
+					})
+
+					elmLI.addEventListener('mouseout', function () {
+						var lizInput = this.querySelector('input');
+						var targetRowI = lizInput.getAttribute('targetRowIndex');
+						var targetCellI = lizInput.getAttribute('targetCellIndex');
+						var targetedTD = storyLineTableTHead.rows[targetRowI].cells[targetCellI];
+
+						/*GET COL-X CLASSES AND ACT*********************/
+						/***********************************************/
+						var targetedTDClassList = targetedTD.classList;
+						var cellsClassList = this.classList;
+						var prefix = 'col-';
+						var prefixLength = prefix.length;
+
+						for (k = 0; k < targetedTDClassList.length; k++) {
+
+							//GET THE COL-X CLASSES ONE AFTER ANOTHER BELONGING TO THE TARGETED TD
+							if (targetedTDClassList[k].slice(0, prefixLength) == prefix) {
+								var col_xClass = targetedTDClassList[k];
+
+								//GET COLLECTION OF TDs BELONGING TO THIS COL-X CLASS
+								var tdsOfCheckedClass = storyLineTable.querySelectorAll('.' + col_xClass);
+
+								//GO THROUGH EACH CELL BELONGING TO THIS CLASS
+								for (l = 0; l < tdsOfCheckedClass.length; l++) {
+									var TD = tdsOfCheckedClass[l];
+									TD.style.backgroundColor = '';
+								}
+							}
+						}
+					})
+					/*************************************************/
 					//APPEND LIST ELEMENT TO OL
 					elmUL.appendChild(elmLI);
 				}
@@ -2662,7 +2943,7 @@ function hightlightCheckedTimelines(x) {
 	shouldIhideRowName = 0;
 	x.style.backgroundColor = 'rgba(255, 231, 0, 0.45)';
 	hideAllCheckedTimeLines.style.backgroundColor = '';
-};
+}
 
 function HideCheckedTimelines(x) {
 	uncheckAllBoxes('.timeLinesLINameCheckBox');
@@ -2671,7 +2952,7 @@ function HideCheckedTimelines(x) {
 	shouldIhideRowName = 1;
 	x.style.backgroundColor = 'rgba(255, 231, 0, 0.45)';
 	hightlightTimelines.style.backgroundColor = '';
-};
+}
 
 function timeLinesMenu() {
 	var rowsWithRowName = storyLineTable.querySelectorAll('[rowname]');
@@ -2710,6 +2991,9 @@ function timeLinesMenu() {
 		timeLinesListNameCheckBox.addEventListener('click', function () {
 			var rowName2searchFor = this.getAttribute('targettimeLine');
 			var allTargetedTD = storyLineTable.querySelectorAll(`[rowname="` + rowName2searchFor + `"]`);
+			var legendTableRowClass = legendTable.querySelector(`[rowname="` + rowName2searchFor + `"]`).classList[0];
+			var legendTableRow = legendTable.getElementsByClassName(legendTableRowClass)[0];
+			var legendTableRowsToggleStyle = document.getElementById('legendTableRowsToggleStyle')
 			if (this.checked == true) {
 				allTargetedTD.forEach(function (itm) {
 					if (shouldIhighlightRowName == 1) {
@@ -2717,6 +3001,9 @@ function timeLinesMenu() {
 					}
 					if (shouldIhideRowName == 1) {
 						itm.style.display = 'none';
+						//to HIDE corresponding lengendTableRow (setting style.display = 'none' will not work because of the table will be rebuilt)
+						//add the following to the styleSheet
+						legendTableRowsToggleStyle.append(`.` + legendTableRowClass + `{ display: none;}`)
 					}
 				})
 			} else if (this.checked != true) {
@@ -2727,15 +3014,24 @@ function timeLinesMenu() {
 					}
 					if (shouldIhideRowName == 1) {
 						itm.style.display = '';
+						//to SHOW corresponding lengendTableRow
+						var ltrtsArray = legendTableRowsToggleStyle.innerHTML.split(`.` + legendTableRowClass + `{ display: none;}`);
+						legendTableRowsToggleStyle.innerHTML = '';
+						ltrtsArray.forEach(function (ltr) {
+							var formerInner = legendTableRowsToggleStyle.innerHTML;
+							legendTableRowsToggleStyle.innerHTML = formerInner + ltr;
+						})
+						ltrtsArray = [];
 					}
 				})
 			}
+			setTimeout(connectAllDraggableDivsWithSVGLines, 5);
+			//			buildLegendTable();
 		});
 
 		LI4timeLines.addEventListener('mouseenter', function () {
 
 			var rowName2searchFor = this.id.slice(10);
-			console.log(rowName2searchFor);
 			var allTargetedTD = storyLineTable.querySelectorAll(`[rowname="` + rowName2searchFor + `"]`);
 			allTargetedTD.forEach(function (itm) {
 				itm.style.backgroundColor = 'rgba(255, 231, 0, 0.56)';
@@ -2796,3 +3092,187 @@ function navMenu() {
 }
 /******************************************************/
 /******************************************************/
+
+
+
+/****************************************************************/
+/*2ND TYPE SVG CONNECTOR -- CONNECTFROM*/
+/****************************************************************/
+
+function connectFrom() {
+
+	//The following just builds the connectFrom attribute of the clicked div
+	if (clickedDIV) {
+		var selectedClass2Connect4rm = divClass2ConnectFrom.value;
+		if (clickedDIV.getAttribute('connectFrom')) {
+			if (connectFromArray.indexOf(selectedClass2Connect4rm) == -1) {
+				var formerConnectFrom = clickedDIV.getAttribute('connectFrom');
+				var newConnectFrom = formerConnectFrom + ", " + selectedClass2Connect4rm;
+				clickedDIV.setAttribute('connectFrom', newConnectFrom)
+			}
+		} else {
+			if (selectedClass2Connect4rm != '') {
+				clickedDIV.setAttribute('connectFrom', selectedClass2Connect4rm)
+			}
+		}
+		//generate the options to disconnect from
+		generateDisconnectFromDropdown();
+	}
+
+	//The following generates the special lines
+	generateCustomSVGConnectorsType2();
+}
+var divToDisConnect4rmOptions = document.getElementById('divToDisConnect4rmOptions');
+
+function generateDisconnectFromDropdown() {
+	//Clear the divToDisConnect4rmOptions select menu
+	divToDisConnect4rmOptions.innerHTML = '';
+
+	if (clickedDIV.getAttribute('connectFrom')) {
+		//get the connectFrom attribute value which is a string
+		var connectFromString = clickedDIV.getAttribute('connectFrom');
+		//convert it into an array to be converted into individual options to be appended to the divToDisConnect4rmOptions select menu
+		connectFromArray = connectFromString.split(', ');
+
+		//Clear the divToDisConnect4rmOptions select menu
+		if (divToDisConnect4rmOptions.innerHTML) {
+			divToDisConnect4rmOptions.innerHTML = '';
+		}
+
+		//loop through the generated array and append options
+		for (i = 0; i < connectFromArray.length; i++) {
+			//			console.log(connectFromArray[i]);
+			var disConnectFromOption = document.createElement('OPTION');
+			disConnectFromOption.text = connectFromArray[i];
+			divToDisConnect4rmOptions.append(disConnectFromOption);
+		}
+	}
+}
+
+function disConnectFrom() {
+	if (clickedDIV) {
+		var node2 = clickedDIV;
+		var node1;
+
+		var selectedClass2DisConnect4rm = divToDisConnectFrom.value;
+		console.log(selectedClass2DisConnect4rm);
+
+		if (clickedDIV.getAttribute('connectFrom')) {
+			console.log('i2remove');
+			if (connectFromArray.indexOf(selectedClass2DisConnect4rm) != -1) {
+				//remove the class from the connectFromArray
+				var i2remove = connectFromArray.indexOf(selectedClass2DisConnect4rm);
+				console.log(i2remove);
+				connectFromArray.splice(i2remove, 1);
+				//convert the array to a string to replace the former value of the the connectFrom attribute of the selected div
+				var newConnectFrom = connectFromArray.join(", ");
+				clickedDIV.setAttribute('connectFrom', newConnectFrom)
+			}
+			if (clickedDIV.getAttribute('connectFrom') == '') {
+				clickedDIV.removeAttribute('connectFrom');
+			}
+		} else {
+			customAlert("NOTHING TO DISCONNECT FROM");
+		}
+		//clear the input
+		divToDisConnectFrom.value = '';
+		//re-generate the options to disctonnect from
+		generateDisconnectFromDropdown();
+
+		//The following generates the special lines
+		generateCustomSVGConnectorsType2();
+	}
+}
+/****************************************************************/
+/****************************************************************/
+
+/****************************************************************/
+/*3RD TYPE SVG CONNECTOR */
+/****************************************************************/
+
+function connectTo() {
+
+	//The following just builds the connectFrom attribute of the clicked div
+	if (clickedDIV) {
+		var selectedClass2Connect2 = divClass2ConnectTo.value;
+		if (clickedDIV.getAttribute('connectTo')) {
+			if (connectToArray.indexOf(selectedClass2Connect2) == -1) {
+				var formerConnectTo = clickedDIV.getAttribute('connectTo');
+				var newConnectTo = formerConnectTo + ", " + selectedClass2Connect2;
+				clickedDIV.setAttribute('connectTo', newConnectTo)
+			}
+		} else {
+			if (selectedClass2Connect2 != '') {
+				clickedDIV.setAttribute('connectTo', selectedClass2Connect2)
+			}
+		}
+		//generate the options to disconnect from
+		generateDisconnectToDropdown();
+	}
+
+	//The following generates the special lines
+	generateCustomSVGConnectorsType3();
+}
+var divToDisConnect2Options = document.getElementById('divToDisConnect2Options');
+
+function generateDisconnectToDropdown() {
+	//Clear the divToDisConnect2Options select menu
+	divToDisConnect2Options.innerHTML = '';
+
+	if (clickedDIV.getAttribute('connectTo')) {
+		//get the connectTo attribute value which is a string
+		var connectToString = clickedDIV.getAttribute('connectTo');
+		//convert it into an array to be converted into individual options to be appended to the divToDisConnect2Options select menu
+		connectToArray = connectToString.split(', ');
+
+		//Clear the divToDisConnect4rmOptions select menu
+		if (divToDisConnect2Options.innerHTML) {
+			divToDisConnect2Options.innerHTML = '';
+		}
+
+		//loop through the generated array and append options
+		for (i = 0; i < connectToArray.length; i++) {
+			//			console.log(connectFromArray[i]);
+			var disConnectToOption = document.createElement('OPTION');
+			disConnectToOption.text = connectToArray[i];
+			divToDisConnect2Options.append(disConnectToOption);
+		}
+	}
+}
+
+function disConnectTo() {
+	if (clickedDIV) {
+		var node2 = clickedDIV;
+		var node1;
+
+		var selectedClass2DisConnect2 = divToDisConnectTo.value;
+		console.log(selectedClass2DisConnect2);
+
+		if (clickedDIV.getAttribute('connectTo')) {
+			console.log('i2remove');
+			if (connectToArray.indexOf(selectedClass2DisConnect2) != -1) {
+				//remove the class from the connectFromArray
+				var i2remove = connectToArray.indexOf(selectedClass2DisConnect2);
+				console.log(i2remove);
+				connectToArray.splice(i2remove, 1);
+				//convert the array to a string to replace the former value of the the connectFrom attribute of the selected div
+				var newConnectTo = connectToArray.join(", ");
+				clickedDIV.setAttribute('connectTo', newConnectTo)
+			}
+			if (clickedDIV.getAttribute('connectTo') == '') {
+				clickedDIV.removeAttribute('connectTo');
+			}
+		} else {
+			customAlert("NOTHING TO DISCONNECT TO");
+		}
+		//clear the input
+		divToDisConnectTo.value = '';
+		//re-generate the options to disctonnect To
+		generateDisconnectToDropdown();
+
+		//The following generates the special lines
+		generateCustomSVGConnectorsType3();
+	}
+}
+/****************************************************************/
+/****************************************************************/
