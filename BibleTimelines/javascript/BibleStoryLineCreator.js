@@ -2222,9 +2222,7 @@ function fillDivClassToDisConnectTo() {
 var masterEditButton = document.getElementById('masterEditButton');
 
 function alternateClose() {
-	makeEditableCheckbox.checked = false;
-	storyLineTableTitleHeader.contentEditable = 'false';
-	alternateStoryLineEditorButtons.style.display = 'none';
+	makeTableEditable();
 }
 
 var makeEditableCheckbox = document.getElementById('editableRadio');
