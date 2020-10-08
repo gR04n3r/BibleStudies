@@ -139,12 +139,17 @@ var generateCustomSVGConnectorsType1 = function () {
 					}
 					var endPArray = endDivParentColXArray;
 					var goAhead = 1;
-					////////////////////////////////////////////
-					//count the col-x's backwards to get the start div
+					////////////////////////////////////////////////////
+					//count the col-x's backwards to get the start div//
+					////////////////////////////////////////////////////
 					for (d = X - 1; d > 0; d--) {
 
 						//find div with the same divclassname attribute as in the preceeding col-x
-						var div2connect4rm = storyLineTable.querySelector(`.col-` + d + ` [divclassname="` + divzClassName + `"]`);
+						var div2connect4rm;
+						div2connect4rm = storyLineTable.querySelector(`.col-` + d + ` [divclassname="` + divzClassName + `"]`);
+						if (connectAccording2RowNames == 1) {
+							div2connect4rm = storyLineTable.querySelector(`[rowname="` + endDivRowName + `"] .col-` + d + ` [divclassname="` + divzClassName + `"]`)
+						}
 						var startDiv = div2connect4rm;
 						if (startDiv != null) {
 							var startDivParent = startDiv.parentElement;
@@ -199,7 +204,24 @@ var generateCustomSVGConnectorsType1 = function () {
 								}
 							} else if (connectAccording2RowNames == 1) {
 								if ((goAhead) && (startDiv != null) && (startDivRowName == endDivRowName) && (startDivParent.style.display != 'none') && (endDivParent.style.display != 'none') && (startDivParentRow.style.display != 'none') && (endDivParentRow.style.display != 'none') && (startDivParent != endDivParent)) {
+
+									//////////////////////////////////////////////////////////////////////////////
+									//check to be sure that the endDiv is the first div of its class in its column
+									//////////////////////////////////////////////////////////////////////////////
+									//if not, move on to the next div
+									//do this only if the connection is accross rowNames
+									//////////////////////////////////////////////////////////////////////////////
+									//if you remove this function, multiple 'endDiv's will connect to the first
+									//preceding 'startDiv'
+									//////////////////////////////////////////////////////////////////////////////
+									var endDivBrodasInColx = storyLineTable.querySelector( `[rowname="` + startDivRowName + `"] .col-` + X + ` [divclassname="` + divzClassName + `"]`);
+									if (endDiv != endDivBrodasInColx) {
+										break;
+									}
+									//////////////////////////////////////////////////////////////////////////////
+
 									drawConnector(startDiv, endDiv, divzClassName);
+									endDiv = null;
 									startDiv = null;
 									break;
 								}
