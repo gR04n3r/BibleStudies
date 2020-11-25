@@ -37,19 +37,29 @@ function drawConnector(X, Y, divClassforColor) {
 		x: B.leftCenterX - svgMasterLeft - pageScrollX,
 		y: B.leftCenterY - svgMasterTop - pageScrollY
 	};
+	
+	var distanceBtwPoints = Math.abs(posnB.x - posnA.x);
+	var lengthB4Curve;
+	if(distanceBtwPoints < 100 ){
+	   lengthB4Curve = distanceBtwPoints;
+	   }
+	else{
+		lengthB4Curve = 100;
+	}
+	
 	var dStr =
 		"M" +
 		(posnA.x) + "," + (posnA.y) + " " +
 		"C" +
-		(posnA.x + 100) + "," + (posnA.y) + " " +
-		(posnB.x - 100) + "," + (posnB.y) + " " +
+		(posnA.x + lengthB4Curve) + "," + (posnA.y) + " " +
+		(posnB.x - lengthB4Curve) + "," + (posnB.y) + " " +
 		(posnB.x) + "," + (posnB.y);
 	//	connector.setAttribute("d", dStr);
 	nodesconnector(("M" +
 		(posnA.x) + "," + (posnA.y) + " " +
 		"C" +
-		(posnA.x + 100) + "," + (posnA.y) + " " +
-		(posnB.x - 100) + "," + (posnB.y) + " " +
+		(posnA.x + lengthB4Curve) + "," + (posnA.y) + " " +
+		(posnB.x - lengthB4Curve) + "," + (posnB.y) + " " +
 		(posnB.x) + "," + (posnB.y)), 'opt_' + divClassforColor);
 }
 
@@ -65,7 +75,9 @@ var generateCustomSVGConnectorsType1 = function () {
 			allLeaderLines[k].remove();
 		}
 	}
-
+	
+	if(connectOnlyConnect2andConnect4rm == 0){
+		
 	var startElement, endElement;
 	/*THIS SEARCHES FOR ALL MEMBERS OF A divClassName ATTRIBUTE IN EACH COL-CLASS COULUMN*/
 	if (storyLineTable.querySelector('div[divclassname]')) {
@@ -232,7 +244,7 @@ var generateCustomSVGConnectorsType1 = function () {
 			}
 		}
 	}
-}
+}}
 
 //REDRAW THE LINES EVERYTIME THE WINDOW IS RESIZED
 //window.addEventListener("resize", connectAllDraggableDivsWithSVGLines);

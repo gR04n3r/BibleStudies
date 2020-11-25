@@ -32,19 +32,29 @@ function drawConnector3(X, Y, divClassforColor) {
 		x: B.leftCenterX - svgMasterLeft - pageScrollX,
 		y: B.leftCenterY - svgMasterTop - pageScrollY
 	};
+	
+	var distanceBtwPoints = Math.abs(posnB.x - posnA.x);
+	var lengthB4Curve;
+	if(distanceBtwPoints < 100 ){
+	   lengthB4Curve = distanceBtwPoints;
+	   }
+	else{
+		lengthB4Curve = 100;
+	}
+	
 	var dStr =
 		"M" +
 		(posnA.x) + "," + (posnA.y) + " " +
 		"C" +
-		(posnA.x + 100) + "," + (posnA.y) + " " +
-		(posnB.x - 100) + "," + (posnB.y) + " " +
+		(posnA.x + lengthB4Curve) + "," + (posnA.y) + " " +
+		(posnB.x - lengthB4Curve) + "," + (posnB.y) + " " +
 		(posnB.x) + "," + (posnB.y);
 	//	connector.setAttribute("d", dStr);
-	nodesconnector3(("M" +
+	nodesconnector(("M" +
 		(posnA.x) + "," + (posnA.y) + " " +
 		"C" +
-		(posnA.x + 100) + "," + (posnA.y) + " " +
-		(posnB.x - 100) + "," + (posnB.y) + " " +
+		(posnA.x + lengthB4Curve) + "," + (posnA.y) + " " +
+		(posnB.x - lengthB4Curve) + "," + (posnB.y) + " " +
 		(posnB.x) + "," + (posnB.y)), 'opt_' + divClassforColor);
 }
 
@@ -72,7 +82,6 @@ function generateCustomSVGConnectorsType3() {
 		var clickedDivOptClass = originatingDiv.getAttribute('divclassname');
 		var divzConnectToValue = originatingDiv.getAttribute('connectTo');
 		var divzConnectToArray = divzConnectToValue.split(', ');
-		console.log(divzConnectToArray);
 
 		//GENERATE CONNECTION
 		var succeedingCellIndex = originatingDivzParent.cellIndex + 1;
@@ -119,10 +128,10 @@ function generateCustomSVGConnectorsType3() {
 					}
 					//after finding the first connectable element of current connectTo class, 
 					//break the loop and search for the next connectTo class to connect with
-					if ((i == maxNumOfColumns) && (j == allscColX.length - 1) && (node2 == null)) {
-						customAlert('This ACTOR does not exist AFTER this point to connect to.');
-						divClass2ConnectTo.value = '';
-					}
+//					if ((i == maxNumOfColumns) && (j == allscColX.length - 1) && (node2 == null)) {
+//						customAlert('This ACTOR does not exist AFTER this point to connect to.');
+//						divClass2ConnectTo.value = '';
+//					}
 				}
 				//reset node2
 				node2 = null;
@@ -137,6 +146,5 @@ function generateCustomSVGConnectorsType3() {
 		//	deselectEmptyCell();
 		//		buildLegendTable();
 		//		connectAllDraggableDivsWithSVGLines();
-		console.log('HELLO');
 	}
 }

@@ -18,8 +18,7 @@ var alternateStoryLineEditorButtons = document.getElementById('alternateStoryLin
 var storyLineTableTitleHeader = document.getElementById('storyLineTableTitleHeader');
 
 var storyLineTableTHead = storyLineTable.querySelector('thead');
-var storyLineTHeadRowz = storyLineTableTHead.querySelectorAll('tr');
-var rowNameTime = storyLineTable.querySelectorAll(`[rowname="time"]`);
+var storyLineTHeadRowz = storyLineTableTHead.getElementsByTagName('tr');
 
 var timePeriodMenu = document.getElementById('timePeriodMenu');
 var onPageLoadTimeMenuWidth;
@@ -419,7 +418,6 @@ function analyzeTable() {
 	resetClasses();
 	deselectEmptyCell();
 	buildLegendTable();
-
 }
 /*CHANGE CONTROL AND DETAILS SECTION Z-INDEX*********************************************/
 
@@ -1666,6 +1664,7 @@ function insertHeading() {
 
 		buildLegendTable();
 	}
+	connectAllDraggableDivsWithSVGLines();
 	analyzeTable();
 }
 var input4text = document.getElementById('cellText'); //GETS VALUE FROM INPUT BOX
@@ -1693,6 +1692,7 @@ function insertTextIntoTD() {
 
 		buildLegendTable();
 	}
+	connectAllDraggableDivsWithSVGLines();
 	analyzeTable();
 }
 
@@ -1713,6 +1713,7 @@ function insertDurationIntoTD() {
 
 		buildLegendTable();
 	}
+	connectAllDraggableDivsWithSVGLines();
 	analyzeTable();
 }
 
@@ -2504,8 +2505,6 @@ var timeMenuArray = [];
 var col_x_CellHeader;
 
 function createTimeMenu(ROWorCOL) {
-	
-	rowNameTime = storyLineTable.querySelectorAll(`[rowname="time"]`);
 
 	/*ARRANGE THE TIMES BY COLUMN*/
 	if (ROWorCOL == "COL") {
@@ -2554,8 +2553,7 @@ function createTimeMenu(ROWorCOL) {
 		cellColClassesArray = [];
 		removeAllChildNodesOf(timeMenuListDiv);
 		//GO THROUGH EACH ROW ONE AFTER ANOTHER
-//		for (i = 0; i < storyLineTHeadRowz.length; i++) {
-		for (i = 0; i < rows.length; i++) {
+		for (i = 0; i < storyLineTHeadRowz.length; i++) {
 			//CREATE <LI> FOR EACH ROW
 			/*var elmLI_1 = document.createElement('LI');
 			elmLI_1.innerHTML = "Row " + (i + 1);*/
@@ -2563,8 +2561,8 @@ function createTimeMenu(ROWorCOL) {
 			var elmUL = document.createElement('OL');
 
 			//CHECK EACH CELL IN THE ROW
-//			var cellsInTheadRow = storyLineTHeadRowz[i].cells;
-			var cellsInTheadRow = rows[i].cells;
+			var cellsInTheadRow = storyLineTHeadRowz[i].cells;
+
 			for (j = 0; j < cellsInTheadRow.length; j++) {
 				col_x_CellHeader = cellsInTheadRow[j].querySelector(TypeOfHtmlHeader);
 
@@ -2602,8 +2600,7 @@ function createTimeMenu(ROWorCOL) {
 
 						var targetRowI = this.getAttribute('targetRowIndex');
 						var targetCellI = this.getAttribute('targetCellIndex');
-//						var targetedTD = storyLineTableTHead.rows[targetRowI].cells[targetCellI];
-						var targetedTD = storyLineTable.rows[targetRowI].cells[targetCellI];
+						var targetedTD = storyLineTableTHead.rows[targetRowI].cells[targetCellI];
 
 						/*
 						targetedTD.click();
@@ -2741,8 +2738,7 @@ function createTimeMenu(ROWorCOL) {
 						var lizInput = this.querySelector('input');
 						var targetRowI = lizInput.getAttribute('targetRowIndex');
 						var targetCellI = lizInput.getAttribute('targetCellIndex');
-//						var targetedTD = storyLineTableTHead.rows[targetRowI].cells[targetCellI];
-						var targetedTD = storyLineTable.rows[targetRowI].cells[targetCellI];
+						var targetedTD = storyLineTableTHead.rows[targetRowI].cells[targetCellI];
 
 						/*GET COL-X CLASSES AND ACT*********************/
 						/***********************************************/
@@ -2778,8 +2774,7 @@ function createTimeMenu(ROWorCOL) {
 						var lizInput = this.querySelector('input');
 						var targetRowI = lizInput.getAttribute('targetRowIndex');
 						var targetCellI = lizInput.getAttribute('targetCellIndex');
-//						var targetedTD = storyLineTableTHead.rows[targetRowI].cells[targetCellI];
-						var targetedTD = storyLineTable.rows[targetRowI].cells[targetCellI];
+						var targetedTD = storyLineTableTHead.rows[targetRowI].cells[targetCellI];
 
 						/*GET COL-X CLASSES AND ACT*********************/
 						/***********************************************/
@@ -2816,7 +2811,6 @@ function createTimeMenu(ROWorCOL) {
 		}
 	}
 }
-
 /******************************************************************************************/
 /******************************************************************************************/
 
