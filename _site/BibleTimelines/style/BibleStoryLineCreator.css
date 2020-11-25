@@ -645,6 +645,10 @@ td > div {
 #detailsKeyFacts ul {
 	margin-top: 0;
 	padding-left: 20px;
+	
+	overflow-wrap: break-word;
+	word-wrap: break-word;
+	hyphens: auto;
 }
 
 #detailsSummary {
