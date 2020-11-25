@@ -31,8 +31,8 @@ function getMissingNumber(arrayOrStringOfNumbers) {
 		arr = str.split(/\s/);
 	}
 	var missingNum = [];
-	for (var i = Math.min(...arr); i < Math.max(...arr); i++) {
-		if (arr.indexOf(i.toString()) === -1) {
+	for (var i = /*Math.min(...arr)*/ 1; i < Math.max(...arr); i++) {
+		if (arr.indexOf(i) === -1) {
 			missingNum.push(i);
 		}
 	}
@@ -49,14 +49,11 @@ var detailsSection = document.getElementById('detailsSection');
 var detailsCount;
 var detailsCountArray = [];
 var initialDetailsOnload = detailsSection.querySelectorAll(`div[detailIndex]`);
-
 ////////////////////////////////////////////
 //FOR CLEANING UP THE DETAILINDEX...////////
 ////////////////////////////////////////////
 for (i = 0; i < initialDetailsOnload.length; i++) {
 	if (initialDetailsOnload[i].textContent == '') {
-		//		var prevDetailIndex = initialDetailsOnload[i].getAttribute('detailIndex')
-		//		storyLineTable.querySelector.removeAttribute('detailIndex');
 		initialDetailsOnload[i].remove();
 	}
 }
@@ -66,16 +63,24 @@ var buildDetailsIndexArray = 0;
 
 for (i = 0; i < tdDetailIndex.length; i++) {
 	var zyx = tdDetailIndex[i].getAttribute('detailIndex');
+	////////////////////////////////////////////////////
+	//If it has no corresponding detail/note,///////////
+	//then remove its detailIndex attribute/////////////
+	//This detail index will not be added to the array//
+	////////////////////////////////////////////////////
 	if (!detailsSection.querySelector(`div[detailIndex="` + zyx + `"]`)) {
 		tdDetailIndex[i].removeAttribute('detailIndex');
 	}
-	if (i == (tdDetailIndex.length - 1)) {
-		buildDetailsIndexArray = 1;
+	//////////////////////////////////////////////////////
+	//If, however, it has a corresponding detail/note,////
+	//Then add its detail index to the detailsCountArray//
+	//////////////////////////////////////////////////////
+	//BUILD DETAILSCOUNT ARRAY//
+	////////////////////////////
+	else {
+		detailsCountArray.push(Number(tdDetailIndex[i].getAttribute('detailIndex')));
+		detailsCountArray.sort();
 	}
-}
-
-for (i = 0; i < initialDetailsOnload.length; i++) {
-	detailsCountArray.push(initialDetailsOnload[i].getAttribute('detailIndex'))
 }
 //////////////////////////////////////////////////////
 //////////////////////////////////////////////////////
@@ -86,15 +91,18 @@ function addDetailKeys() {
 	var previouslyShownDetail = document.querySelector('.showDetail'); //don't make it a live nodelist
 	var detailsActors = document.getElementById('detailsActors');
 	var detailsRegions = document.getElementById('detailsRegions');
-	//	var cellParentName = storyLineTable.rows[clickedRow].parentNode.nodeName;
+	//var cellParentName = storyLineTable.rows[clickedRow].parentNode.nodeName;
 	var divsInCellLength = selectedCell.querySelectorAll('div[divclassname]').length;
 	var cellH4;
 	if (selectedCell.querySelector('h4')) {
 		cellH4 = selectedCell.querySelector('h4').textContent
 	}
 
+	////////////////////////////////////////////////////////////////
+	//IF SELCETED CELL HAS CONTENT E.G., DIV, HEADING, LOCATION...//
 	//if selected cell has label divs or it has a heading, i.e., it cannot be empty
-	if ((selectedCell.innerHTML) && ((selectedCell.querySelectorAll('div[divclassname]').length != 0) || (selectedCell.querySelector('h4').textContent != ''))) {
+	////////////////////////////////////////////////////////////////
+	if ((selectedCell.querySelector('div[divclassname]')) || ((selectedCell.querySelector('h4')) && (selectedCell.querySelector('h4').textContent != ''))) {
 
 		/////////////////////////////////////////////////
 		///*TO GET ACTORS/CHARACTERS IN SELECTED CELL*///
@@ -158,7 +166,10 @@ function addDetailKeys() {
 			}
 		}
 
+		//////////////////////////////////////////////////////
+		//GET TIME-SECTION WITH SELECTED-CELLS COL-X//////////
 		//get the selected cells time from its corresponding col-x class in the thead
+		//////////////////////////////////////////////////////
 		var storyLineTableTHead = storyLineTable.querySelector('thead');
 		var timeRegion = storyLineTableTHead.querySelectorAll(col_xClass);
 		for (i = 0; i < timeRegion.length; i++) {
@@ -186,10 +197,14 @@ function addDetailKeys() {
 			//*HIDE PREVIOUSLY SHOWN DETAIL IF ANY*//
 			/////////////////////////////////////////
 			if (document.querySelector('.showDetail')) {
+				//////////////////////////////////////////////////
+				//IF PREVIOUSLY SHOWN DETAIL IS EMPTY, REMOVE IT//
+				//////////////////////////////////////////////////
 				if (document.querySelector('.showDetail').textContent == '') {
+					
 					previouslyShownDetail = document.querySelector('.showDetail');
-					var prevDetailIndex = previouslyShownDetail.getAttribute('detailIndex')
-					previouslyClickedCell = document.querySelector(`td[detailIndex="` + prevDetailIndex + `"]`)
+					var prevDetailIndex = Number(previouslyShownDetail.getAttribute('detailIndex'));
+					previouslyClickedCell = document.querySelector(`td[detailIndex="` + prevDetailIndex + `"]`);
 					previouslyClickedCell.removeAttribute('detailIndex');
 					previouslyShownDetail.remove(prevDetailIndex);
 					
@@ -198,6 +213,7 @@ function addDetailKeys() {
 					//////////////////////////////////////////////
 					var indexOfDetailCount2remove = detailsCountArray.indexOf(prevDetailIndex);
 					detailsCountArray.splice(indexOfDetailCount2remove, 1);
+					
 				} else {
 					previouslyShownDetail = document.querySelector('.showDetail');
 					previouslyShownDetail.classList.add('hideDetail');
@@ -211,7 +227,8 @@ function addDetailKeys() {
 			if (getMissingNumber(detailsCountArray).length != 0) {
 				detailsCount = getMissingNumber(detailsCountArray)[0];
 				getMissingNumber(detailsCountArray).splice(0, 1);
-			} else {
+			}
+			else {
 				if (detailsCountArray.length != 0) {
 					detailsCount = Math.max(...detailsCountArray) + 1;
 				} else {
@@ -236,36 +253,52 @@ function addDetailKeys() {
 			//			previouslyClickedCell = selectedCell;
 		}
 		
-		//////////////////////////////////////////////////////
+		////////////////////////////////////////////////////////
 		//ELSE IF THE SELECTED CELL ALREADY HAS A DETAIL-INDEX//
-		//////////////////////////////////////////////////////
+		////////////////////////////////////////////////////////
 		else if (selectedCell.getAttribute('detailIndex') != null) {
 			
 			x = selectedCell.getAttribute('detailIndex');
+			var detailToShow = detailsSection.querySelector(`div[detailIndex="` + x + `"]`); //find the corresponding detail/note (it will carry the same detailIndex attribute value)
 
 			///////////////////////////////////////////////
 			//find previously selected detail and hide it//
 			///////////////////////////////////////////////
-			if (previouslyShownDetail.getAttribute('detailIndex') != x) {
+			
+			///////////////////////////////////////////////////////////////
+			//IN CASE THERE IS NO DETAIL WITH DETAIL OF CLASS SHOWDETAIL,//
+			//BUT CLICKED CELL HAS A CORRESPONDING DETAILS THAT HAS////////
+			//HIDEDETAIL CLASS ASSIGNED TO IT//////////////////////////////
+			///////////////////////////////////////////////////////////////
+			if ((previouslyShownDetail == null) && (detailToShow) && (detailToShow.classList.contains('hideDetail'))) {
+				detailToShow.classList.remove('hideDetail');
+				detailToShow.classList.add('showDetail');			
+			}
+			if ((previouslyShownDetail) && (previouslyShownDetail.getAttribute('detailIndex') != x)) {
 
 				previouslyShownDetail.contentEditable = 'false';
-				if (previouslyShownDetail.textContent == null) {
-					var prevDetailIndex = previouslyShownDetail.getAttribute('detailIndex');
+				///////////////////////////////////////////////////
+				//REMOVE PREVIOUSLY SHOWN DETAIL IF IT IS EMPTY////
+				//AND ITS CORRESPONDING ATTRIBUTE FROM THE RESPECTIVE<TD>
+				///////////////////////////////////////////////////
+				if (previouslyShownDetail.textContent == '') {
+					var prevDetailIndex = Number(previouslyShownDetail.getAttribute('detailIndex'));
+					previouslyClickedCell = document.querySelector(`td[detailIndex="` + prevDetailIndex + `"]`);
 					previouslyClickedCell.removeAttribute('detailIndex');
 					previouslyShownDetail.remove();
+					///////////////////////////
+					//Remove index from array//
+					///////////////////////////
+					var indexOfDetailCount2remove = detailsCountArray.indexOf(prevDetailIndex);
+					detailsCountArray.splice(indexOfDetailCount2remove, 1);
 				}
 				previouslyShownDetail.classList.add('hideDetail');
 				previouslyShownDetail.classList.remove('showDetail');
 
-				var detailToShow = detailsSection.querySelector(`div[detailIndex="` + x + `"]`); //find the corresponding detail/note (it will carry the same detailIndex attribute value)
+				detailToShow = detailsSection.querySelector(`div[detailIndex="` + x + `"]`); //find the corresponding detail/note (it will carry the same detailIndex attribute value)
 				detailToShow.classList.remove('hideDetail');
 				detailToShow.classList.add('showDetail');
-				/*var detailsToHide = detailsSection.querySelectorAll(y);
-				for (i = 0; i < detailsToHide; i++) {
-					detailsToHide[i].style.display = 'none';
-				}*/
 			}
-			//			previouslyClickedCell = selectedCell;
 		}
 	} else if (previouslyShownDetail) {
 		previouslyShownDetail.contentEditable = 'false';

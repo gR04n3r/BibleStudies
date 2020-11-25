@@ -32,19 +32,29 @@ function drawConnector2(X, Y, divClassforColor) {
 		x: B.leftCenterX - svgMasterLeft - pageScrollX,
 		y: B.leftCenterY - svgMasterTop - pageScrollY
 	};
+	
+	var distanceBtwPoints = Math.abs(posnB.x - posnA.x);
+	var lengthB4Curve;
+	if(distanceBtwPoints < 100 ){
+	   lengthB4Curve = distanceBtwPoints;
+	   }
+	else{
+		lengthB4Curve = 100;
+	}
+	
 	var dStr =
 		"M" +
 		(posnA.x) + "," + (posnA.y) + " " +
 		"C" +
-		(posnA.x + 100) + "," + (posnA.y) + " " +
-		(posnB.x - 100) + "," + (posnB.y) + " " +
+		(posnA.x + lengthB4Curve) + "," + (posnA.y) + " " +
+		(posnB.x - lengthB4Curve) + "," + (posnB.y) + " " +
 		(posnB.x) + "," + (posnB.y);
 	//	connector.setAttribute("d", dStr);
-	nodesconnector2(("M" +
+	nodesconnector(("M" +
 		(posnA.x) + "," + (posnA.y) + " " +
 		"C" +
-		(posnA.x + 100) + "," + (posnA.y) + " " +
-		(posnB.x - 100) + "," + (posnB.y) + " " +
+		(posnA.x + lengthB4Curve) + "," + (posnA.y) + " " +
+		(posnB.x - lengthB4Curve) + "," + (posnB.y) + " " +
 		(posnB.x) + "," + (posnB.y)), 'opt_' + divClassforColor);
 }
 
@@ -108,11 +118,11 @@ function generateCustomSVGConnectorsType2() {
 					}
 					//after finding the first connectable element of current connectFrom class, 
 					//break the loop and search for the next connectFrom class to connect with
-					if ((i == 0) && (j == allpcColX.length - 1) && (node1 == null)) {
+					/*if ((i == 0) && (j == allpcColX.length - 1) && (node1 == null)) {
 						customAlert(connectFromThisClass + ' does not exist before this point to connect from');
 						divClass2ConnectTo.value = '';
 
-					}
+					}*/
 				}
 				//reset node1
 				node1 = null;
@@ -122,10 +132,6 @@ function generateCustomSVGConnectorsType2() {
 		divDeleteButton.style.backgroundColor = '';
 		connectFromButton.style.backgroundColor = '';
 		clearTimeout(deletButtonColorTimeOut);
-
-		//	deselectEmptyCell();
-		//		buildLegendTable();
-		//		connectAllDraggableDivsWithSVGLines();
 	}
 //	generateCustomSVGConnectorsType3();
 }

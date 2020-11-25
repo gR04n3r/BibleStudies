@@ -1,5 +1,3 @@
-<!--///////[START]/[BStL-detailsSection-Buttons]///////////-->
-<!--DETAILS SECTION (SHOWS DETAILS FOR THE CELlS) **-->
 <section id="detailsSection" class="draggableSection">
 		<div id="detailsSectionheader" class="titleBarH3">
 			<h3>Details</h3>
@@ -7,16 +5,16 @@
 		</div>
 		<div id="detailsKeyFacts">
 
-			<h4>Characters/Actors</h4>
-			<ul id="detailsActors">
+			<h4 title="Absolute/Relative time when this/these event/events takes place">Time:</h4>
+			<ul id="detailsTimePeriods">
 			</ul>
 
 			<h4 title="Where this/these event/events takes place">Location/Region:</h4>
 			<ul id="detailsRegions">
 			</ul>
 
-			<h4 title="Absolute/Relative time when this/these event/events takes place">Time:</h4>
-			<ul id="detailsTimePeriods">
+			<h4>Characters/Actors</h4>
+			<ul id="detailsActors">
 			</ul>
 
 		</div>
@@ -103,6 +101,7 @@
 				<button class="intLink fa fa-paste" title="Paste" onclick="formatDoc('paste');" style="display: none"></button>
 			</div>
 			
-			<button id="makeCurrentDetailEditable" onclick="makeCurrentDetailEditable()" title="Make detail/note edtiable">Make Editable</button><button id="expandDetails" onclick="detailsEditButtons()">Editor Buttons</button><button id="toggleKeyDetails" onclick="toglesummary()">Key Details</button>
+			<button id="toggleKeyDetails" onclick="toglesummary()">Key Details</button>
+			<button id="expandDetails" onclick="detailsEditButtons()">Editor Buttons</button>
+			<button id="makeCurrentDetailEditable" onclick="makeCurrentDetailEditable()" title="Make detail/note edtiable">Make Editable</button>
 	</div>
-<!--///////[END]/[BStL-detailsSection-Buttons]/////////////-->

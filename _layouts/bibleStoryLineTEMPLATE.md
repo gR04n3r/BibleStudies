@@ -4,7 +4,6 @@
 2. the details section
 -->
 {{content}}
-<!--**********************************************-->
 
 {% include BStL-detailsSection-ShowHTML.html %}
 {% include BStL-storylineEditorSection.html %}
