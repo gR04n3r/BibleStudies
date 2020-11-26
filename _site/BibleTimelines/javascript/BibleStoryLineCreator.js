@@ -102,16 +102,16 @@ function howShouldDivsBeConnected(x) {
 			} else if (customConnectionsOnly == 1) {
 				customConnectionsOnly = 0;
 			}
-			
+
 			connectOnlyConnect2andConnect4rm = 0;
 			connectAccording2RowNames = 0;
 			connectByTimelines.checked = false;
 			connectAllDraggableDivsWithSVGLines();
 			x.style.backgroundColor = '';
 			x.title = 'Connect Actors Across TimeLines';
-			
+
 		} else if (connectByTimelines.checked == false) {
-			
+
 			if (customConnectionsOnly == 0) {
 				connectOnlyConnect2andConnect4rm = 0;
 				connectAccording2RowNames = 1;
@@ -119,7 +119,7 @@ function howShouldDivsBeConnected(x) {
 				connectAllDraggableDivsWithSVGLines();
 				x.style.backgroundColor = 'pink';
 				x.title = "Connect Only Within RowNames"
-				
+
 			} else if (customConnectionsOnly == 1) {
 				connectOnlyConnect2andConnect4rm = 1;
 				connectAccording2RowNames = 0;
@@ -829,7 +829,7 @@ function selectCells(dbtn) {
 			cells[i].onclick = function () {
 
 				if ((!this.classList.contains('selected')) && ((dbtn.style.background == active) || (makeCellsSelectable4MergeSplit == 1)) && (this.rowSpan == 1)) {
-					
+
 					this.style.backgroundColor = 'pink';
 					this.classList.add('selected')
 					var cspan = this.colSpan;
@@ -2254,6 +2254,56 @@ function alternateClose() {
 }
 
 var makeEditableCheckbox = document.getElementById('editableRadio');
+/////////////////////////////////////////////////////
+//For Android BackButton to close Designated Window//
+/////////////////////////////////////////////////////
+function mediaQueryFunction(mQF) {
+	if (mQF.matches) { // If media query matches
+		window.addEventListener("hashchange", function (e) {
+			/////////////////////////////
+			//To Close Editor Window/////
+			/////////////////////////////
+			if (makeEditableCheckbox.checked == true) {
+				alternateStoryLineEditorButtons.style.display = '';
+				storyLineTableTitleHeader.contentEditable = 'true';
+
+				var allHInTable = storyLineTable.querySelectorAll('h4');
+				var allPInTable = storyLineTable.querySelectorAll('p');
+				allHInTable.forEach(function (itm) {
+					itm.contentEditable = true
+				})
+				allPInTable.forEach(function (itm) {
+					itm.contentEditable = true
+				})
+			}
+			/////////////////////////////
+			//To Close Details Section///
+			/////////////////////////////
+			if (toggleDetailsCheckbox.checked == true) {
+				toggleDetailsCheckbox.checked = false;
+			}
+			if (toggleDetailsCheckbox.checked == true) {
+				detailsSection.style.display = '';
+			}
+			/////////////////////////////
+			//To Close SlideShow/////////
+			/////////////////////////////
+			if (showSlideShowArranger.checked == true) {
+				showSlideShowArranger.checked = false;
+				slideShowListMaster.style.display = 'none';
+			}
+		});
+	}
+//	else {
+//		document.body.style.backgroundColor = "pink";
+//	}
+}
+
+var mQF = window.matchMedia("(max-width: 700px)")
+mediaQueryFunction(mQF) // Call listener function at run time
+mQF.addListener(mediaQueryFunction) // Attach listener function on state changes
+
+/////////////////////////////////////////////////
 
 function makeTableEditable() {
 	//	alternateClose();
@@ -2434,7 +2484,7 @@ function createDivMenu(dClass) {
 				connectAllDraggableDivsWithSVGLines();
 			}
 		} else if (shouldISoloDiv == 1) {
-			
+
 			if (previouslyChecked != null) {
 				previouslyChecked.checked = false;
 			}
@@ -2504,7 +2554,7 @@ var timeMenuArray = [];
 var col_x_CellHeader;
 
 function createTimeMenu(ROWorCOL) {
-	
+
 	rowNameTime = storyLineTable.querySelectorAll(`[rowname="time"]`);
 
 	/*ARRANGE THE TIMES BY COLUMN*/
@@ -2554,7 +2604,7 @@ function createTimeMenu(ROWorCOL) {
 		cellColClassesArray = [];
 		removeAllChildNodesOf(timeMenuListDiv);
 		//GO THROUGH EACH ROW ONE AFTER ANOTHER
-//		for (i = 0; i < storyLineTHeadRowz.length; i++) {
+		//		for (i = 0; i < storyLineTHeadRowz.length; i++) {
 		for (i = 0; i < rows.length; i++) {
 			//CREATE <LI> FOR EACH ROW
 			/*var elmLI_1 = document.createElement('LI');
@@ -2563,7 +2613,7 @@ function createTimeMenu(ROWorCOL) {
 			var elmUL = document.createElement('OL');
 
 			//CHECK EACH CELL IN THE ROW
-//			var cellsInTheadRow = storyLineTHeadRowz[i].cells;
+			//			var cellsInTheadRow = storyLineTHeadRowz[i].cells;
 			var cellsInTheadRow = rows[i].cells;
 			for (j = 0; j < cellsInTheadRow.length; j++) {
 				col_x_CellHeader = cellsInTheadRow[j].querySelector(TypeOfHtmlHeader);
@@ -2602,7 +2652,7 @@ function createTimeMenu(ROWorCOL) {
 
 						var targetRowI = this.getAttribute('targetRowIndex');
 						var targetCellI = this.getAttribute('targetCellIndex');
-//						var targetedTD = storyLineTableTHead.rows[targetRowI].cells[targetCellI];
+						//						var targetedTD = storyLineTableTHead.rows[targetRowI].cells[targetCellI];
 						var targetedTD = storyLineTable.rows[targetRowI].cells[targetCellI];
 
 						/*
@@ -2741,7 +2791,7 @@ function createTimeMenu(ROWorCOL) {
 						var lizInput = this.querySelector('input');
 						var targetRowI = lizInput.getAttribute('targetRowIndex');
 						var targetCellI = lizInput.getAttribute('targetCellIndex');
-//						var targetedTD = storyLineTableTHead.rows[targetRowI].cells[targetCellI];
+						//						var targetedTD = storyLineTableTHead.rows[targetRowI].cells[targetCellI];
 						var targetedTD = storyLineTable.rows[targetRowI].cells[targetCellI];
 
 						/*GET COL-X CLASSES AND ACT*********************/
@@ -2778,7 +2828,7 @@ function createTimeMenu(ROWorCOL) {
 						var lizInput = this.querySelector('input');
 						var targetRowI = lizInput.getAttribute('targetRowIndex');
 						var targetCellI = lizInput.getAttribute('targetCellIndex');
-//						var targetedTD = storyLineTableTHead.rows[targetRowI].cells[targetCellI];
+						//						var targetedTD = storyLineTableTHead.rows[targetRowI].cells[targetCellI];
 						var targetedTD = storyLineTable.rows[targetRowI].cells[targetCellI];
 
 						/*GET COL-X CLASSES AND ACT*********************/
@@ -2996,7 +3046,7 @@ function timeLinesMenu() {
 		}
 		rowsNameLLowerCaseArray.push(rowzRowName.toLowerCase())
 	}
-	
+
 	removeAllChildNodesOf(timeLinesMenuList);
 	rowNamesArray.forEach(function (RN) {
 
