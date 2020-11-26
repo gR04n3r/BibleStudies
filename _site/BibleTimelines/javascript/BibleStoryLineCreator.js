@@ -2257,46 +2257,46 @@ var makeEditableCheckbox = document.getElementById('editableRadio');
 /////////////////////////////////////////////////////
 //For Android BackButton to close Designated Window//
 /////////////////////////////////////////////////////
-function mediaQueryFunction(mQF) {
-	if (mQF.matches) { // If media query matches
-		window.addEventListener("hashchange", function (e) {
-			/////////////////////////////
-			//To Close Editor Window/////
-			/////////////////////////////
-			if (makeEditableCheckbox.checked == true) {
-				alternateStoryLineEditorButtons.style.display = '';
-				storyLineTableTitleHeader.contentEditable = 'true';
+window.addEventListener("hashchange", function (e) {
+		function mediaQueryFunction(mQF) {
+			if (mQF.matches) { // If media query matches
+				/////////////////////////////
+				//To Close Editor Window/////
+				/////////////////////////////
+				if (makeEditableCheckbox.checked == true) {
+					alternateStoryLineEditorButtons.style.display = '';
+					storyLineTableTitleHeader.contentEditable = 'true';
 
-				var allHInTable = storyLineTable.querySelectorAll('h4');
-				var allPInTable = storyLineTable.querySelectorAll('p');
-				allHInTable.forEach(function (itm) {
-					itm.contentEditable = true
-				})
-				allPInTable.forEach(function (itm) {
-					itm.contentEditable = true
-				})
-			}
-			/////////////////////////////
-			//To Close Details Section///
-			/////////////////////////////
-			if (toggleDetailsCheckbox.checked == true) {
-				toggleDetailsCheckbox.checked = false;
-			}
-			if (toggleDetailsCheckbox.checked == true) {
-				detailsSection.style.display = '';
-			}
-			/////////////////////////////
-			//To Close SlideShow/////////
-			/////////////////////////////
-			if (showSlideShowArranger.checked == true) {
-				showSlideShowArranger.checked = false;
-				slideShowListMaster.style.display = 'none';
-			}
-		});
+					var allHInTable = storyLineTable.querySelectorAll('h4');
+					var allPInTable = storyLineTable.querySelectorAll('p');
+					allHInTable.forEach(function (itm) {
+						itm.contentEditable = true
+					})
+					allPInTable.forEach(function (itm) {
+						itm.contentEditable = true
+					})
+				}
+				/////////////////////////////
+				//To Close Details Section///
+				/////////////////////////////
+				if (toggleDetailsCheckbox.checked == true) {
+					toggleDetailsCheckbox.checked = false;
+				}
+				if (toggleDetailsCheckbox.checked == true) {
+					detailsSection.style.display = '';
+				}
+				/////////////////////////////
+				//To Close SlideShow/////////
+				/////////////////////////////
+				if (showSlideShowArranger.checked == true) {
+					showSlideShowArranger.checked = false;
+					slideShowListMaster.style.display = 'none';
+				}
+			});
 	}
-//	else {
-//		document.body.style.backgroundColor = "pink";
-//	}
+	//	else {
+	//		document.body.style.backgroundColor = "pink";
+	//	}
 }
 
 var mQF = window.matchMedia("(max-width: 700px)")
