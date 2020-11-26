@@ -2257,52 +2257,53 @@ var makeEditableCheckbox = document.getElementById('editableRadio');
 /////////////////////////////////////////////////////
 //For Android BackButton to close Designated Window//
 /////////////////////////////////////////////////////
-window.addEventListener("hashchange", function (e) {
-		function mediaQueryFunction(mQF) {
-			if (mQF.matches) { // If media query matches
-				/////////////////////////////
-				//To Close Editor Window/////
-				/////////////////////////////
-				if (makeEditableCheckbox.checked == true) {
-					alternateStoryLineEditorButtons.style.display = '';
-					storyLineTableTitleHeader.contentEditable = 'true';
+function mediaQueryFunction(mQF) {
+		if (mQF.matches) { // If media query matches
+			/////////////////////////////
+			//To Close Editor Window/////
+			/////////////////////////////
+			if (makeEditableCheckbox.checked == true) {
+				alternateStoryLineEditorButtons.style.display = '';
+				storyLineTableTitleHeader.contentEditable = 'true';
 
-					var allHInTable = storyLineTable.querySelectorAll('h4');
-					var allPInTable = storyLineTable.querySelectorAll('p');
-					allHInTable.forEach(function (itm) {
-						itm.contentEditable = true
-					})
-					allPInTable.forEach(function (itm) {
-						itm.contentEditable = true
-					})
-				}
-				/////////////////////////////
-				//To Close Details Section///
-				/////////////////////////////
-				if (toggleDetailsCheckbox.checked == true) {
-					toggleDetailsCheckbox.checked = false;
-				}
-				if (toggleDetailsCheckbox.checked == true) {
-					detailsSection.style.display = '';
-				}
-				/////////////////////////////
-				//To Close SlideShow/////////
-				/////////////////////////////
-				if (showSlideShowArranger.checked == true) {
-					showSlideShowArranger.checked = false;
-					slideShowListMaster.style.display = 'none';
-				}
-			});
+				var allHInTable = storyLineTable.querySelectorAll('h4');
+				var allPInTable = storyLineTable.querySelectorAll('p');
+				allHInTable.forEach(function (itm) {
+					itm.contentEditable = true
+				})
+				allPInTable.forEach(function (itm) {
+					itm.contentEditable = true
+				})
+			}
+			/////////////////////////////
+			//To Close Details Section///
+			/////////////////////////////
+			if (toggleDetailsCheckbox.checked == true) {
+				toggleDetailsCheckbox.checked = false;
+			}
+			if (toggleDetailsCheckbox.checked == true) {
+				detailsSection.style.display = '';
+			}
+			/////////////////////////////
+			//To Close SlideShow/////////
+			/////////////////////////////
+			if (showSlideShowArranger.checked == true) {
+				showSlideShowArranger.checked = false;
+				slideShowListMaster.style.display = 'none';
+			}
+		}
+		//	else {
+		//		document.body.style.backgroundColor = "pink";
+		//	}
 	}
-	//	else {
-	//		document.body.style.backgroundColor = "pink";
-	//	}
-}
+
+window.addEventListener("hashchange", function (e) {
 
 var mQF = window.matchMedia("(max-width: 700px)")
 mediaQueryFunction(mQF) // Call listener function at run time
 mQF.addListener(mediaQueryFunction) // Attach listener function on state changes
 
+});
 /////////////////////////////////////////////////
 
 function makeTableEditable() {
